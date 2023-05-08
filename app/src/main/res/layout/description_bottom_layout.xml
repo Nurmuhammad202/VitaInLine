@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_dialog_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/bottomDialogDismiss"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/horizontal_rule" />
+
+    <TextView
+        android:id="@+id/dialogPillTitle"
+        style="@style/BottomDialogTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parasetamol 500 mg" />
+
+    <TextView
+        android:id="@+id/dialogPillDesc"
+        style="@style/BottomDialogStandardText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Parasetomol preparadi istima tushirish uchun eng samarali dorilardan biri hisoblanadi" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="16dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/calendar_month_icon" />
+
+        <TextView
+
+            style="@style/BottomDialogStandardText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:text="@string/dialog_period_date" />
+
+        <TextView
+            android:id="@+id/dialogPeriodDate"
+            style="@style/BottomDialogBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 kun" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_layout_bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="16dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/clock_icon" />
+
+        <TextView
+
+            style="@style/BottomDialogStandardText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:text="@string/dialog_apply_time" />
+
+        <TextView
+            android:id="@+id/dialogTimeTakingPill"
+            style="@style/BottomDialogBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9:00,12:00,18:00" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_layout_bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/bucket_icon" />
+
+        <TextView
+
+            style="@style/BottomDialogStandardText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:text="@string/dialog_apply_text" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialogChildPillCount"
+            style="@style/BottomDialogBoldText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="2ta tabletka" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginHorizontal="10dp"
+            android:src="@drawable/circled_drop" />
+
+        <TextView
+            android:id="@+id/dialogPillStatus"
+            style="@style/BottomDialogBoldText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Och qoringa" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginHorizontal="10dp"
+            android:src="@drawable/circled_drop" />
+
+        <TextView
+            android:id="@+id/dialogPillCountDate"
+            style="@style/BottomDialogBoldText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="4 mahal" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/BottomDialogExtraTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dialog_extra_desc_title" />
+
+    <TextView
+        android:id="@+id/dialogPillExtraDesc"
+        style="@style/BottomDialogStandardText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Parasetamol preparadini 5 kunda davomida xar 3 soatda och qoringa qo’llanish tavsiya qilinadi." />
+</LinearLayout>

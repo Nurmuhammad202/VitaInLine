@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/secondary_color"
+    tools:context=".ui.main.DavolanishFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingHorizontal="16dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/ButtonStyle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="3dp"
+            android:src="@drawable/arrow_left_icon" />
+
+        <TextView
+
+            style="@style/ToolbarTitleTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/davolanish_text" />
+
+        <ImageView
+            android:id="@+id/davolanishHistory"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/top_secondary_background"
+            android:padding="4dp"
+            android:src="@drawable/history_icon" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/HomeInfoTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="------------- Bugun ------------" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+</LinearLayout>

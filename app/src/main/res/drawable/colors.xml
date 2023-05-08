@@ -23,17 +23,7 @@
 
     // button bg color
     <color name="button_bg_color">#1BB7B5</color>
-    <color name="secondary_button_bg_color">#F8FEFE</color>
 
-    //ripple color
-    <color name="main_btn_btn_ripple_color">#D5D5D5</color>
 
-    <color name="error_text_star_color">#EC2D2D</color>
-
-    // attention color
-    <color name="attention_text_color">#A0B9BA</color>
-
-    // home fragment color
-    <color name="top_layout_bg_color">#EDFDFF</color>
-
+    <color name="dsdss">#0EC5C9</color>
 </resources>

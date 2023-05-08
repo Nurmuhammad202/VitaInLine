@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_davolanishFragment"
+            app:destination="@id/davolanishFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tavsiyanomaFragment"
+            app:destination="@id/tavsiyanomaFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_pillsFragment"
+            app:destination="@id/pillsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/davolanishFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.DavolanishFragment"
+        android:label="fragment_davolanish"
+        tools:layout="@layout/fragment_davolanish" >
+        <action
+            android:id="@+id/action_davolanishFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_davolanishFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tavsiyanomaFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.TavsiyanomaFragment"
+        android:label="fragment_tavsiyanoma"
+        tools:layout="@layout/fragment_tavsiyanoma" >
+        <action
+            android:id="@+id/action_tavsiyanomaFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_tavsiyanomaFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_davolanishFragment"
+            app:destination="@id/davolanishFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_tavsiyanomaFragment"
+            app:destination="@id/tavsiyanomaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pillsFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.pill.PillsFragment"
+        android:label="fragment_pills"
+        tools:layout="@layout/fragment_pills" >
+        <action
+            android:id="@+id/action_pillsFragment_to_aboutPillFragment"
+            app:destination="@id/aboutPillFragment" />
+        <action
+            android:id="@+id/action_pillsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutPillFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.pill.AboutPillFragment"
+        android:label="fragment_about_pill"
+        tools:layout="@layout/fragment_about_pill" >
+        <action
+            android:id="@+id/action_aboutPillFragment_to_pillsFragment"
+            app:destination="@id/pillsFragment" />
+    </fragment>
+</navigation>

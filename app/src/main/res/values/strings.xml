@@ -1,3 +1,63 @@
 <resources>
+    // app name
     <string name="app_name">Vita In Line</string>
+    // splash text
+    <string name="splash_text">Vita in line</string>
+    // sign in text
+    <string name="sign_in_username_text">Login (Tug\'ilgan kun)</string>
+    <string name="sign_in_username_hint">Loginni kiriting</string>
+    <string name="sign_in_password_text">Parol (Passport seriya)</string>
+    <string name="sign_in_password_hint">*******</string>
+    <string name="sign_in_btn_text">Kirish</string>
+
+
+    //sign up text
+    <string name="sign_up_FLM">FISH</string>
+    <string name="sign_up_FLM_hint">(Eshonov Fakhiyor Farhodbek o\'g\'li)</string>
+    <string name="sign_up_birth_date_hint">Tug\'ilgan sana</string>
+    <string name="sign_up_btn_text">Ro\'yxatdan o\'tish</string>
+    <string name="calendar_text">  Tanlang</string>
+    <string name="sign_up_description">Iltimos ro\’yxatdan o’tish uchun quyidagi maydonlarni to\’ldiring!</string>
+    <string name="sign_in_title">Tizimga kirish</string>
+    <string name="error_star">*</string>
+    <string name="attention_login_text">Diqqat ushbu ma\'lumot, login sifatida ishlatilinadi!</string>
+    <string name="sign_up_serial_text">Passport seriya va raqami</string>
+    <string name="attention_password_text">Diqqat ushbu ma\'lumot parol sifatida ishlatiladi!</string>
+    <string name="sign_up_serial_hint">(AA 2314658)</string>
+    <string name="sign_up_region">Viloyat</string>
+    <string name="sign_up_job_text">Ish joyingiz</string>
+    <string name="sign_up_job_hint">(Ishsiz)</string>
+    <string name="sign_up_number_text">Telifon raqamingiz</string>
+    <string name="sign_up_phone_hint">+998 -- --- -- --</string>
+
+    <string-array name="spinner_items">
+        <item>UZ</item>
+        <item>RU</item>
+    </string-array>
+    <string-array name="spinner_region_items">
+        <item>Toshkent</item>
+        <item>Sirdaryo</item>
+        <item>Andijon</item>
+        <item>Farg\'ona</item>
+        <item>Namangan</item>
+        <item>Samarqand</item>
+        <item>Qashqadaryo</item>
+        <item>Surxandaryo</item>
+        <item>Buxoro</item>
+        <item>Navoiy</item>
+        <item>Xorazm</item>
+        <item>Qoraqalpog\'iston</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_hello_text">Salom!</string>
+    <string name="dialog_extra_desc_title">Qo\'shimcha ma\'lumotlar</string>
+    <string name="dialog_apply_text">Qo’llanish</string>
+    <string name="dialog_apply_time">Qo’llanish soatlari</string>
+    <string name="dialog_period_date">Qo’llanish muddati</string>
+    <string name="davolanish_text">Davolanish</string>
+    <string name="dorilar_text">Dorilar</string>
+    <string name="cancel_text">CANCEL</string>
+    <string name="ok_text">OK</string>
+
 </resources>
