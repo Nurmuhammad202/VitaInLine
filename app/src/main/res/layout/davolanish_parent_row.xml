@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="8dp"
 
@@ -13,7 +13,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:background="@drawable/recycler_view_bg"
         android:orientation="vertical"
         android:padding="16dp">
@@ -26,14 +25,14 @@
             android:orientation="horizontal">
 
             <ImageView
-
+                android:id="@+id/davParentIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:padding="3dp"
                 android:src="@drawable/pill_parasetamol_icon" />
 
             <TextView
-                android:id="@+id/parentRcPillName"
+                android:id="@+id/davParentPillName"
                 style="@style/RcParentTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,16 +40,17 @@
                 android:text="Parasetamol 500mg" />
 
             <ImageView
+                android:id="@+id/davParentInfoIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/info_icon" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/childRecyclerView"
+            android:id="@+id/davChildRv"
             android:layout_width="match_parent"
-            tools:listitem="@layout/child_recycler_item"
+            android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_height="wrap_content" />
+            tools:listitem="@layout/davolanish_child_row" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

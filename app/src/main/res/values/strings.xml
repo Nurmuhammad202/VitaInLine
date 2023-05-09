@@ -59,5 +59,11 @@
     <string name="dorilar_text">Dorilar</string>
     <string name="cancel_text">CANCEL</string>
     <string name="ok_text">OK</string>
+    <string name="tarix_text">Tarix</string>
+    <string name="about_pill">Dori haqida</string>
+    <string name="attention_text">Diqqat, Diqqat, Diqqat!</string>
+    <string name="notification_btn_text">Tushunarli</string>
+    <string name="notification_skip_btn_text">15 daqiqadan so\'ngra eslating</string>
+    <string name="tavsiyanoma_text">Tavsiyanoma</string>
 
 </resources>

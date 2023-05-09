@@ -16,6 +16,7 @@
         android:gravity="center_vertical">
 
         <ImageView
+            android:id="@+id/davolanishBackBtn"
             style="@style/ButtonStyle"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -40,16 +41,37 @@
             android:src="@drawable/history_icon" />
     </LinearLayout>
 
-    <TextView
-        style="@style/HomeInfoTextStyle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="------------- Bugun ------------" />
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            android:src="@drawable/date_line_icon"/>
+        <TextView
+            android:id="@+id/davolanishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ToolbarTitleTextStyle"
+            android:layout_marginHorizontal="10dp"
+            android:text="04.05.2023" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            android:src="@drawable/date_line_icon"/>
+
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dRecyclerView"
+        android:id="@+id/davRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"

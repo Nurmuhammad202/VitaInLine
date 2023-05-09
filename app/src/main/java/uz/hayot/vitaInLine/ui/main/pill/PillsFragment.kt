@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import uz.hayot.vitaInLine.adapters.PillAdapter
 import uz.hayot.vitaInLine.databinding.FragmentPillsBinding
 import uz.hayot.vitaInLine.fake_data.FakeData
 import uz.hayot.vitaInLine.models.Pill
 
-class PillsFragment : Fragment(), PillAdapter.OnPillsClickedListener {
+class PillsFragment : Fragment() {
     private var _binding: FragmentPillsBinding? = null
     private val binding get() = _binding!!
 
@@ -30,13 +31,23 @@ class PillsFragment : Fragment(), PillAdapter.OnPillsClickedListener {
 
         fakePillsAdapter()
 
+
+
+
     }
 
     private fun fakePillsAdapter() {
         val list: MutableList<Pill> = FakeData.getPillData()
         val adapter = PillAdapter(list)
-        adapter.setOnPillsClicked(this)
-        binding.rcViewPills.adapter = adapter
+        adapter.setOnPillsClicked(object : PillAdapter.OnPillsClickedListener {
+            override fun onPillsClicked(position: Int) {
+                val objPill = list[position]
+                val action = PillsFragmentDirections.actionPillsFragmentToAboutPillFragment(objPill)
+                findNavController().navigate(action)
+            }
+
+        })
+        binding.rVPills.adapter = adapter
 
     }
 
@@ -46,7 +57,5 @@ class PillsFragment : Fragment(), PillAdapter.OnPillsClickedListener {
         _binding = null
     }
 
-    override fun onPillsClicked(position: Int) {
 
-    }
 }

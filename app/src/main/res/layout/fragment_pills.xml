@@ -16,6 +16,7 @@
         android:paddingHorizontal="16dp">
 
         <ImageView
+            android:id="@+id/pillsBackBtn"
             style="@style/ButtonStyle"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -27,6 +28,7 @@
             style="@style/ToolbarTitleTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/dorilar_text" />
@@ -35,7 +37,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcViewPills"
+        android:id="@+id/rVPills"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

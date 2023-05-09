@@ -17,6 +17,7 @@
         android:padding="16dp">
 
         <ImageView
+            android:id="@+id/signUpBackBtn"
             style="@style/ButtonStyle"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -205,7 +206,7 @@
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <Button
-                    android:id="@+id/button_register"
+                    android:id="@+id/signUpBtn"
                     style="@style/ButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

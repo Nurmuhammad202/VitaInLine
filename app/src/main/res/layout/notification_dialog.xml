@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottom_dialog_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_top_layout"
+        android:orientation="vertical"
+
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/notificationDismissIcon"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+
+            android:src="@drawable/horizontal_rule" />
+
+        <TextView
+            android:id="@+id/notificationAttentionText"
+            style="@style/BottomDialogTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notificationDismissIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/attention_text" />
+
+        <ImageView
+            android:id="@+id/notificationClockIcon"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_below="@id/notificationAttentionText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/notif_clock_icon" />
+
+        <LinearLayout
+            android:id="@+id/notificationPillTimeContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notificationClockIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/notif_pill_time_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/clock_icon" />
+
+            <TextView
+                android:id="@+id/notificationPillTime"
+                style="@style/BottomDialogTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="8:00" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/notificationDesc"
+            style="@style/BottomDialogStandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notificationPillTimeContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="da, siz dorilar ichishingiz kerak!" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="200dp"
+            android:layout_below="@id/notificationAttentionText"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@id/notificationPillTime"
+            android:src="@drawable/splash_bottom_left"
+            tools:ignore="NotSibling" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:layout_below="@id/notificationAttentionText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/splash_top_right" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/notificationContent"
+        style="@style/BottomDialogExtraTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:text="Dorilar:" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notificationRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="2"
+        tools:listitem="@layout/notif_rv_row"
+        android:layout_margin="10dp"
+         />
+
+    <Button
+        android:id="@+id/notificationOkBtn"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/notification_btn_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/notificationSkipBtn"
+            style="@style/SecondaryButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="@string/notification_skip_btn_text" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05" />
+
+        <ImageView
+            android:id="@+id/notificationCancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:src="@drawable/notif_cancel_icon" />
+    </LinearLayout>
+
+
+</LinearLayout>

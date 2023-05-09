@@ -72,8 +72,8 @@ class SignUpFragment : Fragment() {
         dialog.window?.setGravity(Gravity.BOTTOM);
 
         val calendar = dialog.findViewById<CalendarView>(R.id.dialogCalendar)
-        val okBtn = dialog.findViewById<TextView>(R.id.okBtn)
-        val cancelBtn = dialog.findViewById<TextView>(R.id.cancelBtn)
+        val okBtn = dialog.findViewById<TextView>(R.id.calendarOkBtn)
+        val cancelBtn = dialog.findViewById<TextView>(R.id.calendarCancelBtn)
 
 
 

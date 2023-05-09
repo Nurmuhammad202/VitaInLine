@@ -3,26 +3,26 @@ package uz.hayot.vitaInLine.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import uz.hayot.vitaInLine.databinding.ChildRecyclerItemBinding
+import uz.hayot.vitaInLine.databinding.DavolanishChildRowBinding
 import uz.hayot.vitaInLine.models.ChildRcModel
 
-class ChildRecyclerAdapter(private val childList: MutableList<ChildRcModel>) :
-    RecyclerView.Adapter<ChildRecyclerAdapter.ViewHolder>() {
+class DavolanishChildAdapter(private val childList: MutableList<ChildRcModel>) :
+    RecyclerView.Adapter<DavolanishChildAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: ChildRecyclerItemBinding) :
+    inner class ViewHolder(private val binding: DavolanishChildRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(childRcModel: ChildRcModel) {
-            binding.rcChildPillTime.text = childRcModel.time
-            binding.rcChildPillCount.text = childRcModel.pillCount
-            binding.rcChildPillDesc.text = childRcModel.pillDesc
+            binding.davChildPillTime.text = childRcModel.time
+            binding.davChildPillCount.text = childRcModel.pillCount
+            binding.davChildPillDesc.text = childRcModel.pillDesc
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            ChildRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            DavolanishChildRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
 

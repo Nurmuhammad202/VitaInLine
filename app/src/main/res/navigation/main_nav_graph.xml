@@ -76,5 +76,8 @@
         <action
             android:id="@+id/action_aboutPillFragment_to_pillsFragment"
             app:destination="@id/pillsFragment" />
+        <argument
+            android:name="aboutPill"
+            app:argType="uz.hayot.vitaInLine.models.Pill" />
     </fragment>
 </navigation>

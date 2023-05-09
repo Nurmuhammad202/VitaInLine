@@ -24,7 +24,7 @@
 
 
     <TextView
-        android:id="@+id/sign_in_title"
+        android:id="@+id/signInTitle"
         style="@style/AuthTitleTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sign_in_title"
+        android:layout_below="@id/signInTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="25dp"

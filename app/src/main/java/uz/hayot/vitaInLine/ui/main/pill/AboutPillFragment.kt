@@ -1,60 +1,43 @@
 package uz.hayot.vitaInLine.ui.main.pill
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import uz.hayot.vitaInLine.R
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
+import uz.hayot.vitaInLine.databinding.FragmentAboutPillBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutPillFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AboutPillFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentAboutPillBinding? = null
+    private val binding get() = _binding!!
+    private val args: AboutPillFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about_pill, container, false)
+        _binding = FragmentAboutPillBinding.inflate(inflater, container, false)
+        return _binding?.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AboutPillFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AboutPillFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initFakeAboutPill()
     }
+
+    private fun initFakeAboutPill() {
+        binding.aboutPillImage.setImageResource(args.aboutPill.pillIcon)
+        binding.aboutPillName.text = args.aboutPill.pillName
+        binding.aboutPillDesc.text = args.aboutPill.pillDescription
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+
 }

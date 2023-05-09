@@ -31,12 +31,18 @@ class HomeFragment : Fragment() {
         binding.davolanishBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_davolanishFragment)
         }
+
+        binding.tavsiyanomaBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_tavsiyanomaFragment)
+
+        }
         binding.homePillBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_pillsFragment)
         }
 
 
     }
+
     private fun initSpinner() {
         val languageSpinnerAdapter = ArrayAdapter(
             binding.root.context, R.layout.simple_spinner_item,
