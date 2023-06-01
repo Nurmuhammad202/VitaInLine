@@ -37,14 +37,7 @@ class ExtraFunctions {
             return description.substring(0, 30) + "..."
         }
 
-        @SuppressLint("SimpleDateFormat")
-        fun convertLongToTime(time: Long): String {
-            val date = Date()
-            date.time = time
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            return   dateFormat.format(date)
 
-        }
 
     }
 

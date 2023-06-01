@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import uz.hayot.vitaInLine.R
-import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.adapters.TavsiyanomaParentAdapter
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaBinding
 import uz.hayot.vitaInLine.fake_data.FakeData
@@ -37,9 +37,13 @@ class TavsiyanomaFragment : Fragment() {
         initFakeDataAdapter()
 
         binding.tavsiyanomaHistory.setOnClickListener {
-            showNotificationDialog()
+            findNavController().navigate(R.id.action_tavsiyanomaFragment_to_tavsiyanomaHistoryFragment)
+//            showNotificationDialog()
         }
 
+        binding.tavsiyanomaBackBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_tavsiyanomaFragment_to_homeFragment)
+        }
     }
 
     private fun showNotificationDialog() {

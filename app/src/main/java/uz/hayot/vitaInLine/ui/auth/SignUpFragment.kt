@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentSignUpBinding
 import uz.hayot.vitaInLine.util.functions.ExtraFunctions
@@ -20,7 +21,7 @@ import uz.hayot.vitaInLine.util.functions.ExtraFunctions
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
-    private var resultCalendar:String=""
+    private var resultCalendar: String = ""
 
 
     override fun onCreateView(
@@ -39,6 +40,9 @@ class SignUpFragment : Fragment() {
         binding.signUpBirthDate.setOnClickListener {
             showCalendarDialog()
         }
+        binding.signUpBackBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
 
     }
 
@@ -56,7 +60,7 @@ class SignUpFragment : Fragment() {
             binding.root.context, R.layout.simple_spinner_item,
             resources.getStringArray(R.array.spinner_region_items)
         )
-        binding.signUpRegionSpinner.setPopupBackgroundResource(R.drawable.edit_text_background)
+        binding.signUpRegionSpinner.setPopupBackgroundResource(R.drawable.edit_text_no_active)
         binding.signUpRegionSpinner.adapter = regionSpinnerAdapter
     }
 
@@ -77,7 +81,9 @@ class SignUpFragment : Fragment() {
 
 
 
-        calendar.setOnDateChangeListener { _, year, month, dayOfMonth -> resultCalendar ="  ${dayOfMonth}.${month+1}.${year}"}
+        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            resultCalendar = "  ${dayOfMonth}.${month + 1}.${year}"
+        }
 
         okBtn.setOnClickListener {
 

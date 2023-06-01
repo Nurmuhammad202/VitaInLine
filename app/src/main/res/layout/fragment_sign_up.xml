@@ -201,7 +201,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/sign_up_phone_hint"
+                    android:inputType="phone"
+                    android:digits="+998 90 051 26 28"
+                    android:hint="@string/sign_up_number_text"
                     android:paddingHorizontal="16dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 

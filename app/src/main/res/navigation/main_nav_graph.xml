@@ -29,8 +29,8 @@
             android:id="@+id/action_davolanishFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_davolanishFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
+            android:id="@+id/action_davolanishFragment_to_davolanishHistoryFragment"
+            app:destination="@id/davolanishHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/tavsiyanomaFragment"
@@ -41,20 +41,17 @@
             android:id="@+id/action_tavsiyanomaFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_tavsiyanomaFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
+            android:id="@+id/action_tavsiyanomaFragment_to_tavsiyanomaHistoryFragment"
+            app:destination="@id/tavsiyanomaHistoryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/historyFragment"
-        android:name="uz.hayot.vitaInLine.ui.main.HistoryFragment"
+        android:id="@+id/davolanishHistoryFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.DavolanishHistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" >
+        tools:layout="@layout/fragment_davolanish_history" >
         <action
-            android:id="@+id/action_historyFragment_to_davolanishFragment"
+            android:id="@+id/action_davolonishHistoryFragment_to_davolanishFragment"
             app:destination="@id/davolanishFragment" />
-        <action
-            android:id="@+id/action_historyFragment_to_tavsiyanomaFragment"
-            app:destination="@id/tavsiyanomaFragment" />
     </fragment>
     <fragment
         android:id="@+id/pillsFragment"
@@ -79,5 +76,14 @@
         <argument
             android:name="aboutPill"
             app:argType="uz.hayot.vitaInLine.models.Pill" />
+    </fragment>
+    <fragment
+        android:id="@+id/tavsiyanomaHistoryFragment"
+        android:name="uz.hayot.vitaInLine.ui.main.TavsiyanomaHistoryFragment"
+        android:label="fragment_tavsiyanoma_history"
+        tools:layout="@layout/fragment_tavsiyanoma_history" >
+        <action
+            android:id="@+id/action_tavsiyanomaHistoryFragment_to_tavsiyanomaFragment"
+            app:destination="@id/tavsiyanomaFragment" />
     </fragment>
 </navigation>

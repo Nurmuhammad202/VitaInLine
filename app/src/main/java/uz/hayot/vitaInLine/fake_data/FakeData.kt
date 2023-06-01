@@ -123,8 +123,7 @@ class FakeData {
 
         fun getHistoryFakeDate():MutableList<Any>{
             val result: MutableList<Any> = ArrayList()
-            val parentData: MutableList<ParentRcModel> = ArrayList()
-            val dateData: MutableList<DateModel> = ArrayList()
+
 
             val listChild1: MutableList<ChildRcModel> = getChild1RcData()
             val listChild2: MutableList<ChildRcModel> = getChild2RcData()
@@ -135,11 +134,11 @@ class FakeData {
             result.add(DateModel("03.02.2023"))
             result.add(ParentRcModel(0, "Parasetamol 500 mg", listChild1))
             result.add(ParentRcModel(0, "Parasetamol 100 mg", listChild2))
-            dateData.add(DateModel("04.02.2023"))
+            result.add(DateModel("04.02.2023"))
             result.add(ParentRcModel(0, "Parasetamol 500 mg", listChild3))
             result.add(ParentRcModel(0, "Parasetamol 500 mg", listChild4))
             result.add(ParentRcModel(0, "Parasetamol 600 mg", listChild2))
-            dateData.add(DateModel("14.12.2022"))
+            result.add(DateModel("14.12.2022"))
             result.add(ParentRcModel(0, "Parasetamol 500 mg", listChild4))
             result.add(ParentRcModel(0, "Parasetamol 700 mg", listChild2))
             result.add(ParentRcModel(0, "Parasetamol 500 mg", listChild1))

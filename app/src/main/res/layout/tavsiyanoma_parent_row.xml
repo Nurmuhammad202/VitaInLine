@@ -29,7 +29,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:padding="3dp"
-                android:src="@drawable/pill_parasetamol_icon" />
+                android:src="@drawable/pressure_icon" />
 
             <TextView
                 android:id="@+id/tavParentRvName"

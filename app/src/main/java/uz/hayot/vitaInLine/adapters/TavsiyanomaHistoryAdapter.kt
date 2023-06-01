@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.hayot.vitaInLine.databinding.DavolanishParentRowBinding
 import uz.hayot.vitaInLine.databinding.HistoryDateRowBinding
+import uz.hayot.vitaInLine.databinding.TavsiyanomaParentRowBinding
 import uz.hayot.vitaInLine.models.DateModel
 import uz.hayot.vitaInLine.models.ParentRcModel
 
-class HistoryAdapter(private val list: MutableList<Any>) :
+class TavsiyanomaHistoryAdapter(private val list: MutableList<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -16,21 +17,18 @@ class HistoryAdapter(private val list: MutableList<Any>) :
         const val DATE_VIEW_TYPE = 1
     }
 
-    inner class ParentViewHolder(private val binding: DavolanishParentRowBinding) :
+    inner class ParentViewHolder(private val binding: TavsiyanomaParentRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-
-        fun bind(parentRcModel: ParentRcModel) {
-            binding.davParentPillName.text = parentRcModel.title
-            binding.davChildRv.adapter = DavolanishChildAdapter(parentRcModel.list)
+        fun onBind(parentRcModel: ParentRcModel) {
+            binding.tavParentRvName.text = parentRcModel.title
+            binding.tavChildRv.adapter = TavsiyanomaChildAdapter(parentRcModel.list)
         }
     }
 
     inner class DateViewHolder(private val binding: HistoryDateRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
-        fun bind(dateModel: DateModel) {
+        fun onBind(dateModel: DateModel) {
             binding.historyDate.text = dateModel.date
 
         }
@@ -39,7 +37,7 @@ class HistoryAdapter(private val list: MutableList<Any>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             PARENT_VIEW_TYPE -> {
-                val view = DavolanishParentRowBinding.inflate(
+                val view = TavsiyanomaParentRowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -64,12 +62,12 @@ class HistoryAdapter(private val list: MutableList<Any>) :
             PARENT_VIEW_TYPE -> {
                 val personViewHolder = holder as ParentViewHolder
                 val person = item as ParentRcModel
-                personViewHolder.bind(person)
+                personViewHolder.onBind(person)
             }
             DATE_VIEW_TYPE -> {
-                val dogViewHolder = holder as DateViewHolder
-                val dog = item as DateModel
-                dogViewHolder.bind(dog)
+                val dateViewHolder = holder as DateViewHolder
+                val date = item as DateModel
+                dateViewHolder.onBind(date)
             }
         }
     }
@@ -79,10 +77,8 @@ class HistoryAdapter(private val list: MutableList<Any>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (list[position]) {
-            is ParentRcModel -> PARENT_VIEW_TYPE
-            is DateModel -> DATE_VIEW_TYPE
-            else -> throw IllegalArgumentException("Invalid data type")
-        }
+        return if(list[position] is DateModel)
+            DATE_VIEW_TYPE
+        else PARENT_VIEW_TYPE
     }
 }

@@ -222,7 +222,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/edit_text_no_active"
         android:orientation="horizontal"
         android:paddingHorizontal="5dp"
         android:paddingVertical="1dp">

@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
             binding.root.context, R.layout.simple_spinner_item,
             resources.getStringArray(R.array.spinner_items)
         )
-        binding.homeLanguageSpinner.setPopupBackgroundResource(R.drawable.edit_text_background);
+        binding.homeLanguageSpinner.setPopupBackgroundResource(R.drawable.edit_text_no_active);
         binding.homeLanguageSpinner.adapter = languageSpinnerAdapter
     }
 

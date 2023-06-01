@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentAboutPillBinding
 
 
@@ -26,6 +28,10 @@ class AboutPillFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initFakeAboutPill()
+
+        binding.aboutPillBackBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_aboutPillFragment_to_pillsFragment)
+        }
     }
 
     private fun initFakeAboutPill() {

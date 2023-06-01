@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.adapters.PillAdapter
 import uz.hayot.vitaInLine.databinding.FragmentPillsBinding
 import uz.hayot.vitaInLine.fake_data.FakeData
@@ -31,7 +32,9 @@ class PillsFragment : Fragment() {
 
         fakePillsAdapter()
 
-
+        binding.pillsBackBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_pillsFragment_to_homeFragment)
+        }
 
 
     }

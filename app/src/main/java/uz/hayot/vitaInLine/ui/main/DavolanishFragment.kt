@@ -38,7 +38,12 @@ class DavolanishFragment : Fragment() {
         initFakeDataAdapter()
 
         binding.davolanishHistory.setOnClickListener {
-            findNavController().navigate(R.id.action_davolanishFragment_to_historyFragment)
+            findNavController().navigate(
+                R.id.action_davolanishFragment_to_davolanishHistoryFragment
+            )
+        }
+        binding.davolanishBackBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_davolanishFragment_to_homeFragment)
         }
 
     }

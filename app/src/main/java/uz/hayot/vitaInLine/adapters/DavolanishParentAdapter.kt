@@ -9,7 +9,7 @@ import uz.hayot.vitaInLine.databinding.DavolanishParentRowBinding
 
 import uz.hayot.vitaInLine.models.ParentRcModel
 
-class DavolanishParentAdapter(private val parentList: List<ParentRcModel>) :
+class DavolanishParentAdapter(private val parentList: List<ParentRcModel>)  :
     RecyclerView.Adapter<DavolanishParentAdapter.ViewHolder>() {
     private var infoListener: OnParentInfoClickedListener? = null
 
@@ -20,7 +20,7 @@ class DavolanishParentAdapter(private val parentList: List<ParentRcModel>) :
             binding.davParentPillName.text = parentRcModel.title
             binding.davChildRv.adapter = DavolanishChildAdapter(parentRcModel.list)
 
-            binding.davParentIcon.setOnClickListener {
+            binding.davParentInfoIcon.setOnClickListener {
                 infoListener?.onInfoClicked(adapterPosition)
             }
         }

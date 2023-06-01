@@ -35,5 +35,9 @@
 
     // home fragment color
     <color name="top_layout_bg_color">#EDFDFF</color>
+    <color name="button_disable_color">#D0EFEF</color>
+    <color name="child_item_selected_color">#E8FCEB</color>
+    <color name="edit_text_active_border_color">#C5D7D8</color>
+    <color name="child_count_text_selected_color">#86BC8E</color>
 
 </resources>

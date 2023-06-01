@@ -1,11 +1,10 @@
 package uz.hayot.vitaInLine.adapters
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.hayot.vitaInLine.databinding.TavsiyanomaChildRowBinding
-
-
 import uz.hayot.vitaInLine.models.ChildRcModel
 
 class TavsiyanomaChildAdapter(private val childList: MutableList<ChildRcModel>) :
@@ -16,6 +15,20 @@ class TavsiyanomaChildAdapter(private val childList: MutableList<ChildRcModel>) 
 
         fun onBind(childRcModel: ChildRcModel) {
             binding.tavChildPillTime.text = childRcModel.time
+
+            binding.root.setOnClickListener {
+                if (binding.tavChildCheckBox.isSelected) {
+                    binding.tavChildCheckBox.isSelected = false
+                    binding.root.isSelected = false
+                    binding.tavChildPillTime.isSelected = false
+
+                } else {
+                    binding.tavChildCheckBox.isSelected = true
+                    binding.root.isSelected = true
+                    binding.tavChildPillTime.isSelected = true
+
+                }
+            }
 
         }
 
