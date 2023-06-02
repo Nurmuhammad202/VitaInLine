@@ -9,17 +9,22 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
+import uz.hayot.vitaInLine.data.model.SendSigInModel
 import uz.hayot.vitaInLine.databinding.FragmentSignInBinding
 import uz.hayot.vitaInLine.util.functions.ExtraFunctions
 
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
-
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +42,24 @@ class SignInFragment : Fragment() {
         initSpinner()
         visibilityPassword()
 
-        binding.sigInUpBtn.setOnClickListener{
+        binding.sigInUpBtn.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
-        binding.sigInBtn.setOnClickListener{
-            findNavController().navigate(R.id.action_signInFragment_to_mainActivity)
+        binding.sigInBtn.setOnClickListener {
+            val birtDay = binding.signInUsername.text.toString()
+            val password = binding.signInPassword.text.toString()
+            if (birtDay.isNotEmpty() && password.isNotEmpty()) {
+                authViewModel.signIn(sendSigInModel = SendSigInModel(birtDay, password))
+            } else {
+                Toast.makeText(requireContext(), "Ma'lumotlarni to'ldiring", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
+        authViewModel.success.observe(requireActivity()) {
+            if (it) {
+                findNavController().navigate(R.id.action_signInFragment_to_mainActivity)
+            }
         }
 
 

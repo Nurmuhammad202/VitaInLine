@@ -12,16 +12,20 @@ import android.widget.ArrayAdapter
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
+import uz.hayot.vitaInLine.data.model.CreateDataPatient
 import uz.hayot.vitaInLine.databinding.FragmentSignUpBinding
 import uz.hayot.vitaInLine.util.functions.ExtraFunctions
 
-
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
     private var resultCalendar: String = ""
+    private val authViewModel: AuthViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -41,7 +45,27 @@ class SignUpFragment : Fragment() {
             showCalendarDialog()
         }
         binding.signUpBackBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+            val fio = binding.signUpUsername.text.toString()
+            val data = "01.05.1999"//binding.signUpBirthDate.text.toString()
+            val passport = "AB999910"
+            val country = "Toshkent"
+            val phone = binding.signUpPhoneNumber.text.toString()
+            authViewModel.createUser(
+                dataPatient = CreateDataPatient(
+                    fullname = fio,
+                    birthday = data,
+                    passport = passport,
+                    province = country,
+                    phone = phone
+                )
+            )
+
+        }
+
+        authViewModel.success.observe(requireActivity()) {
+            if (it) {
+                findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+            }
         }
 
     }
