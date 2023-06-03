@@ -36,9 +36,6 @@ class ExtraFunctions {
         fun convertShortDesc(description: String): String {
             return description.substring(0, 30) + "..."
         }
-
-
-
     }
 
 

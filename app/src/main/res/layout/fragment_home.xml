@@ -60,6 +60,7 @@
             android:text="@string/home_hello_text" />
 
         <TextView
+            android:id="@+id/homeUsername"
             style="@style/HomeUsernameTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

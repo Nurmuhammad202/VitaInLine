@@ -22,4 +22,6 @@ class Repository @Inject constructor(
     suspend fun createUser(data: CreateDataPatient) = apiInterface.createUser(data)
 
     suspend fun sigIn(sendSigInModel: SendSigInModel) = apiInterface.signIn(sendSigInModel)
+
+    suspend fun getUser(authToken: String) = apiInterface.getUser(authToken = authToken)
 }
