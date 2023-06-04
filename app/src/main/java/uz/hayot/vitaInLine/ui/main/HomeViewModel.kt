@@ -1,6 +1,5 @@
 package uz.hayot.vitaInLine.ui.main
 
-import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,7 @@ import uz.hayot.vitaInLine.data.model.UserResponse
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     val success = MutableLiveData<Boolean>()
     private var userResponse = UserResponse()
@@ -27,7 +26,7 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
                         success.value = true
                     }
                 }
-                Log.e("salom", "getUser: $it vs ${it.body()}")
+                Log.e("homeData", "getUser: $it vs ${it.body()}")
             }
         } catch (ex: Exception) {
             ex.message

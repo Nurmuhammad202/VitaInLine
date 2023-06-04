@@ -20,7 +20,7 @@ class DavolanishHistoryAdapter(private val list: MutableList<Any>) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(parentRcModel: ParentRcModel) {
             binding.davParentPillName.text = parentRcModel.title
-            binding.davChildRv.adapter = DavolanishChildAdapter(parentRcModel.list)
+//            binding.davChildRv.adapter = DavolanishChildAdapter(parentRcModel.list)
         }
     }
 

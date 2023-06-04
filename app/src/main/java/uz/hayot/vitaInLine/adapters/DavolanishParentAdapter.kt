@@ -4,21 +4,33 @@ package uz.hayot.vitaInLine.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
+import uz.hayot.vitaInLine.data.model.DataItem
+import uz.hayot.vitaInLine.data.model.HealingChildRVModel
 import uz.hayot.vitaInLine.databinding.DavolanishParentRowBinding
 
-import uz.hayot.vitaInLine.models.ParentRcModel
-
-class DavolanishParentAdapter(private val parentList: List<ParentRcModel>)  :
+class DavolanishParentAdapter(private val healingList: List<DataItem>) :
     RecyclerView.Adapter<DavolanishParentAdapter.ViewHolder>() {
     private var infoListener: OnParentInfoClickedListener? = null
+    private var childList: MutableList<HealingChildRVModel> = ArrayList()
 
     inner class ViewHolder(private val binding: DavolanishParentRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(parentRcModel: ParentRcModel) {
-            binding.davParentPillName.text = parentRcModel.title
-            binding.davChildRv.adapter = DavolanishChildAdapter(parentRcModel.list)
+        fun onBind(dataItem: DataItem) {
+            binding.davParentPillName.text = dataItem.pill
+            childList.clear()
+            for (i in 0 until (dataItem.times?.size ?: 0)) {
+                childList.add(
+                    HealingChildRVModel(
+                        dataItem.times?.get(i) ?: "",
+                        dataItem.quantity.toString(),
+                        dataItem.type.toString()
+                    )
+                )
+            }
+
+            binding.davChildRv.adapter =
+                DavolanishChildAdapter(childList)
 
             binding.davParentInfoIcon.setOnClickListener {
                 infoListener?.onInfoClicked(adapterPosition)
@@ -28,12 +40,13 @@ class DavolanishParentAdapter(private val parentList: List<ParentRcModel>)  :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = DavolanishParentRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view =
+            DavolanishParentRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(parentList[position])
+        holder.onBind(healingList[position])
 
 
     }
@@ -44,7 +57,7 @@ class DavolanishParentAdapter(private val parentList: List<ParentRcModel>)  :
 
 
     override fun getItemCount(): Int {
-        return parentList.size
+        return healingList.size
     }
 
     fun setOnInfoClicked(listener: OnParentInfoClickedListener) {

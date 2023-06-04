@@ -17,6 +17,7 @@ class SharedPrefRepository(context: Context) : SharedInterface {
 
     override suspend fun saveToken(token: String) {
         sharedPreferences.edit().putString(SHARED_USER_TOKEN, "Bearer $token").apply()
+
     }
 
     override suspend fun saveLang(lang: String) {

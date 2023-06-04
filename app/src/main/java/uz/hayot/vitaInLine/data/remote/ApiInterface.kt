@@ -23,5 +23,11 @@ interface ApiInterface {
     @GET("auth/user")
     suspend fun getUser(@Header("Authorization") authToken: String): Response<UserResponse>
 
+    @GET("healings/patient")
+    suspend fun getHealing(
+        @Header("Authorization") authToken: String,
+        @Body type: HealingType
+    ): Response<HealingResponse>
+
 
 }

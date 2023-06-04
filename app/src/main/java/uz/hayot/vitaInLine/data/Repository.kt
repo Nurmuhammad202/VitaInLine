@@ -2,6 +2,7 @@ package uz.hayot.vitaInLine.data
 
 import uz.hayot.vitaInLine.data.local.SharedInterface
 import uz.hayot.vitaInLine.data.model.CreateDataPatient
+import uz.hayot.vitaInLine.data.model.HealingType
 import uz.hayot.vitaInLine.data.model.SendSigInModel
 import uz.hayot.vitaInLine.data.remote.ApiInterface
 import javax.inject.Inject
@@ -23,5 +24,8 @@ class Repository @Inject constructor(
 
     suspend fun sigIn(sendSigInModel: SendSigInModel) = apiInterface.signIn(sendSigInModel)
 
-    suspend fun getUser(authToken: String) = apiInterface.getUser(authToken = authToken)
+    suspend fun getUser(authToken: String) = apiInterface.getUser(authToken)
+
+    suspend fun getHealing(authToken: String, type: HealingType) =
+        apiInterface.getHealing(authToken = authToken, type = type)
 }

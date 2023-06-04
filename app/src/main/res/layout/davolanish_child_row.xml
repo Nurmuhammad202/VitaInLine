@@ -10,13 +10,7 @@
     android:paddingHorizontal="10dp"
     android:paddingVertical="8dp">
 
-    <ImageView
-        android:id="@+id/davChildCheckBox"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:padding="3dp"
-        android:src="@drawable/checkbox_background"
-        />
+
 
     <ImageView
         android:layout_width="20dp"
