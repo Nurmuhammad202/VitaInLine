@@ -1,6 +1,6 @@
 package uz.hayot.vitaInLine.data.model
 
-data class Data(
+data class DataXX(
     val birthday: String,
     val createdAt: String,
     val fullname: String,
@@ -10,5 +10,5 @@ data class Data(
     val phone: String,
     val province: String,
     val updatedAt: String,
-    val workplace: String?
+    val workplace: Any
 )

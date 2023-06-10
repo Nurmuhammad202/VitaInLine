@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.auth.SignUpFragment"
@@ -123,13 +124,16 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/sign_up_serial_text" />
 
-                <EditText
+                <com.santalu.maskara.widget.MaskEditText
                     android:id="@+id/signUpSerialNumber"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:hint="@string/sign_up_serial_hint"
+                    app:mask="__ _______"
+                    app:maskCharacter="_"
+                    app:maskStyle="completable"
                     android:paddingHorizontal="16dp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
@@ -195,14 +199,16 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/sign_up_number_text" />
 
-                <EditText
+                <com.santalu.maskara.widget.MaskEditText
                     android:id="@+id/signUpPhoneNumber"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:inputType="phone"
-                    android:digits="+998 90 051 26 28"
+                    app:mask="+___ __ ___ __ __"
+                    app:maskCharacter="_"
+                    app:maskStyle="completable"
                     android:hint="@string/sign_up_number_text"
                     android:paddingHorizontal="16dp"
                     tools:ignore="SpeakableTextPresentCheck" />

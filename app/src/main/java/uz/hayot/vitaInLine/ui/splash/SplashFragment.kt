@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentSplashBinding
+import uz.hayot.vitaInLine.ui.auth.AuthViewModel
 import uz.hayot.vitaInLine.util.functions.ExtraFunctions
 
 
+@AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +35,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         // init spannable text
         initSpannableText()
         // fake transition
-        val loginState = false
+        val loginState = viewModel.getToken()
         object : CountDownTimer(1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
             }

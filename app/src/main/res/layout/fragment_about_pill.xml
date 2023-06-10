@@ -53,7 +53,7 @@
                 android:layout_height="200dp"
                 app:cardCornerRadius="10dp">
 
-                <ImageView
+                <VideoView
                     android:id="@+id/aboutPillImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

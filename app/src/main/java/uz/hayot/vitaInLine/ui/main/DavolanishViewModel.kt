@@ -1,5 +1,6 @@
 package uz.hayot.vitaInLine.ui.main
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,40 +9,74 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import uz.hayot.vitaInLine.data.Repository
 import uz.hayot.vitaInLine.data.model.HealingResponse
-import uz.hayot.vitaInLine.data.model.HealingType
 import javax.inject.Inject
 
 @HiltViewModel
 class DavolanishViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    val success = MutableLiveData<Boolean>()
-    private var healingDate = HealingResponse()
-    private lateinit var type: HealingType
-
-    // body uchun type berish
-    fun setType(type: String) {
-        this.type = HealingType(type)
-    }
+    var healingDate = MutableLiveData<HealingResponse>()
+    var healingDateHistory = MutableLiveData<HealingResponse>()
 
     fun getHealing() = viewModelScope.launch {
         try {
-            repository.getHealing(repository.getToken(), type).let {
+            repository.getHealing().let {
                 if (it.isSuccessful) {
                     it.body()?.let { data ->
-                        healingDate = data
-                        success.value = true
+                        healingDate.value = data
                     }
                 }
-
-                Log.e("type", type.type.toString())
                 Log.e("token", repository.getToken())
                 Log.e("healingData", "  $it vs ${it.body()}")
+            }
+        } catch (ex: Exception) {
+            ex.message
+            Log.e("healingData1", "${ex.message}")
+        }
+    }
+
+    fun getHealingHistory() = viewModelScope.launch {
+        try {
+            repository.getHealingHistory().let {
+                if (it.isSuccessful) {
+                    it.body()?.let { data ->
+                        healingDateHistory.value = data
+                    }
+                }
+                Log.e("healingDatadsfdsfds", "  $it vs ${it.body()}")
             }
         } catch (ex: Exception) {
             ex.message
         }
     }
 
-    fun getHealingData(): HealingResponse {
-        return healingDate
+    var recommendationsData = MutableLiveData<HealingResponse>()
+    fun recommendations() = viewModelScope.launch {
+        try {
+            repository.recommendations().let {
+                if (it.isSuccessful) {
+                    it.body()?.let { data ->
+                        recommendationsData.value = data
+                    }
+                }
+                Log.e("recommendationsData", "  $it vs ${it.body()}")
+            }
+        } catch (ex: Exception) {
+            ex.message
+        }
     }
+    var recommendationsDataHistory = MutableLiveData<HealingResponse>()
+    fun recommendationsHistory() = viewModelScope.launch {
+        try {
+            repository.recommendationsHistory().let {
+                if (it.isSuccessful) {
+                    it.body()?.let { data ->
+                        recommendationsDataHistory.value = data
+                    }
+                }
+                Log.e("healingDatadsfdsfds", "  $it vs ${it.body()}")
+            }
+        } catch (ex: Exception) {
+            ex.message
+        }
+    }
+
 }

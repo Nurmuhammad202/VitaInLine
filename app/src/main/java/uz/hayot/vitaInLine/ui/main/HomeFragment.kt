@@ -1,20 +1,27 @@
 package uz.hayot.vitaInLine.ui.main
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import uz.hayot.vitaInLine.MainActivity
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentHomeBinding
+import uz.hayot.vitaInLine.util.Localization.changeLan
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: HomeViewModel by viewModels()
@@ -31,21 +38,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.getSignUser()
-
         initSpinner()
 
-        mainViewModel.success.observe(requireActivity()) {
-            if (it) {
-                val userResponse = mainViewModel.getUser()
-                Toast.makeText(binding.root.context, "true", Toast.LENGTH_SHORT).show()
-                binding.homeUsername.text = userResponse.data?.fullname
-                binding.homeUserBirthDay.text = userResponse.data?.birthday
-                binding.homeUserRegion.text = userResponse.data?.province
-                binding.homeUserJobPlace.text = userResponse.data?.workplace.toString()
-            } else {
-                Toast.makeText(binding.root.context, "Nimadir xato", Toast.LENGTH_SHORT).show()
-            }
-
+        mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
+            binding.homeUsername.text = userResponse.data?.fullname
+            binding.homeUserBirthDay.text = userResponse.data?.birthday
+            binding.homeUserRegion.text = userResponse.data?.province
+            binding.homeUserJobPlace.text = userResponse.data?.workplace ?: "Promo Technology"
         }
 
         binding.davolanishBtn.setOnClickListener {
@@ -63,18 +62,49 @@ class HomeFragment : Fragment() {
 
     }
 
+    private lateinit var languageSpinnerAdapter: ArrayAdapter<String>
     private fun initSpinner() {
-        val languageSpinnerAdapter = ArrayAdapter(
-            binding.root.context, R.layout.simple_spinner_item,
-            resources.getStringArray(R.array.spinner_items)
-        )
+        val lang = mainViewModel.getLang()
+        languageSpinnerAdapter = if (lang == "ru") {
+            ArrayAdapter(
+                binding.root.context, R.layout.simple_spinner_item,
+                resources.getStringArray(R.array.spinner_items_ru)
+            )
+        } else {
+            ArrayAdapter(
+                binding.root.context, R.layout.simple_spinner_item,
+                resources.getStringArray(R.array.spinner_items)
+            )
+        }
         binding.homeLanguageSpinner.setPopupBackgroundResource(R.drawable.edit_text_no_active);
         binding.homeLanguageSpinner.adapter = languageSpinnerAdapter
+        binding.homeLanguageSpinner.onItemSelectedListener = this
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        count = 0
+    }
+
+    var count = 0
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+
+        Log.e(TAG, "onItemSelectedewwew $count")
+        if (count > 0) {
+            val lang = languageSpinnerAdapter.getItem(position).toString()
+            mainViewModel.saveLang(lang)
+            changeLan(lang, requireActivity())
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            requireActivity().finishAffinity()
+            startActivity(intent)
+        }
+
+        count++
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
     }
 
 

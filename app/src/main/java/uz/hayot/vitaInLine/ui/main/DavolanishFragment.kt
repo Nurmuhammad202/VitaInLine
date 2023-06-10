@@ -31,7 +31,6 @@ class DavolanishFragment : Fragment() {
     private lateinit var dataList: List<DataItem>
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,23 +43,12 @@ class DavolanishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        davolanishViewModel.setType("current")
         davolanishViewModel.getHealing()
 
 
-        davolanishViewModel.success.observe(requireActivity()) {
-            if (it) {
-                dataList = davolanishViewModel.getHealingData().data as List<DataItem>
-
-                initDataAdapter(dataList)
-
-                Toast.makeText(binding.root.context, "true", Toast.LENGTH_SHORT)
-                    .show()
-
-            } else {
-                Toast.makeText(binding.root.context, "Nimadir xato ketdi", Toast.LENGTH_SHORT)
-                    .show()
-            }
+        davolanishViewModel.healingDate.observe(requireActivity()) {
+            dataList = it.data as List<DataItem>
+            initDataAdapter(dataList)
         }
 
 
@@ -77,7 +65,7 @@ class DavolanishFragment : Fragment() {
 
 
     private fun initDataAdapter(list: List<DataItem>) {
-       val  adapter = DavolanishParentAdapter(list)
+        val adapter = DavolanishParentAdapter(list,"pill")
         binding.davolanishDate.text = dataList[0].startedDate
         binding.davRecyclerView.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {

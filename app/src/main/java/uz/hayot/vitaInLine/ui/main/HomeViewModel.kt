@@ -1,5 +1,6 @@
 package uz.hayot.vitaInLine.ui.main
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,17 +14,15 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    val success = MutableLiveData<Boolean>()
-    private var userResponse = UserResponse()
+    var userResponse = MutableLiveData<UserResponse>()
 
-
-      fun getSignUser() = viewModelScope.launch {
+    fun getSignUser() = viewModelScope.launch {
         try {
-            repository.getUser(repository.getToken()).let {
+            Log.e(TAG, "getSignUser: ${repository.getToken()}")
+            repository.getUser().let {
                 if (it.isSuccessful) {
                     it.body()?.let { body ->
-                        userResponse = body
-                        success.value = true
+                        userResponse.value = body
                     }
                 }
                 Log.e("homeData", "getUser: $it vs ${it.body()}")
@@ -33,9 +32,7 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
         }
     }
 
-    fun getUser(): UserResponse {
-        return userResponse
-    }
+    fun saveLang(lang: String) = repository.saveLang(lang)
 
-
+    fun getLang() = repository.getLang()
 }

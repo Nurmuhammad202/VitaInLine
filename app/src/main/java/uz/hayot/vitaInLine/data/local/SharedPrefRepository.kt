@@ -11,16 +11,15 @@ class SharedPrefRepository(context: Context) : SharedInterface {
     private val sharedPreferences =
         context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 
-    override suspend fun getToken(): String {
+    override fun getToken(): String {
         return sharedPreferences.getString(SHARED_USER_TOKEN, "") ?: ""
     }
 
     override suspend fun saveToken(token: String) {
-        sharedPreferences.edit().putString(SHARED_USER_TOKEN, "Bearer $token").apply()
-
+        sharedPreferences.edit().putString(SHARED_USER_TOKEN, token).apply()
     }
 
-    override suspend fun saveLang(lang: String) {
+    override fun saveLang(lang: String) {
         sharedPreferences.edit().putString(SHARED_LANGUAGE, lang).apply()
     }
 

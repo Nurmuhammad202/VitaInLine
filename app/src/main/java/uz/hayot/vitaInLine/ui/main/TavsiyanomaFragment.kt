@@ -10,17 +10,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
+import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.adapters.TavsiyanomaParentAdapter
+import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaBinding
 import uz.hayot.vitaInLine.fake_data.FakeData
 import uz.hayot.vitaInLine.models.ParentRcModel
 
 
+@Suppress("UNCHECKED_CAST")
+@AndroidEntryPoint
 class TavsiyanomaFragment : Fragment() {
     private var _binding: FragmentTavsiyanomaBinding? = null
     private val binding get() = _binding!!
+    private val davolanishViewModel: DavolanishViewModel by viewModels()
+    private lateinit var dataList: List<DataItem>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +42,13 @@ class TavsiyanomaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initFakeDataAdapter()
+        davolanishViewModel.recommendations()
+
+
+        davolanishViewModel.recommendationsData.observe(requireActivity()) {
+            dataList = it.data as List<DataItem>
+            initDataAdapter(dataList)
+        }
 
         binding.tavsiyanomaHistory.setOnClickListener {
             findNavController().navigate(R.id.action_tavsiyanomaFragment_to_tavsiyanomaHistoryFragment)
@@ -42,7 +56,7 @@ class TavsiyanomaFragment : Fragment() {
         }
 
         binding.tavsiyanomaBackBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_tavsiyanomaFragment_to_homeFragment)
+            findNavController().popBackStack()
         }
     }
 
@@ -65,10 +79,14 @@ class TavsiyanomaFragment : Fragment() {
         dialog.show()
     }
 
-    private fun initFakeDataAdapter() {
-        val list: MutableList<ParentRcModel> = FakeData.getParentRcData()
-        val adapter = TavsiyanomaParentAdapter(list)
+    private fun initDataAdapter(list: List<DataItem>) {
+        val adapter = DavolanishParentAdapter(list,"recommendations")
+        binding.tavsiyanomaDate.text = dataList[0].startedDate
         binding.tavRecyclerView.adapter = adapter
+        adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {
+
+        })
+
     }
 
     override fun onDestroy() {

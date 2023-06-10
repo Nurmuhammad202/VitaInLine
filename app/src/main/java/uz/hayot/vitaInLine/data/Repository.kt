@@ -14,9 +14,9 @@ class Repository @Inject constructor(
 
     fun getLang(): String = sharedInterface.getLang()
 
-    suspend fun getToken(): String = sharedInterface.getToken()
+    fun getToken(): String = sharedInterface.getToken()
 
-    suspend fun saveLang(lang: String) = sharedInterface.saveLang(lang = lang)
+     fun saveLang(lang: String) = sharedInterface.saveLang(lang = lang)
 
     suspend fun saveToken(token: String) = sharedInterface.saveToken(token = token)
 
@@ -24,8 +24,20 @@ class Repository @Inject constructor(
 
     suspend fun sigIn(sendSigInModel: SendSigInModel) = apiInterface.signIn(sendSigInModel)
 
-    suspend fun getUser(authToken: String) = apiInterface.getUser(authToken)
+    suspend fun getUser() = apiInterface.getUser(sharedInterface.getToken())
 
-    suspend fun getHealing(authToken: String, type: HealingType) =
-        apiInterface.getHealing(authToken = authToken, type = type)
+    suspend fun getHealing() =
+        apiInterface.getHealing(authToken = sharedInterface.getToken(), type = "current")
+
+    suspend fun getHealingHistory() =
+        apiInterface.getHealing(authToken = sharedInterface.getToken(), type = "history")
+
+    suspend fun recommendations() =
+        apiInterface.recommendations(authToken = sharedInterface.getToken(), type = "current")
+
+    suspend fun recommendationsHistory() =
+        apiInterface.recommendations(authToken = sharedInterface.getToken(), type = "history")
+
+    suspend fun advertising() = apiInterface.advertising()
+
 }
