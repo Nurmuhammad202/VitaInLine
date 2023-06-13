@@ -9,6 +9,7 @@
     <string name="sign_in_password_text">Parol (Passport seriya)</string>
     <string name="sign_in_password_hint">*******</string>
     <string name="sign_in_btn_text">Kirish</string>
+    <string name="sign_in_title">Tizimga kirish</string>
 
 
     //sign up text
@@ -18,7 +19,7 @@
     <string name="sign_up_btn_text">Ro\'yxatdan o\'tish</string>
     <string name="calendar_text">  Tanlang</string>
     <string name="sign_up_description">Iltimos ro\’yxatdan o’tish uchun quyidagi maydonlarni to\’ldiring!</string>
-    <string name="sign_in_title">Tizimga kirish</string>
+
     <string name="error_star">*</string>
     <string name="attention_login_text">Diqqat ushbu ma\'lumot, login sifatida ishlatilinadi!</string>
     <string name="sign_up_serial_text">Passport seriya va raqami</string>
