@@ -5,17 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
+import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.adapters.TavsiyanomaHistoryAdapter
+import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaHistoryBinding
 import uz.hayot.vitaInLine.fake_data.FakeData
 
-
+@Suppress("UNCHECKED_CAST")
+@AndroidEntryPoint
 class TavsiyanomaHistoryFragment : Fragment() {
     private var _binding: FragmentTavsiyanomaHistoryBinding? = null
     private val binding get() = _binding!!
 
+    private val davolanishViewModel: DavolanishViewModel by viewModels()
+    private lateinit var dataList: List<DataItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +36,26 @@ class TavsiyanomaHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initFakeDavHistory()
+
+        davolanishViewModel.recommendationsHistory()
+
+
+        davolanishViewModel.recommendationsDataHistory.observe(requireActivity()) {
+            dataList = it.data as List<DataItem>
+            initDataAdapter(dataList)
+        }
 
         binding.tavHisBackBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_tavsiyanomaHistoryFragment_to_tavsiyanomaFragment)
+            findNavController().popBackStack()
         }
     }
 
-    private fun initFakeDavHistory() {
-        val data: MutableList<Any> = FakeData.getHistoryFakeDate()
-        val adapter = TavsiyanomaHistoryAdapter(data)
-        binding.tavHistoryRv.adapter = adapter
+
+    private fun initDataAdapter(list: List<DataItem>) {
+        val adapter = DavolanishParentAdapter(list,"recommendations")
+        binding.davRecyclerView.adapter = adapter
+        adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {})
+
     }
 
     override fun onDestroy() {

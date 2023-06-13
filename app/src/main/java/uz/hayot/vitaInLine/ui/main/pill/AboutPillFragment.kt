@@ -1,6 +1,8 @@
 package uz.hayot.vitaInLine.ui.main.pill
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +16,7 @@ import uz.hayot.vitaInLine.databinding.FragmentAboutPillBinding
 class AboutPillFragment : Fragment() {
     private var _binding: FragmentAboutPillBinding? = null
     private val binding get() = _binding!!
-    private val args: AboutPillFragmentArgs by navArgs()
+    // private val args: AboutPillFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,14 +32,22 @@ class AboutPillFragment : Fragment() {
         initFakeAboutPill()
 
         binding.aboutPillBackBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_aboutPillFragment_to_pillsFragment)
+            findNavController().popBackStack()
         }
+
+        binding.aboutPillImage.setVideoPath("https://www.youtube.com/watch?v=FALLT7X6jpc")
+        binding.aboutPillImage.start()
     }
 
     private fun initFakeAboutPill() {
-        binding.aboutPillImage.setImageResource(args.aboutPill.pillIcon)
-        binding.aboutPillName.text = args.aboutPill.pillName
-        binding.aboutPillDesc.text = args.aboutPill.pillDescription
+        arguments?.let {
+            val url = it.getString("link")
+            Log.e(TAG, "initFakeAboutPill: $url")
+            binding.aboutPillName.text = it.getString("title")
+            binding.aboutPillDesc.text = it.getString("desc")
+
+        }
+
     }
 
     override fun onDestroy() {

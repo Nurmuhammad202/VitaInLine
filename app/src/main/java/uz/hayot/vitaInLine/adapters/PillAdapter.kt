@@ -3,20 +3,21 @@ package uz.hayot.vitaInLine.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import uz.hayot.vitaInLine.data.model.advertising.Data
 import uz.hayot.vitaInLine.databinding.PillsRowBinding
 import uz.hayot.vitaInLine.models.Pill
 import uz.hayot.vitaInLine.util.functions.ExtraFunctions
 
-class PillAdapter(private val list: MutableList<Pill>) :
+class PillAdapter(private val list: ArrayList<Data>) :
     RecyclerView.Adapter<PillAdapter.ViewHolder>() {
     private var pillsListener: OnPillsClickedListener? = null
 
     inner class ViewHolder(private val binding: PillsRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(pill: Pill) {
-            binding.pillsImage.setImageResource(pill.pillIcon)
-            binding.pillsName.text = pill.pillName
-            binding.pillsShortDesc.text = ExtraFunctions.convertShortDesc(pill.pillDescription)
+        fun onBind(pill: Data) {
+            //binding.pillsImage.setImageResource(pill.pillIcon)
+            binding.pillsName.text = pill.title
+            binding.pillsShortDesc.text = ExtraFunctions.convertShortDesc(pill.description)
             binding.root.setOnClickListener {
                 pillsListener?.onPillsClicked(adapterPosition)
             }

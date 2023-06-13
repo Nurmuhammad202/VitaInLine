@@ -32,9 +32,15 @@
     <string name="sign_up_phone_hint">+998 -- --- -- --</string>
 
     <string-array name="spinner_items">
-        <item>UZ</item>
-        <item>RU</item>
+        <item>uz</item>
+        <item>ru</item>
     </string-array>
+
+    <string-array name="spinner_items_ru">
+        <item>ru</item>
+        <item>uz</item>
+    </string-array>
+
     <string-array name="spinner_region_items">
         <item>Toshkent</item>
         <item>Sirdaryo</item>
@@ -66,5 +72,7 @@
     <string name="notification_btn_text">Tushunarli</string>
     <string name="notification_skip_btn_text">15 daqiqadan so\'ngra eslating</string>
     <string name="tavsiyanoma_text">Tavsiyanoma</string>
-
+    <string name="date">Sana</string>
+    <string name="save">Saqlash</string>
+    <string name="bo_limlar">Bo\'limlar</string>
 </resources>

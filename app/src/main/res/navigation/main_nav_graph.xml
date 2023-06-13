@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="uz.hayot.vitaInLine.ui.main.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_davolanishFragment"
             app:destination="@id/davolanishFragment" />
@@ -24,7 +24,7 @@
         android:id="@+id/davolanishFragment"
         android:name="uz.hayot.vitaInLine.ui.main.DavolanishFragment"
         android:label="fragment_davolanish"
-        tools:layout="@layout/fragment_davolanish" >
+        tools:layout="@layout/fragment_davolanish">
         <action
             android:id="@+id/action_davolanishFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -36,7 +36,7 @@
         android:id="@+id/tavsiyanomaFragment"
         android:name="uz.hayot.vitaInLine.ui.main.TavsiyanomaFragment"
         android:label="fragment_tavsiyanoma"
-        tools:layout="@layout/fragment_tavsiyanoma" >
+        tools:layout="@layout/fragment_tavsiyanoma">
         <action
             android:id="@+id/action_tavsiyanomaFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -48,7 +48,7 @@
         android:id="@+id/davolanishHistoryFragment"
         android:name="uz.hayot.vitaInLine.ui.main.DavolanishHistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_davolanish_history" >
+        tools:layout="@layout/fragment_davolanish_history">
         <action
             android:id="@+id/action_davolonishHistoryFragment_to_davolanishFragment"
             app:destination="@id/davolanishFragment" />
@@ -57,31 +57,24 @@
         android:id="@+id/pillsFragment"
         android:name="uz.hayot.vitaInLine.ui.main.pill.PillsFragment"
         android:label="fragment_pills"
-        tools:layout="@layout/fragment_pills" >
+        tools:layout="@layout/fragment_pills">
         <action
             android:id="@+id/action_pillsFragment_to_aboutPillFragment"
             app:destination="@id/aboutPillFragment" />
-        <action
-            android:id="@+id/action_pillsFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/aboutPillFragment"
         android:name="uz.hayot.vitaInLine.ui.main.pill.AboutPillFragment"
         android:label="fragment_about_pill"
-        tools:layout="@layout/fragment_about_pill" >
-        <action
-            android:id="@+id/action_aboutPillFragment_to_pillsFragment"
-            app:destination="@id/pillsFragment" />
-        <argument
-            android:name="aboutPill"
-            app:argType="uz.hayot.vitaInLine.models.Pill" />
+        tools:layout="@layout/fragment_about_pill">
+
     </fragment>
     <fragment
         android:id="@+id/tavsiyanomaHistoryFragment"
         android:name="uz.hayot.vitaInLine.ui.main.TavsiyanomaHistoryFragment"
         android:label="fragment_tavsiyanoma_history"
-        tools:layout="@layout/fragment_tavsiyanoma_history" >
+        tools:layout="@layout/fragment_tavsiyanoma_history">
         <action
             android:id="@+id/action_tavsiyanomaHistoryFragment_to_tavsiyanomaFragment"
             app:destination="@id/tavsiyanomaFragment" />

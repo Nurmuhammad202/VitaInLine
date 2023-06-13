@@ -1,11 +1,9 @@
 package uz.hayot.vitaInLine.data.remote
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 import uz.hayot.vitaInLine.data.model.*
+import uz.hayot.vitaInLine.data.model.advertising.AdvertisingModel
 
 
 interface ApiInterface {
@@ -26,8 +24,16 @@ interface ApiInterface {
     @GET("healings/patient")
     suspend fun getHealing(
         @Header("Authorization") authToken: String,
-        @Body type: HealingType
+        @Query("type") type: String
     ): Response<HealingResponse>
 
+    @GET("recommendations")
+    suspend fun recommendations(
+        @Header("Authorization") authToken: String,
+        @Query("type") type: String
+    ): Response<HealingResponse>
+
+    @GET("advertisings")
+    suspend fun advertising():Response<AdvertisingModel>
 
 }

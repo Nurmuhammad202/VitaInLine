@@ -4,6 +4,7 @@ package uz.hayot.vitaInLine.adapters
 import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +19,16 @@ class DavolanishChildAdapter(private val childList: MutableList<HealingChildRVMo
 
         @SuppressLint("SetTextI18n")
         fun onBind(healingChildRVModel: HealingChildRVModel) {
-            binding.davChildPillTime.text = healingChildRVModel.time
-            binding.davChildPillCount.text = healingChildRVModel.quantity+" ta tabletka"
-            binding.davChildPillDesc.text = healingChildRVModel.type
-
+            if (healingChildRVModel.sectionType == "recommendations") {
+                binding.davChildPillCount.text = ""
+                binding.davChildPillDesc.text = ""
+                binding.davChildDescContainer.visibility = View.INVISIBLE
+            } else {
+                binding.davChildDescContainer.visibility = View.VISIBLE
+                binding.davChildPillTime.text = healingChildRVModel.time
+                binding.davChildPillCount.text = healingChildRVModel.quantity + " ta tabletka"
+                binding.davChildPillDesc.text = healingChildRVModel.type
+            }
         }
 
     }

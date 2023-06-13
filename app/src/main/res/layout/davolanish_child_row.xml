@@ -54,6 +54,7 @@
         <ImageView
             android:layout_width="6dp"
             android:layout_height="6dp"
+            android:id="@+id/icon"
             android:src="@drawable/circled_drop" />
 
         <TextView

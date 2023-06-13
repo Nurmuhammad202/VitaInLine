@@ -17,6 +17,7 @@ class AuthViewModel @Inject constructor(private val repository: Repository) : Vi
 
     fun createUser(dataPatient: CreateDataPatient) = viewModelScope.launch {
         try {
+            Log.e(TAG, "createUser111: $dataPatient")
             repository.createUser(dataPatient).let {
                 if (it.isSuccessful) {
                     it.body()?.let { body ->
@@ -30,13 +31,16 @@ class AuthViewModel @Inject constructor(private val repository: Repository) : Vi
         }
     }
 
+    fun getToken() = repository.getToken().isNotEmpty()
+
     val success = MutableLiveData<Boolean>()
     fun signIn(sendSigInModel: SendSigInModel) = viewModelScope.launch {
         try {
+            Log.e(TAG, "signIn: $sendSigInModel")
             repository.sigIn(sendSigInModel).let {
                 if (it.isSuccessful) {
                     it.body()?.let { body ->
-                        repository.saveToken(body.token)
+                        repository.saveToken("Bearer ${body.token}")
                         success.value = true
                     }
                 }
