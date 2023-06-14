@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.ui.main.HomeViewModel
 import uz.hayot.vitaInLine.util.Localization.changeLan

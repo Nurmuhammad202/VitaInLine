@@ -69,4 +69,12 @@ dependencies {
 
     implementation 'com.github.santalu:maskara:1.0.0'
 
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    // video view
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28'
+
+    //lottie animation
+    implementation "com.airbnb.android:lottie:5.2.0"
+
 }

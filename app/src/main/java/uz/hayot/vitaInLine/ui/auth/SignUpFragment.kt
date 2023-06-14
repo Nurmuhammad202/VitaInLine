@@ -55,6 +55,7 @@ class SignUpFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val passport = binding.signUpSerialNumber.text.toString().replace(" ", "")
             val country = country
             val phone = binding.signUpPhoneNumber.text.toString().replace(" ", "")
+            binding.animationSignUpView.visibility=View.VISIBLE
             authViewModel.createUser(
                 dataPatient = CreateDataPatient(
                     fullname = fio,
@@ -72,6 +73,7 @@ class SignUpFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         authViewModel.success.observe(requireActivity()) {
             if (it) {
+                binding.animationSignUpView.visibility=View.GONE
                 findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
             }
         }

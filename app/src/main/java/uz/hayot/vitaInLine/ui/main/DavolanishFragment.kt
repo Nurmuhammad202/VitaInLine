@@ -42,11 +42,13 @@ class DavolanishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.animationDavolanishView.visibility=View.VISIBLE
 
         davolanishViewModel.getHealing()
 
 
         davolanishViewModel.healingDate.observe(requireActivity()) {
+            binding.animationDavolanishView.visibility=View.GONE
             dataList = it.data as List<DataItem>
             initDataAdapter(dataList)
         }

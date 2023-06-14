@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,6 +9,7 @@
     tools:context=".ui.main.TavsiyanomaFragment">
 
     <LinearLayout
+        android:id="@+id/tavisyaTopMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -42,9 +43,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_below="@id/tavisyaTopMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:id="@+id/tavsiyaDateContainer"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -74,10 +77,18 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tavRecyclerView"
+        android:layout_below="@id/tavsiyaDateContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-
-</LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationTavsiyaView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/loader"
+        android:visibility="gone"
+        app:lottie_loop="true"/>
+</RelativeLayout>
