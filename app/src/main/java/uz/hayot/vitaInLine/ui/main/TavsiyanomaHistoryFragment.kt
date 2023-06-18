@@ -36,11 +36,12 @@ class TavsiyanomaHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.animationTavsiyaHisView.visibility=View.VISIBLE
         davolanishViewModel.recommendationsHistory()
 
 
         davolanishViewModel.recommendationsDataHistory.observe(requireActivity()) {
+            binding.animationTavsiyaHisView.visibility=View.GONE
             dataList = it.data as List<DataItem>
             initDataAdapter(dataList)
         }

@@ -66,8 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/homeIntroText"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="E. F. Fakhriyor" />
+            android:layout_marginTop="10dp" />
 
 
     </RelativeLayout>
@@ -75,7 +74,7 @@
     <LinearLayout
         android:id="@+id/homeUserInfoContainer"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/homeTopContainer"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="-50dp"
@@ -107,8 +106,7 @@
                 android:id="@+id/homeUserBirthDay"
                 style="@style/HomeInfoTextStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25.08.1998" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <View
@@ -141,8 +139,7 @@
                 android:id="@+id/homeUserRegion"
                 style="@style/HomeInfoTextStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thinkland Company" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <View
@@ -174,8 +171,7 @@
                 android:id="@+id/homeUserJobPlace"
                 style="@style/HomeInfoTextStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Farg'ona viloyati" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
@@ -194,24 +190,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_below="@id/homeTextSection"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/davolanishBtn"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:src="@drawable/davolanish" />
 
-        <ImageView
+
+
+     <RelativeLayout
+         android:id="@+id/davolanishBtn"
+         android:layout_width="0dp"
+         android:layout_height="150dp"
+         android:layout_weight="1">
+         <ImageView
+
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+
+             android:src="@drawable/davolanish" />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerHorizontal="true"
+             android:layout_alignParentBottom="true"
+             style="@style/HomeMenuTextStyle"
+             android:text="@string/davolanish_text"
+             android:layout_marginBottom="35dp"/>
+     </RelativeLayout>
+
+
+
+        <RelativeLayout
             android:id="@+id/tavsiyanomaBtn"
             android:layout_width="0dp"
             android:layout_height="150dp"
-            android:layout_weight="1"
-            android:src="@drawable/tavsiyanoma" />
+            android:layout_weight="1">
+            <ImageView
 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/tavsiyanoma" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/tavsiyanoma_text"
+                style="@style/HomeMenuTextStyle"
+                android:layout_marginBottom="35dp"/>
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -242,4 +269,13 @@
             android:prompt="@array/spinner_items"
             tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationHomeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loader" />
 </RelativeLayout>

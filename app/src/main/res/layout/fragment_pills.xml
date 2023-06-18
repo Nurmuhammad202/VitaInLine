@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,6 +9,7 @@
     tools:context=".ui.main.pill.PillsFragment">
 
     <LinearLayout
+        android:id="@+id/pillTopMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -40,7 +41,16 @@
         android:id="@+id/rVPills"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/pillTopMenuContainer"
         android:layout_marginBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationPillsView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loader" />
+</RelativeLayout>

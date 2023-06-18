@@ -34,7 +34,7 @@ class PillsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.animationPillsView.visibility=View.VISIBLE
         pillViewModel.pillViewModel()
 
         pillViewModel.advertising.observe(requireActivity()) {
@@ -51,6 +51,7 @@ class PillsFragment : Fragment() {
 
     private fun fakePillsAdapter(data: ArrayList<Data>) {
         val adapter = PillAdapter(data)
+        binding.animationPillsView.visibility=View.GONE
         adapter.setOnPillsClicked(object : PillAdapter.OnPillsClickedListener {
             override fun onPillsClicked(position: Int) {
                 val title = data[position].title

@@ -37,10 +37,12 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.animationHomeView.visibility=View.VISIBLE
         mainViewModel.getSignUser()
         initSpinner()
 
         mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
+            binding.animationHomeView.visibility=View.GONE
             binding.homeUsername.text = userResponse.data?.fullname
             binding.homeUserBirthDay.text = userResponse.data?.birthday
             binding.homeUserRegion.text = userResponse.data?.province
