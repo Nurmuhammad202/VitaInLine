@@ -89,6 +89,11 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         count = 0
     }
 
+    override fun onStop() {
+        super.onStop()
+        count = 0
+    }
+
     var count = 0
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
 
