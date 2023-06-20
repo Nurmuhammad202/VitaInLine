@@ -2,6 +2,7 @@ package uz.hayot.vitaInLine.ui.main
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,6 +21,7 @@ import uz.hayot.vitaInLine.MainActivity
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentHomeBinding
 import uz.hayot.vitaInLine.util.Localization.changeLan
+import uz.hayot.vitaInLine.util.setAlarm
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -35,14 +38,17 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return _binding?.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.animationHomeView.visibility=View.VISIBLE
+        binding.animationHomeView.visibility = View.VISIBLE
         mainViewModel.getSignUser()
         initSpinner()
 
+        // setAlarm(5, requireActivity())
+
         mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
-            binding.animationHomeView.visibility=View.GONE
+            binding.animationHomeView.visibility = View.GONE
             binding.homeUsername.text = userResponse.data?.fullname
             binding.homeUserBirthDay.text = userResponse.data?.birthday
             binding.homeUserRegion.text = userResponse.data?.province
