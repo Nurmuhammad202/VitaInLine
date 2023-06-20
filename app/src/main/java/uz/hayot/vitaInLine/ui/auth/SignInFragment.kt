@@ -50,7 +50,7 @@ class SignInFragment : Fragment() {
             val password = binding.signInPassword.text.toString()
             if (birtDay.isNotEmpty() && password.isNotEmpty()) {
                 authViewModel.signIn(sendSigInModel = SendSigInModel(birtDay, password))
-                binding.animationSignInView.visibility=View.VISIBLE
+                binding.animationSignInView.visibility = View.VISIBLE
 
             } else {
                 Toast.makeText(requireContext(), "Ma'lumotlarni to'ldiring", Toast.LENGTH_SHORT)
@@ -60,8 +60,9 @@ class SignInFragment : Fragment() {
 
         authViewModel.success.observe(requireActivity()) {
             if (it) {
-                binding.animationSignInView.visibility=View.GONE
+                binding.animationSignInView.visibility = View.GONE
                 findNavController().navigate(R.id.action_signInFragment_to_mainActivity)
+                requireActivity().finish()
             }
         }
 

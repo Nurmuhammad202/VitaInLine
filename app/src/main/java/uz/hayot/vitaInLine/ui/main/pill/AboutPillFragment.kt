@@ -50,12 +50,7 @@ class AboutPillFragment : Fragment() {
                 youTubePlayer.loadVideo(videoId, 0f)
             }
         })
-    }
-
-
-
-
-    private fun initFakeAboutPill() {
+    }private fun initFakeAboutPill() {
         arguments?.let {
             val url = it.getString("link")
             Log.e(TAG, "initFakeAboutPill: $url")

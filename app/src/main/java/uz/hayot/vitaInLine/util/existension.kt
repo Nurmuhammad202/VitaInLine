@@ -22,7 +22,7 @@ object Localization {
 
     }
 
-    fun getLocale(languageCode: String): Locale {
+    private fun getLocale(languageCode: String): Locale {
         return Locale(languageCode)
     }
 }

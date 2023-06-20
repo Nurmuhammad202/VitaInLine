@@ -41,7 +41,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             }
 
             override fun onFinish() {
-                if (loginState) findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+                if (loginState) {
+                    findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+                    requireActivity().finish()
+                }
                 else findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
             }
         }.start()

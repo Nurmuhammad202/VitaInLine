@@ -17,7 +17,7 @@
             android:layout_width="110dp"
             android:layout_height="140dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:src="@drawable/splash_bottom_left" />
 
         <ImageView
@@ -31,13 +31,26 @@
             android:id="@+id/homePillBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/top_secondary_background"
             android:padding="8dp"
             android:src="@drawable/pill_logo" />
+        <ImageView
+            android:id="@+id/homeLogOut"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:background="@drawable/top_secondary_background"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="3dp"
+            android:src="@drawable/logout"
+            tools:ignore="RtlSymmetry" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/homeUserIcon"

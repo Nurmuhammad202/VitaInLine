@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.MainActivity
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentHomeBinding
+import uz.hayot.vitaInLine.ui.splash.SplashActivity
+import uz.hayot.vitaInLine.ui.splash.SplashFragment
 import uz.hayot.vitaInLine.util.Localization.changeLan
 
 @AndroidEntryPoint
@@ -37,16 +37,24 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.animationHomeView.visibility=View.VISIBLE
+        binding.animationHomeView.visibility = View.VISIBLE
         mainViewModel.getSignUser()
         initSpinner()
 
         mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
-            binding.animationHomeView.visibility=View.GONE
+            binding.animationHomeView.visibility = View.GONE
             binding.homeUsername.text = userResponse.data?.fullname
             binding.homeUserBirthDay.text = userResponse.data?.birthday
             binding.homeUserRegion.text = userResponse.data?.province
             binding.homeUserJobPlace.text = userResponse.data?.workplace ?: "Promo Technology"
+        }
+
+        binding.homeLogOut.setOnClickListener {
+            mainViewModel.logOutPatient()
+            val intent = Intent(requireActivity(), SplashActivity::class.java)
+            requireActivity().finishAffinity()
+            startActivity(intent)
+
         }
 
         binding.davolanishBtn.setOnClickListener {

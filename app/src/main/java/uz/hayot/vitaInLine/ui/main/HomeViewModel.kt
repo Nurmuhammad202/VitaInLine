@@ -35,4 +35,9 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
     fun saveLang(lang: String) = repository.saveLang(lang)
 
     fun getLang() = repository.getLang()
+
+    //Patient log out qilish
+    fun logOutPatient() = viewModelScope.launch {
+        repository.saveToken("")
+    }
 }
