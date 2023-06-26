@@ -75,4 +75,15 @@
     <string name="date">Sana</string>
     <string name="save">Saqlash</string>
     <string name="bo_limlar">Bo\'limlar</string>
+    <string name="malumotlar">Ma\'lumotlarni to\'ldiring</string>
+    <string name="login_full_error">Login ma\'lumotlari to\'liq kiritilmagan</string>
+    <string name="birthday_error">Tu\'gilgan kun kiritilmagan</string>
+    <string name="passport_error">Passport ma\'lumotlari to\'liq kiritilmagan</string>
+    <string name="passport_error_two">Passport ma\'lumotlari notog\'ri formatda</string>
+    <string name="phone_number_error">Telifon raqam to\'liq kiritilmagan</string>
+    <string name="phone_number_error_two">Telifon raqam noto\'g\'ri  kiritilgan</string>
+    <string name="name_error">Ism juda qisqa</string>
+    <string name="success_sign_up">Muvaffaqiyatli ro\'yxatdan o\'tildi</string>
+    <string name="notification_title">Dori ichish vaqti</string>
+    <string name="notification_extra_title">Dorilarni ko\'rish uchun bosing</string>
 </resources>

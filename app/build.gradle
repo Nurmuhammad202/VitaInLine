@@ -82,4 +82,7 @@ dependencies {
     //lottie animation
     implementation "com.airbnb.android:lottie:5.2.0"
 
+    // mask
+    implementation 'com.github.santalu:maskara:1.0.0'
+
 }

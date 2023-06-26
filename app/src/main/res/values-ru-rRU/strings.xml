@@ -68,4 +68,15 @@
     <string name="date">Дата</string>
     <string name="save">Сохранить</string>
     <string name="bo_limlar">Раздел</string>
+    <string name="malumotlar">Заполните информацию</string>
+    <string name="login_full_error">Данные для входа неполные</string>
+    <string name="birthday_error">Дата рождения не введена</string>
+    <string name="passport_error">Паспортные данные введены не полностью</string>
+    <string name="passport_error_two">Паспортные данные указаны в неверном формате</string>
+    <string name="phone_number_error">Номер телефона введен не полностью</string>
+    <string name="phone_number_error_two">Номер телефона был введен неправильно</string>
+    <string name="name_error">Имя слишком короткое</string>
+    <string name="success_sign_up">Успешно зарегистрирован</string>
+    <string name="notification_title">Время принимать лекарства</string>
+    <string name="notification_extra_title">Нажмите, чтобы посмотреть лекарства</string>
 </resources>

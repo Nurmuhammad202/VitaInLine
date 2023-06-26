@@ -61,24 +61,7 @@ class TavsiyanomaFragment : Fragment() {
         }
     }
 
-    private fun showNotificationDialog() {
-        val dialog = Dialog(binding.root.context)
-        dialog.setContentView(R.layout.notification_dialog)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-        dialog.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation;
-        dialog.window?.setGravity(Gravity.BOTTOM);
 
-
-        val exitButton = dialog.findViewById<ImageView>(R.id.notificationDismissIcon)
-        exitButton.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
 
     private fun initDataAdapter(list: List<DataItem>) {
         val adapter = DavolanishParentAdapter(list,"recommendations")

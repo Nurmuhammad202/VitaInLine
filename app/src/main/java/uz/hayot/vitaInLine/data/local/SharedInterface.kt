@@ -7,4 +7,7 @@ interface SharedInterface {
     fun saveLang(lang: String)
 
     fun getLang(): String
+
+    fun setAlarm(date: Int)
+    fun getAlarm(): Int
 }

@@ -1,10 +1,16 @@
 package uz.hayot.vitaInLine.util.functions
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ExtraFunctions {
@@ -35,6 +41,34 @@ class ExtraFunctions {
 
         fun convertShortDesc(description: String): String {
             return description.substring(0, 30) + "..."
+        }
+
+        fun convertTimeStringToMillis(time: String): Long {
+            val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                DateTimeFormatter.ofPattern("HH:mm")
+            } else {
+                TODO("VERSION.SDK_INT < O")
+            }
+            val localTime = LocalTime.parse(time, formatter)
+            val localDateTime = LocalDateTime.of(LocalDate.now(), localTime)
+            return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        }
+
+        fun checkDayFormat(date:Int):Int{
+            return  when(date.toString()){
+                "01" -> 1
+                "02" -> 2
+                "03" -> 3
+                "04" -> 4
+                "05" -> 5
+                "06" -> 6
+                "07" -> 7
+                "08" -> 8
+                "09" -> 9
+                else -> {
+                    0
+                }
+            }
         }
     }
 

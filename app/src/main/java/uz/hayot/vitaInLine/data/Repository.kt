@@ -2,7 +2,6 @@ package uz.hayot.vitaInLine.data
 
 import uz.hayot.vitaInLine.data.local.SharedInterface
 import uz.hayot.vitaInLine.data.model.CreateDataPatient
-import uz.hayot.vitaInLine.data.model.HealingType
 import uz.hayot.vitaInLine.data.model.SendSigInModel
 import uz.hayot.vitaInLine.data.remote.ApiInterface
 import javax.inject.Inject
@@ -17,7 +16,10 @@ class Repository @Inject constructor(
 
     fun getToken(): String = sharedInterface.getToken()
 
-     fun saveLang(lang: String) = sharedInterface.saveLang(lang = lang)
+    fun saveLang(lang: String) = sharedInterface.saveLang(lang = lang)
+
+    fun saveAlarm(date: Int) = sharedInterface.setAlarm( date)
+    fun getAlarm(): Int = sharedInterface.getAlarm()
 
     suspend fun saveToken(token: String) = sharedInterface.saveToken(token = token)
 
