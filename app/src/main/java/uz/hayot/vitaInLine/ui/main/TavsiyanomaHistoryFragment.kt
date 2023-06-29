@@ -43,6 +43,8 @@ class TavsiyanomaHistoryFragment : Fragment() {
         davolanishViewModel.recommendationsDataHistory.observe(requireActivity()) {
             binding.animationTavsiyaHisView.visibility=View.GONE
             dataList = it.data as List<DataItem>
+            if (dataList.isEmpty()) binding.tavHisNotFoundContainer.visibility = View.VISIBLE
+            else binding.tavHisNotFoundContainer.visibility = View.GONE
             initDataAdapter(dataList)
         }
 

@@ -72,6 +72,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         // log out tugmasi bosilishi
         binding.homeLogOut.setOnClickListener {
             mainViewModel.logOutPatient()
+            mainViewModel.saveAlarm(0)
             val intent = Intent(requireActivity(), SplashActivity::class.java)
             requireActivity().finishAffinity()
             startActivity(intent)

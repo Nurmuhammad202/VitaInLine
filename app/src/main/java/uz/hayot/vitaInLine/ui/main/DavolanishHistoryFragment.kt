@@ -18,11 +18,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
-import uz.hayot.vitaInLine.adapters.DavolanishHistoryAdapter
 import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishHistoryBinding
-import uz.hayot.vitaInLine.fake_data.FakeData
 
 
 @Suppress("UNCHECKED_CAST")
@@ -43,12 +41,15 @@ class DavolanishHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.animationDavolanishHisHomeView.visibility=View.VISIBLE
+        binding.animationDavolanishHisHomeView.visibility = View.VISIBLE
         davolanishViewModel.getHealingHistory()
 
         davolanishViewModel.healingDateHistory.observe(requireActivity()) {
-            binding.animationDavolanishHisHomeView.visibility=View.GONE
+            binding.animationDavolanishHisHomeView.visibility = View.GONE
             dataList = it.data as List<DataItem>
+            if (dataList.isEmpty()) binding.davHisNotFoundContainer.visibility = View.VISIBLE
+            else binding.davHisNotFoundContainer.visibility = View.GONE
+
             initDataAdapter(dataList)
         }
         binding.davHisBackBtn.setOnClickListener {
@@ -59,7 +60,7 @@ class DavolanishHistoryFragment : Fragment() {
 
 
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list,"pill")
+        val adapter = DavolanishParentAdapter(list, "pill")
         Log.e(TAG, "initDataAdapter: $list")
         binding.davHistoryRv.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {
@@ -104,7 +105,7 @@ class DavolanishHistoryFragment : Fragment() {
 
         pillChildCount.text = "${dataObject.quantity} ta tabletka"
         pillChildStatus.text = dataObject.type
-        pillChildCountDay.text = dataObject.times.size.toString()
+        pillChildCountDay.text = "${dataObject.times.size}+ mahal"
 
         val exitButton = dialog.findViewById<ImageView>(R.id.infoDialogDismiss)
         exitButton.setOnClickListener {

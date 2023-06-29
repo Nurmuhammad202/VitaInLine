@@ -29,11 +29,13 @@ const val messageExtra = "messageExtra"
 
 @RequiresApi(Build.VERSION_CODES.M)
 fun setAlarm(context: Context, alarmData: AlarmData) {
+    val title=context.resources.getString(R.string.notification_title)
+    val titleExtraText=context.resources.getString(R.string.notification_extra_title)
     val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val pendingIntent: PendingIntent = Intent(context, MyAlarm::class.java).let { intent ->
         intent.putExtra("time", alarmData.time)
-        intent.putExtra(titleExtra, R.string.notification_title)
-        intent.putExtra(messageExtra, R.string.notification_extra_title)
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, titleExtraText)
         PendingIntent.getBroadcast(
             context,
             alarmData.requestCode,

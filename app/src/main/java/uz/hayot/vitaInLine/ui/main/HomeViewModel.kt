@@ -40,4 +40,6 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
     fun logOutPatient() = viewModelScope.launch {
         repository.saveToken("")
     }
+
+    fun saveAlarm(date:Int) = repository.saveAlarm(date)
 }

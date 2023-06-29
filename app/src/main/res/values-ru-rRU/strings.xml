@@ -79,4 +79,5 @@
     <string name="success_sign_up">Успешно зарегистрирован</string>
     <string name="notification_title">Время принимать лекарства</string>
     <string name="notification_extra_title">Нажмите, чтобы посмотреть лекарства</string>
+    <string name="davolash_not_found_text">Информация пока не найдена!</string>
 </resources>

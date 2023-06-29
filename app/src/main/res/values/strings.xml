@@ -86,4 +86,5 @@
     <string name="success_sign_up">Muvaffaqiyatli ro\'yxatdan o\'tildi</string>
     <string name="notification_title">Dori ichish vaqti</string>
     <string name="notification_extra_title">Dorilarni ko\'rish uchun bosing</string>
+    <string name="davolash_not_found_text">Xozircha hech qanday ma\'lumot topilmadi!</string>
 </resources>

@@ -1,25 +1,17 @@
 package uz.hayot.vitaInLine.ui.main
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
-import uz.hayot.vitaInLine.adapters.TavsiyanomaParentAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaBinding
-import uz.hayot.vitaInLine.fake_data.FakeData
-import uz.hayot.vitaInLine.models.ParentRcModel
 
 
 @Suppress("UNCHECKED_CAST")
@@ -41,13 +33,15 @@ class TavsiyanomaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         binding.animationTavsiyaView.visibility=View.VISIBLE
+        binding.animationTavsiyaView.visibility = View.VISIBLE
         davolanishViewModel.recommendations()
 
 
         davolanishViewModel.recommendationsData.observe(requireActivity()) {
-            binding.animationTavsiyaView.visibility=View.GONE
+            binding.animationTavsiyaView.visibility = View.GONE
             dataList = it.data as List<DataItem>
+            if (dataList.isEmpty()) binding.tavsiyaNotFoundContainer.visibility = View.VISIBLE
+            else binding.tavsiyaNotFoundContainer.visibility = View.GONE
             initDataAdapter(dataList)
         }
 
@@ -62,9 +56,8 @@ class TavsiyanomaFragment : Fragment() {
     }
 
 
-
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list,"recommendations")
+        val adapter = DavolanishParentAdapter(list, "recommendations")
         binding.tavsiyanomaDate.text = dataList[0].startedDate
         binding.tavRecyclerView.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {

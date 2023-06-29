@@ -28,10 +28,8 @@ import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.data.model.NotificationChild
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishBinding
 import uz.hayot.vitaInLine.util.createNotificationChannel
-import uz.hayot.vitaInLine.util.functions.ExtraFunctions
 import uz.hayot.vitaInLine.util.setAlarm
 import java.time.LocalDate
-import kotlin.math.abs
 
 @Suppress("UNCHECKED_CAST")
 @AndroidEntryPoint
@@ -67,16 +65,20 @@ class DavolanishFragment : Fragment() {
 
 
         davolanishViewModel.healingDate.observe(requireActivity()) {
-
             binding.animationDavolanishView.visibility = View.GONE
             dataList = it?.data as List<DataItem>
-            initDataAdapter(dataList)
 
+            if (dataList.isEmpty())
+                binding.davolanishNotFoundContainer.visibility = View.VISIBLE
+            else binding.davolanishNotFoundContainer.visibility = View.GONE
+
+            initDataAdapter(dataList)
             setAlarmFromDateTimes()
 
             if (isNotification) {
                 if (dataList.isNotEmpty()) {
                     showNotificationDialog(dataList, timeNotification)
+
                 } else {
                     Toast.makeText(
                         binding.root.context,
@@ -262,14 +264,14 @@ class DavolanishFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAlarmStatus(): Boolean {
         val lastDate = davolanishViewModel.getAlarm()
-        val day: Int = ExtraFunctions.checkDayFormat(LocalDate.now().dayOfMonth)
+        val day: Int = LocalDate.now().dayOfMonth
         return if (lastDate == 0) true
-        else abs(lastDate - day) >= 1
+        else lastDate.toString() != day.toString()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveAlarm() {
-        davolanishViewModel.saveAlarm(ExtraFunctions.checkDayFormat(LocalDate.now().dayOfMonth))
+        davolanishViewModel.saveAlarm(LocalDate.now().dayOfMonth)
     }
 
 

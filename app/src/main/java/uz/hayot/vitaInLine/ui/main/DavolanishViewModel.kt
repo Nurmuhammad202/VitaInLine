@@ -7,14 +7,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import uz.hayot.vitaInLine.data.Repository
-import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.data.model.HealingResponse
 import javax.inject.Inject
 
 @HiltViewModel
 class DavolanishViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     val healingDate = MutableLiveData<HealingResponse>()
-    var healingDateHistory =MutableLiveData<HealingResponse>()
+    var healingDateHistory = MutableLiveData<HealingResponse>()
 
 
     fun getHealing() = viewModelScope.launch {
@@ -23,7 +22,7 @@ class DavolanishViewModel @Inject constructor(private val repository: Repository
                 if (it.isSuccessful) {
                     it.body()?.let { data ->
 
-                        healingDate.value= data
+                        healingDate.value = data
                     }
                 }
                 Log.e("token", repository.getToken())
@@ -83,7 +82,7 @@ class DavolanishViewModel @Inject constructor(private val repository: Repository
     }
 
 
-    fun saveAlarm(date:Int) = repository.saveAlarm(date)
+    fun saveAlarm(date: Int) = repository.saveAlarm(date)
     fun getAlarm(): Int = repository.getAlarm()
 
 }
