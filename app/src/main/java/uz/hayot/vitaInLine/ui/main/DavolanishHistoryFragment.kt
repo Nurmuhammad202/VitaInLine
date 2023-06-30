@@ -21,6 +21,7 @@ import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishHistoryBinding
+import uz.hayot.vitaInLine.util.Constants
 
 
 @Suppress("UNCHECKED_CAST")
@@ -77,8 +78,7 @@ class DavolanishHistoryFragment : Fragment() {
         val dialog = Dialog(binding.root.context)
         dialog.setContentView(R.layout.davolanish_info_dialog)
         dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
         dialog.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation;
@@ -98,14 +98,21 @@ class DavolanishHistoryFragment : Fragment() {
         val times = StringBuilder()
         for (i in 0 until dataObject.times?.size!!) {
             times.append(dataObject.times[i])
-            if (i != dataObject.times.size - 1)
-                times.append(",")
+            if (i != dataObject.times.size - 1) times.append(",")
         }
         pillTimes.text = times.toString()
 
-        pillChildCount.text = "${dataObject.quantity} ta tabletka"
-        pillChildStatus.text = dataObject.type
-        pillChildCountDay.text = "${dataObject.times.size}+ mahal"
+
+        pillChildCount.text = "${dataObject.quantity} ${resources.getString(R.string.tabletka_tx)}"
+
+        if (dataObject.type == Constants.BEFORE_MEAL)
+            pillChildStatus.text = resources.getString(R.string.before_meal)
+        else if (dataObject.type == Constants.AFTER_MEAL)
+            pillChildStatus.text =  resources.getString(R.string.after_meal)
+
+
+        pillChildCountDay.text =
+            "${dataObject.times.size} ${resources.getString(R.string.mahal_tx)}"
 
         val exitButton = dialog.findViewById<ImageView>(R.id.infoDialogDismiss)
         exitButton.setOnClickListener {

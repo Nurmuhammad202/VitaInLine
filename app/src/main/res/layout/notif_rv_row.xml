@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="2ta tabletka" />
+            android:text="@string/tabletka_tx" />
 
         <ImageView
             android:layout_width="6dp"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="Och qoringa" />
+            android:text="@string/after_meal" />
 
     </LinearLayout>
 

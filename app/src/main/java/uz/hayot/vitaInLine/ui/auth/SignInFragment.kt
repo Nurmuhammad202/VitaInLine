@@ -95,11 +95,11 @@ class SignInFragment : Fragment() {
     }
 
     private fun initSpannableText() {
-        val item = resources.getText(R.string.sign_in_title)
+        val item = resources.getString(R.string.sign_in_title)
         val startColor: Int = resources.getColor(R.color.secondary_text_color)
         val endColor: Int = resources.getColor(R.color.main_color)
         binding.signInTitle.text =
-            ExtraFunctions.twoColoredText(item.toString(), 0, 7, startColor, endColor)
+            ExtraFunctions.twoColoredText(item, 0, 7, startColor, endColor)
 
     }
 

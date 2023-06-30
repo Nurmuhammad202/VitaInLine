@@ -7,6 +7,7 @@ import uz.hayot.vitaInLine.data.model.advertising.Data
 import uz.hayot.vitaInLine.databinding.PillsRowBinding
 import uz.hayot.vitaInLine.models.Pill
 import uz.hayot.vitaInLine.util.functions.ExtraFunctions
+import uz.hayot.vitaInLine.util.functions.ExtraFunctions.Companion.convertShortDesc
 
 class PillAdapter(private val list: ArrayList<Data>) :
     RecyclerView.Adapter<PillAdapter.ViewHolder>() {
@@ -17,7 +18,7 @@ class PillAdapter(private val list: ArrayList<Data>) :
         fun onBind(pill: Data) {
             //binding.pillsImage.setImageResource(pill.pillIcon)
             binding.pillsName.text = pill.title
-            binding.pillsShortDesc.text = ExtraFunctions.convertShortDesc(pill.description)
+            binding.pillsShortDesc.text = convertShortDesc(pill.description,0,30)
             binding.root.setOnClickListener {
                 pillsListener?.onPillsClicked(adapterPosition)
             }

@@ -27,6 +27,7 @@ import uz.hayot.vitaInLine.data.model.AlarmData
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.data.model.NotificationChild
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishBinding
+import uz.hayot.vitaInLine.util.Constants
 import uz.hayot.vitaInLine.util.createNotificationChannel
 import uz.hayot.vitaInLine.util.setAlarm
 import java.time.LocalDate
@@ -122,7 +123,7 @@ class DavolanishFragment : Fragment() {
         val rvNotification = dialog.findViewById<RecyclerView>(R.id.notificationRv)
 
         timeNotification.text = time
-        rvNotification.adapter = NotificationChildAdapter(getTimeData(list, time))
+        rvNotification.adapter = NotificationChildAdapter(getTimeData(list, time),binding.root.context)
 
 
 
@@ -188,9 +189,17 @@ class DavolanishFragment : Fragment() {
         }
         pillTimes.text = times.toString()
 
-        pillChildCount.text = "${dataObject.quantity} ta tabletka"
-        pillChildStatus.text = dataObject.type
-        pillChildCountDay.text = "${dataObject.times.size} mahal"
+
+        pillChildCount.text = "${dataObject.quantity} ${resources.getString(R.string.tabletka_tx)}"
+
+        if (dataObject.type == Constants.BEFORE_MEAL)
+            pillChildStatus.text = resources.getString(R.string.before_meal)
+        else if (dataObject.type == Constants.AFTER_MEAL)
+            pillChildStatus.text =  resources.getString(R.string.after_meal)
+
+
+        pillChildCountDay.text =
+            "${dataObject.times.size} ${resources.getString(R.string.mahal_tx)}"
 
         val exitButton = dialog.findViewById<ImageView>(R.id.infoDialogDismiss)
         exitButton.setOnClickListener {

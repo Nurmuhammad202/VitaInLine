@@ -39,8 +39,8 @@ class ExtraFunctions {
         }
 
 
-        fun convertShortDesc(description: String): String {
-            return description.substring(0, 30) + "..."
+        fun convertShortDesc(description: String,startPosition: Int,endPosition: Int): String {
+            return description.substring(startPosition, endPosition) + "..."
         }
 
         fun convertTimeStringToMillis(time: String): Long {

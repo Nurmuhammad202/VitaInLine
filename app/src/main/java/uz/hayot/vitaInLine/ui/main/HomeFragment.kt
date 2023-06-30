@@ -24,10 +24,9 @@ import uz.hayot.vitaInLine.MainActivity
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentHomeBinding
 import uz.hayot.vitaInLine.ui.splash.SplashActivity
+import uz.hayot.vitaInLine.util.Constants.REQUEST_LOCATION
 import uz.hayot.vitaInLine.util.Localization.changeLan
-
-
-const val REQUEST_LOCATION = 100
+import uz.hayot.vitaInLine.util.functions.ExtraFunctions.Companion.convertShortDesc
 
 
 @AndroidEntryPoint
@@ -62,10 +61,18 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
             binding.animationHomeView.visibility = View.GONE
-            binding.homeUsername.text = userResponse.data?.fullname
+
             binding.homeUserBirthDay.text = userResponse.data?.birthday
             binding.homeUserRegion.text = userResponse.data?.province
             binding.homeUserJobPlace.text = userResponse.data?.workplace ?: "Promo Technology"
+            val name = userResponse.data?.fullname
+            if (name?.length!! > 26) {
+                binding.homeUsername.text = convertShortDesc(name, 0, 23)
+            } else {
+                binding.homeUsername.text = name
+            }
+
+
         }
 
 
@@ -79,7 +86,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
 
-       // davolanish oynasiga o'tish
+        // davolanish oynasiga o'tish
         binding.davolanishBtn.setOnClickListener {
 
             findNavController().navigate(R.id.action_homeFragment_to_davolanishFragment)

@@ -23,9 +23,9 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="140dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
-            android:layout_alignParentEnd="true"
             android:src="@drawable/splash_bottom_right" />
 
         <ImageView
@@ -33,13 +33,14 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/top_secondary_background"
             android:padding="8dp"
             android:src="@drawable/pill_logo" />
+
         <ImageView
             android:id="@+id/homeLogOut"
             android:layout_width="35dp"
@@ -47,9 +48,9 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
             android:background="@drawable/top_secondary_background"
+            android:paddingStart="3dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:paddingStart="3dp"
             android:src="@drawable/logout"
             tools:ignore="RtlSymmetry" />
 
@@ -80,7 +81,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/homeIntroText"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="20dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textAlignment="center" />
 
 
     </RelativeLayout>
@@ -92,6 +97,7 @@
         android:layout_below="@id/homeTopContainer"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="-50dp"
+
         android:background="@drawable/home_user_info_bg"
         android:orientation="vertical"
         android:paddingHorizontal="16dp">
@@ -166,6 +172,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:paddingVertical="16dp">
 
             <ImageView
@@ -208,29 +215,28 @@
         android:orientation="horizontal">
 
 
+        <RelativeLayout
+            android:id="@+id/davolanishBtn"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1">
 
+            <ImageView
 
-     <RelativeLayout
-         android:id="@+id/davolanishBtn"
-         android:layout_width="0dp"
-         android:layout_height="150dp"
-         android:layout_weight="1">
-         <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
+                android:src="@drawable/davolanish" />
 
-             android:src="@drawable/davolanish" />
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerHorizontal="true"
-             android:layout_alignParentBottom="true"
-             style="@style/HomeMenuTextStyle"
-             android:text="@string/davolanish_text"
-             android:layout_marginBottom="35dp"/>
-     </RelativeLayout>
-
+            <TextView
+                style="@style/HomeMenuTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="35dp"
+                android:text="@string/davolanish_text" />
+        </RelativeLayout>
 
 
         <RelativeLayout
@@ -238,20 +244,22 @@
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_weight="1">
+
             <ImageView
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
                 android:src="@drawable/tavsiyanoma" />
+
             <TextView
+                style="@style/HomeMenuTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:text="@string/tavsiyanoma_text"
-                style="@style/HomeMenuTextStyle"
-                android:layout_marginBottom="35dp"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="35dp"
+                android:text="@string/tavsiyanoma_text" />
         </RelativeLayout>
 
     </LinearLayout>

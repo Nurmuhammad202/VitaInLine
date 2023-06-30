@@ -3,7 +3,6 @@ package uz.hayot.vitaInLine.util
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.BroadcastReceiver
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -84,11 +83,6 @@ fun cancelAlarm(context: Context, alarmData: AlarmData) {
 fun createNotificationChannel(context: Context) {
 
 
-    // Set the custom sound URI
-    val soundUri = Uri.parse(
-        ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/" + R.raw.alarm_sound
-    )
-
     val name = "Notif Channel"
     val desc = "A Description of the Channel"
     val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -113,13 +107,6 @@ class MyAlarm : BroadcastReceiver() {
     ) {
         Log.d("MyLog", "Message:${intent.getStringExtra("key")}")
 
-        try {
-            val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            val mp = MediaPlayer.create(context.applicationContext, alarmSound)
-            mp.start()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
 
 
         val bundle = Bundle()
@@ -144,5 +131,20 @@ class MyAlarm : BroadcastReceiver() {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationID, notification)
 
+        try {
+            val mediaPlayer = MediaPlayer.create(
+                context,
+                Uri.parse("android.resource://${context.packageName}/${R.raw.alarm_sound_two}")
+            )
+            mediaPlayer.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+
+
     }
+
+
 }
