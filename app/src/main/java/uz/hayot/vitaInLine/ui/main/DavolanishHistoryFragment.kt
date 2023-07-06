@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -45,13 +47,26 @@ class DavolanishHistoryFragment : Fragment() {
         binding.animationDavolanishHisHomeView.visibility = View.VISIBLE
         davolanishViewModel.getHealingHistory()
 
-        davolanishViewModel.healingDateHistory.observe(requireActivity()) {
-            binding.animationDavolanishHisHomeView.visibility = View.GONE
-            dataList = it.data as List<DataItem>
-            if (dataList.isEmpty()) binding.davHisNotFoundContainer.visibility = View.VISIBLE
-            else binding.davHisNotFoundContainer.visibility = View.GONE
+        davolanishViewModel.success.observe(requireActivity()) {success->
+            if(success){
+                binding.animationDavolanishHisHomeView.visibility = View.GONE
+                dataList = davolanishViewModel.getHealingHistoryData().data as List<DataItem>
+                if (dataList.isEmpty()) binding.davHisNotFoundContainer.visibility = View.VISIBLE
+                else binding.davHisNotFoundContainer.visibility = View.GONE
 
-            initDataAdapter(dataList)
+                initDataAdapter(dataList)
+            }else{
+                if (binding.animationDavolanishHisHomeView.isVisible) {
+                    binding.animationDavolanishHisHomeView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        davolanishViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+
         }
         binding.davHisBackBtn.setOnClickListener {
             findNavController().popBackStack()

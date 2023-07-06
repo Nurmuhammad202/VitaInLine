@@ -6,11 +6,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -18,12 +18,12 @@ import androidx.navigation.NavDeepLinkBuilder
 import uz.hayot.vitaInLine.MainActivity
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.data.model.AlarmData
-import uz.hayot.vitaInLine.util.functions.ExtraFunctions
+import uz.hayot.vitaInLine.util.functions.ExtraFunctions.Companion.convertTimeStringToMillis
 import java.util.*
 
 
-const val notificationID = 1
-const val channelID = "channel1"
+const val notificationID = 2
+const val channelID = "channel2"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
 
@@ -31,6 +31,7 @@ const val messageExtra = "messageExtra"
 fun setAlarm(context: Context, alarmData: AlarmData) {
     val title = context.resources.getString(R.string.notification_title)
     val titleExtraText = context.resources.getString(R.string.notification_extra_title)
+
 
     val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val pendingIntent: PendingIntent = Intent(context, MyAlarm::class.java).let { intent ->
@@ -47,22 +48,31 @@ fun setAlarm(context: Context, alarmData: AlarmData) {
 
 
 
-    alarmManager.setExact(
-        AlarmManager.RTC_WAKEUP,
-        ExtraFunctions.convertTimeStringToMillis(alarmData.time),
-        pendingIntent
 
-    )
+
+    try {
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            convertTimeStringToMillis(alarmData.time),
+            pendingIntent
+
+        )
+
+        Toast.makeText(context, "Alarm is set", Toast.LENGTH_SHORT).show()
+    } catch (e: Exception) {
+        Toast.makeText(context, e.message.toString(), Toast.LENGTH_SHORT).show()
+    }
+
 
 //    alarmManager.setRepeating(
 //        AlarmManager.RTC_WAKEUP,
-//        timeInMillis,
+//        ExtraFunctions.convertTimeStringToMillis(alarmData.time),
 //        24 * 3600 * 1000,
 //        pendingIntent
 //
 //    )
 
-//    Toast.makeText(context, "Alarm is set", Toast.LENGTH_SHORT).show()
+
 }
 
 @SuppressLint("UnspecifiedImmutableFlag")
@@ -108,10 +118,10 @@ class MyAlarm : BroadcastReceiver() {
         Log.d("MyLog", "Message:${intent.getStringExtra("key")}")
 
 
-
         val bundle = Bundle()
         bundle.putBoolean("notification", true)
         bundle.putString("time", intent.getStringExtra("time"))
+
         val pendingFragmentIntent = NavDeepLinkBuilder(context)
             .setComponentName(MainActivity::class.java)
             .setGraph(R.navigation.main_nav_graph)
@@ -140,8 +150,6 @@ class MyAlarm : BroadcastReceiver() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
 
 
     }

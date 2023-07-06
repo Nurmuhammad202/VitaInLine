@@ -13,9 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,20 +59,33 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         // tilni amashtirish uchun til spinnerini init qilish
         initSpinner()
 
-        //viewModeldan userResponse ni observe qilish
+        //viewModeldan success ni observe qilish
 
-        mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
-            binding.animationHomeView.visibility = View.GONE
+        mainViewModel.success.observe(requireActivity()) { success ->
+            if(success){
+                val userData=mainViewModel.getHomeUserData()
+                binding.animationHomeView.visibility = View.GONE
+                binding.homeUserBirthDay.text = userData.data?.birthday
+                binding.homeUserRegion.text = userData.data?.province
+                binding.homeUserJobPlace.text = userData.data?.workplace ?: "Promo Technology"
+                val name = userData.data?.fullname
+                if (name?.length!! > 26) {
+                    binding.homeUsername.text = convertShortDesc(name, 0, 23)
+                } else {
+                    binding.homeUsername.text = name
+                }
 
-            binding.homeUserBirthDay.text = userResponse.data?.birthday
-            binding.homeUserRegion.text = userResponse.data?.province
-            binding.homeUserJobPlace.text = userResponse.data?.workplace ?: "Promo Technology"
-            val name = userResponse.data?.fullname
-            if (name?.length!! > 26) {
-                binding.homeUsername.text = convertShortDesc(name, 0, 23)
-            } else {
-                binding.homeUsername.text = name
+            }else {
+                if (binding.animationHomeView.isVisible) {
+                    binding.animationHomeView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        mainViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+
 
 
         }

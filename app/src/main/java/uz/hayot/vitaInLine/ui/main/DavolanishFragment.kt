@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,7 @@ import uz.hayot.vitaInLine.databinding.FragmentDavolanishBinding
 import uz.hayot.vitaInLine.util.Constants
 import uz.hayot.vitaInLine.util.createNotificationChannel
 import uz.hayot.vitaInLine.util.setAlarm
+
 import java.time.LocalDate
 
 @Suppress("UNCHECKED_CAST")
@@ -65,29 +67,43 @@ class DavolanishFragment : Fragment() {
 
 
 
-        davolanishViewModel.healingDate.observe(requireActivity()) {
-            binding.animationDavolanishView.visibility = View.GONE
-            dataList = it?.data as List<DataItem>
 
-            if (dataList.isEmpty())
-                binding.davolanishNotFoundContainer.visibility = View.VISIBLE
-            else binding.davolanishNotFoundContainer.visibility = View.GONE
 
-            initDataAdapter(dataList)
-            setAlarmFromDateTimes()
+        davolanishViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
+                binding.animationDavolanishView.visibility = View.GONE
+                dataList = davolanishViewModel.getHealingData().data as List<DataItem>
+                if (dataList.isEmpty())
+                    binding.davolanishNotFoundContainer.visibility = View.VISIBLE
+                else binding.davolanishNotFoundContainer.visibility = View.GONE
 
-            if (isNotification) {
-                if (dataList.isNotEmpty()) {
-                    showNotificationDialog(dataList, timeNotification)
+                initDataAdapter(dataList)
+                setAlarmFromDateTimes()
 
-                } else {
+                if (isNotification) {
+                    if (dataList.isNotEmpty()) {
+                        showNotificationDialog(dataList, timeNotification)
+
+                    } else {
+                        Toast.makeText(
+                            binding.root.context,
+                            "${timeNotification},${isNotification}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            } else {
+                if (binding.animationDavolanishView.isVisible) {
+                    binding.animationDavolanishView.visibility = View.GONE
                     Toast.makeText(
                         binding.root.context,
-                        "${timeNotification},${isNotification}",
-                        Toast.LENGTH_LONG
+                        davolanishViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
+
+
         }
 
 
@@ -95,8 +111,6 @@ class DavolanishFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_davolanishFragment_to_davolanishHistoryFragment
             )
-
-
         }
         binding.davolanishBackBtn.setOnClickListener {
             findNavController().popBackStack()
@@ -123,7 +137,8 @@ class DavolanishFragment : Fragment() {
         val rvNotification = dialog.findViewById<RecyclerView>(R.id.notificationRv)
 
         timeNotification.text = time
-        rvNotification.adapter = NotificationChildAdapter(getTimeData(list, time),binding.root.context)
+        rvNotification.adapter =
+            NotificationChildAdapter(getTimeData(list, time), binding.root.context)
 
 
 
@@ -147,6 +162,7 @@ class DavolanishFragment : Fragment() {
     }
 
 
+    // adapter init qilish
     private fun initDataAdapter(list: List<DataItem>) {
         val adapter = DavolanishParentAdapter(list, "pill")
         binding.davolanishDate.text = dataList[0].startedDate
@@ -160,6 +176,7 @@ class DavolanishFragment : Fragment() {
 
     }
 
+    // dorilar haqida dialog
     @SuppressLint("SetTextI18n")
     private fun showBottomDialog(dataObject: DataItem) {
         val dialog = Dialog(binding.root.context)
@@ -195,7 +212,7 @@ class DavolanishFragment : Fragment() {
         if (dataObject.type == Constants.BEFORE_MEAL)
             pillChildStatus.text = resources.getString(R.string.before_meal)
         else if (dataObject.type == Constants.AFTER_MEAL)
-            pillChildStatus.text =  resources.getString(R.string.after_meal)
+            pillChildStatus.text = resources.getString(R.string.after_meal)
 
 
         pillChildCountDay.text =
@@ -208,18 +225,21 @@ class DavolanishFragment : Fragment() {
         dialog.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun setAlarm(timeList: MutableList<String>) {
+
+    // berilgan list ko'rinishagi vaqtlarda alarm set qilish
+    private fun setAlarmDavolanish(timeList: MutableList<String>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             createNotificationChannel(requireContext())
         }
-        for (i in 0 until timeList.size) {
-            setAlarm(requireActivity(), AlarmData(timeList[i], i))
-        }
 
+        for (i in 0 until timeList.size) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setAlarm(requireActivity(), AlarmData(timeList[i], i))
+            }
+        }
     }
 
-
+ //data listdan vaqtlarni array ko'rinishida alohida ajratib olish
     private fun separateTime(list: List<DataItem>): MutableList<String> {
         val listTime: MutableList<String> = ArrayList()
 
@@ -232,6 +252,7 @@ class DavolanishFragment : Fragment() {
         return listTime
     }
 
+    // alarm chalingan vaqt bo'yicha datadan shu vaqtga mos bo'lgan dorilarni ajratib olish
     private fun getTimeData(list: List<DataItem>, time: String): MutableList<NotificationChild> {
         val childList: MutableList<NotificationChild> = ArrayList()
         for (i in list.indices) {
@@ -252,32 +273,40 @@ class DavolanishFragment : Fragment() {
         return childList
     }
 
+
+    //  alarmni set qilish uchun tekshrish , agardan kun davomida set qilinmagan bo'lsa
+    // alarm set qilinadi, agarda set qilingan bo'lsa set qilinmaydi
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setAlarmFromDateTimes() {
-        if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                setAlarmStatus()
-            } else {
-                TODO("VERSION.SDK_INT < O")
-            }
-        ) {
-            setAlarm(separateTime(dataList))
+        val status = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setAlarmStatus()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+
+        if (status) {
+            setAlarmDavolanish(separateTime(dataList))
+
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 saveAlarm()
             }
-
-
         }
     }
 
+    // kun davomida alarm  set qilingan uyoki qilinmaganlik halotini aniqlash
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAlarmStatus(): Boolean {
         val lastDate = davolanishViewModel.getAlarm()
         val day: Int = LocalDate.now().dayOfMonth
-        return if (lastDate == 0) true
-        else lastDate.toString() != day.toString()
+
+        return if (lastDate == 0) {
+            true
+        } else lastDate.toString() != day.toString()
+
     }
 
+    // notification qo'yilgan kunni shared preferencga saqlab qo'yish
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveAlarm() {
         davolanishViewModel.saveAlarm(LocalDate.now().dayOfMonth)

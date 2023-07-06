@@ -26,6 +26,7 @@ class DavolanishChildAdapter(private val childList: MutableList<HealingChildRVMo
                 binding.davChildPillCount.text = ""
                 binding.davChildPillDesc.text = ""
                 binding.davChildDescContainer.visibility = View.INVISIBLE
+                binding.davChildPillTime.text = healingChildRVModel.time
             } else {
                 binding.davChildDescContainer.visibility = View.VISIBLE
                 binding.davChildPillTime.text = healingChildRVModel.time

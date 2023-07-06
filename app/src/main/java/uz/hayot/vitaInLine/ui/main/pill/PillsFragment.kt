@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,9 +14,6 @@ import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.adapters.PillAdapter
 import uz.hayot.vitaInLine.data.model.advertising.Data
 import uz.hayot.vitaInLine.databinding.FragmentPillsBinding
-import uz.hayot.vitaInLine.fake_data.FakeData
-import uz.hayot.vitaInLine.models.Pill
-import uz.hayot.vitaInLine.ui.main.DavolanishViewModel
 
 @AndroidEntryPoint
 class PillsFragment : Fragment() {
@@ -34,11 +33,31 @@ class PillsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.animationPillsView.visibility=View.VISIBLE
+        binding.animationPillsView.visibility = View.VISIBLE
         pillViewModel.pillViewModel()
 
-        pillViewModel.advertising.observe(requireActivity()) {
-            fakePillsAdapter(it.data as ArrayList<Data>)
+        pillViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
+                binding.animationPillsView.visibility = View.GONE
+                val dataPill = pillViewModel.getPillData()
+                if (dataPill.data.isNotEmpty()) {
+                    binding.pillNotFoundContainer.visibility = View.GONE
+                    fakePillsAdapter(dataPill.data as ArrayList<Data>)
+                } else {
+                    binding.pillNotFoundContainer.visibility = View.VISIBLE
+                }
+
+
+            } else {
+                if (binding.animationPillsView.isVisible) {
+                    binding.animationPillsView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        pillViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
 
 
@@ -51,7 +70,7 @@ class PillsFragment : Fragment() {
 
     private fun fakePillsAdapter(data: ArrayList<Data>) {
         val adapter = PillAdapter(data)
-        binding.animationPillsView.visibility=View.GONE
+        binding.animationPillsView.visibility = View.GONE
         adapter.setOnPillsClicked(object : PillAdapter.OnPillsClickedListener {
             override fun onPillsClicked(position: Int) {
                 val title = data[position].title

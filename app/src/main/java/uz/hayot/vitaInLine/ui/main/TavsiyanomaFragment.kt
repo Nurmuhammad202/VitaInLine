@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,12 +39,24 @@ class TavsiyanomaFragment : Fragment() {
         davolanishViewModel.recommendations()
 
 
-        davolanishViewModel.recommendationsData.observe(requireActivity()) {
-            binding.animationTavsiyaView.visibility = View.GONE
-            dataList = it.data as List<DataItem>
-            if (dataList.isEmpty()) binding.tavsiyaNotFoundContainer.visibility = View.VISIBLE
-            else binding.tavsiyaNotFoundContainer.visibility = View.GONE
-            initDataAdapter(dataList)
+        davolanishViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
+                binding.animationTavsiyaView.visibility = View.GONE
+                dataList = davolanishViewModel.getRecommendationData().data as List<DataItem>
+                if (dataList.isEmpty()) binding.tavsiyaNotFoundContainer.visibility = View.VISIBLE
+                else binding.tavsiyaNotFoundContainer.visibility = View.GONE
+                initDataAdapter(dataList)
+            } else {
+                if (binding.animationTavsiyaView.isVisible) {
+                    binding.animationTavsiyaView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        davolanishViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         }
 
         binding.tavsiyanomaHistory.setOnClickListener {

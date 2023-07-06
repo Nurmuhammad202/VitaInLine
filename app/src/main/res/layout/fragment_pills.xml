@@ -53,4 +53,28 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loader" />
+
+    <LinearLayout
+
+        android:id="@+id/pillNotFoundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/pillTopMenuContainer"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/icon_tavsiya" />
+
+        <TextView
+            style="@style/RcChildStandardText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/davolash_not_found_text"
+            android:textAlignment="center" />
+    </LinearLayout>
 </RelativeLayout>
