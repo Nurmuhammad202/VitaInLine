@@ -113,7 +113,6 @@ class SignUpFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun initSpinner() {
-
         regionSpinnerAdapter = ArrayAdapter(
             binding.root.context, R.layout.simple_spinner_item,
             resources.getStringArray(R.array.spinner_region_items)

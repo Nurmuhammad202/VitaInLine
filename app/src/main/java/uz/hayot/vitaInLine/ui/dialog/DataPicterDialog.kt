@@ -12,7 +12,6 @@ import java.util.*
 class DataPicterDialog(context: Context, var success: (String) -> Unit) :
     BaseAlertDialog(context) {
     private val binding = ItemPrrofileDataDialogLayoutBinding.inflate(LayoutInflater.from(context))
-
     init {
 
         //min date...

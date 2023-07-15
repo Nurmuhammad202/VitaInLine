@@ -24,7 +24,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="3dp"
-            android:src="@drawable/arrow_left_icon" />
+            android:src="@drawable/arrow_left_icon"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/signUpTitle"
@@ -78,7 +79,7 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/sign_up_FLM_hint"
                     android:paddingHorizontal="16dp"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="Autofill,SpeakableTextPresentCheck,TextFields" />
 
                 <TextView
                     style="@style/AuthTextStyle"
@@ -193,7 +194,7 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/sign_up_job_hint"
                     android:paddingHorizontal="16dp"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="Autofill,SpeakableTextPresentCheck,TextFields" />
 
                 <TextView
                     style="@style/AuthTextStyle"

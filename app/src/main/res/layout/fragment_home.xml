@@ -97,7 +97,6 @@
         android:layout_below="@id/homeTopContainer"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="-50dp"
-
         android:background="@drawable/home_user_info_bg"
         android:orientation="vertical"
         android:paddingHorizontal="16dp">
@@ -286,7 +285,7 @@
             android:id="@+id/homeLanguageSpinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/spinner"
+            android:background="@drawable/spinner_lang"
             android:gravity="center_vertical"
             android:prompt="@array/spinner_items"
             tools:ignore="SpeakableTextPresentCheck" />

@@ -58,7 +58,7 @@ fun setAlarm(context: Context, alarmData: AlarmData) {
 
         )
 
-        Toast.makeText(context, "Alarm is set", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, "Alarm is set", Toast.LENGTH_SHORT).show()
     } catch (e: Exception) {
         Toast.makeText(context, e.message.toString(), Toast.LENGTH_SHORT).show()
     }

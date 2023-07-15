@@ -62,8 +62,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         //viewModeldan success ni observe qilish
 
         mainViewModel.success.observe(requireActivity()) { success ->
-            if(success){
-                val userData=mainViewModel.getHomeUserData()
+            if (success) {
+                val userData = mainViewModel.getHomeUserData()
                 binding.animationHomeView.visibility = View.GONE
                 binding.homeUserBirthDay.text = userData.data?.birthday
                 binding.homeUserRegion.text = userData.data?.province
@@ -75,7 +75,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     binding.homeUsername.text = name
                 }
 
-            }else {
+            } else {
                 if (binding.animationHomeView.isVisible) {
                     binding.animationHomeView.visibility = View.GONE
                     Toast.makeText(
@@ -85,7 +85,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     ).show()
                 }
             }
-
 
 
         }
@@ -103,7 +102,6 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         // davolanish oynasiga o'tish
         binding.davolanishBtn.setOnClickListener {
-
             findNavController().navigate(R.id.action_homeFragment_to_davolanishFragment)
         }
         //tavsiyanoma oynasiga o'tish
