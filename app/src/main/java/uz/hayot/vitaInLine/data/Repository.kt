@@ -18,7 +18,7 @@ class Repository @Inject constructor(
 
     fun saveLang(lang: String) = sharedInterface.saveLang(lang = lang)
 
-    fun saveAlarm(date: Int) = sharedInterface.setAlarm( date)
+    fun saveAlarm(date: Int) = sharedInterface.setAlarm(date)
     fun getAlarm(): Int = sharedInterface.getAlarm()
 
     suspend fun saveToken(token: String) = sharedInterface.saveToken(token = token)
@@ -42,5 +42,6 @@ class Repository @Inject constructor(
         apiInterface.recommendations(authToken = sharedInterface.getToken(), type = "history")
 
     suspend fun advertising() = apiInterface.advertising()
+    suspend fun getPillById(pillId: String) = apiInterface.getPillById(pillId)
 
 }
