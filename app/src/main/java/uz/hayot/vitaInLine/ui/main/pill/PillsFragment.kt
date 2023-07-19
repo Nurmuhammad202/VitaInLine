@@ -48,20 +48,20 @@ class PillsFragment : Fragment() {
                 if (dataHealing.isNotEmpty()) {
                     binding.pillNotFoundContainer.visibility = View.GONE
                     val pillIdList = separateDataById(dataHealing)
-                    if(pillIdList.isNotEmpty()){
+                    if (pillIdList.isNotEmpty()) {
                         pillViewModel.fetchPillData(pillIdList)
                         pillViewModel.successPill.observe(requireActivity()) {
                             if (it) {
-                                pillDataList=pillViewModel.getPillData() as List<DataPill>
-                                if(pillDataList.isNotEmpty()){
+                                pillDataList = pillViewModel.getPillData() as List<DataPill>
+                                if (pillDataList.isNotEmpty()) {
                                     adapter.updateData(pillDataList)
                                     binding.animationPillsView.visibility = View.GONE
-                                }else{
+                                } else {
                                     binding.pillNotFoundContainer.visibility = View.VISIBLE
                                 }
                             }
                         }
-                    }else{
+                    } else {
                         binding.pillNotFoundContainer.visibility = View.VISIBLE
                     }
 
@@ -84,7 +84,7 @@ class PillsFragment : Fragment() {
 
         adapter.setOnPillsClicked(object : PillAdapter.OnPillsClickedListener {
             override fun onPillsClicked(position: Int) {
-                val title =pillDataList[position].title
+                val title = pillDataList[position].title
                 val desc = pillDataList[position].description
                 val link = pillDataList[position].video
                 val bundle = Bundle()
@@ -104,13 +104,15 @@ class PillsFragment : Fragment() {
     }
 
     private fun separateDataById(dataHealing: List<DataItem>): MutableList<String> {
-        val list: MutableList<String> = ArrayList()
+        val list = mutableSetOf<String>()
         for (i in dataHealing.indices) {
             if (dataHealing[i].pillId != null) {
                 list.add(dataHealing[i].pillId.toString())
             }
         }
-        return list
+        val resultList: MutableList<String> = ArrayList()
+        resultList.addAll(list)
+        return resultList
     }
 
     private fun fakePillsAdapter(data: List<DataPill>) {

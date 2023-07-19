@@ -9,7 +9,6 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val sharedInterface: SharedInterface,
     private val apiInterface: ApiInterface
-
 ) {
 
     fun getLang(): String = sharedInterface.getLang()
