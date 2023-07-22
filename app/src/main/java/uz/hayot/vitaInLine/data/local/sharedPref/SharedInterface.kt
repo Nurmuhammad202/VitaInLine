@@ -1,4 +1,4 @@
-package uz.hayot.vitaInLine.data.local
+package uz.hayot.vitaInLine.data.local.sharedPref
 
 interface SharedInterface {
     fun getToken(): String

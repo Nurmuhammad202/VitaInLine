@@ -1,4 +1,4 @@
-package uz.hayot.vitaInLine.data.local
+package uz.hayot.vitaInLine.data.local.sharedPref
 
 import android.content.Context
 
