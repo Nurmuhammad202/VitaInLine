@@ -35,4 +35,5 @@ object AppModule {
     fun provideSharedPref(@ApplicationContext context: Context): SharedPrefRepository {
         return SharedPrefRepository(context)
     }
+
 }
