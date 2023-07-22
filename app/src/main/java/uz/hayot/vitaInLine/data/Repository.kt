@@ -1,6 +1,8 @@
 package uz.hayot.vitaInLine.data
 
-import uz.hayot.vitaInLine.data.local.SharedInterface
+import uz.hayot.vitaInLine.data.local.room.dao.VitaDao
+import uz.hayot.vitaInLine.data.local.room.entity.PillModel
+import uz.hayot.vitaInLine.data.local.sharedPref.SharedInterface
 import uz.hayot.vitaInLine.data.model.CreateDataPatient
 import uz.hayot.vitaInLine.data.model.SendSigInModel
 import uz.hayot.vitaInLine.data.remote.ApiInterface
@@ -8,7 +10,8 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val sharedInterface: SharedInterface,
-    private val apiInterface: ApiInterface
+    private val apiInterface: ApiInterface,
+    private val vitaDao: VitaDao
 ) {
 
     fun getLang(): String = sharedInterface.getLang()
@@ -42,5 +45,11 @@ class Repository @Inject constructor(
 
     suspend fun advertising() = apiInterface.advertising()
     suspend fun getPillById(pillId: String) = apiInterface.getPillById(pillId)
+
+
+    //save pill
+    fun saveRoomPill(pillModel: PillModel) = vitaDao.insertPill(pillModel)
+
+    fun getRoomPill() = vitaDao.getPill()
 
 }
