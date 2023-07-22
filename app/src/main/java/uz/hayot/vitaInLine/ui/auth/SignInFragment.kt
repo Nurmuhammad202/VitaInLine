@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -38,6 +39,7 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewItems()
         initSpannableText()
         initSpinner()
         visibilityPassword()
@@ -49,23 +51,38 @@ class SignInFragment : Fragment() {
             val birtDay = binding.signInUsername.text.toString()
             val password = binding.signInPassword.text.toString()
             if (birtDay.isNotEmpty() && password.isNotEmpty()) {
-                authViewModel.signIn(sendSigInModel = SendSigInModel(birtDay, password))
-                binding.animationSignInView.visibility=View.VISIBLE
+                val validText = validateSignIn(birtDay)
+                if (validText == "") {
+                    authViewModel.signIn(sendSigInModel = SendSigInModel(birtDay, password))
+                    binding.animationSignInView.visibility = View.VISIBLE
+                } else {
+                    Toast.makeText(requireContext(), validText, Toast.LENGTH_SHORT)
+                        .show()
+                }
 
             } else {
-                Toast.makeText(requireContext(), "Ma'lumotlarni to'ldiring", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), R.string.malumotlar, Toast.LENGTH_SHORT)
                     .show()
             }
         }
 
         authViewModel.success.observe(requireActivity()) {
             if (it) {
-                binding.animationSignInView.visibility=View.GONE
+                binding.animationSignInView.visibility = View.GONE
                 findNavController().navigate(R.id.action_signInFragment_to_mainActivity)
+                requireActivity().finish()
+            } else {
+                if (binding.animationSignInView.isVisible) {
+                    binding.animationSignInView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        authViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
         }
-
-
     }
 
     private fun initSpinner() {
@@ -78,12 +95,17 @@ class SignInFragment : Fragment() {
     }
 
     private fun initSpannableText() {
-        val item = resources.getText(R.string.sign_in_title)
+        val item = resources.getString(R.string.sign_in_title)
         val startColor: Int = resources.getColor(R.color.secondary_text_color)
         val endColor: Int = resources.getColor(R.color.main_color)
         binding.signInTitle.text =
-            ExtraFunctions.twoColoredText(item.toString(), 0, 7, startColor, endColor)
+            ExtraFunctions.twoColoredText(item, 0, 7, startColor, endColor)
 
+    }
+
+    private fun initViewItems() {
+        binding.signInErrorTextContainer.visibility = View.GONE
+        binding.animationSignInView.visibility = View.GONE
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -112,6 +134,13 @@ class SignInFragment : Fragment() {
             }
             false
         }
+    }
+
+
+    private fun validateSignIn(login: String): String {
+        return if (login.contains("_")) {
+            resources.getString(R.string.login_full_error)
+        } else ""
     }
 
 

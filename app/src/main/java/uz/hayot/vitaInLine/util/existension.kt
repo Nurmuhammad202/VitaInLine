@@ -7,8 +7,6 @@ import android.util.Log
 import java.util.*
 
 object Localization {
-
-
     @JvmStatic
     fun changeLan(changeLang: String, context: Activity) {
         Log.d(ContentValues.TAG, "languageUpdate123: $changeLang")
@@ -22,7 +20,7 @@ object Localization {
 
     }
 
-    fun getLocale(languageCode: String): Locale {
+    private fun getLocale(languageCode: String): Locale {
         return Locale(languageCode)
     }
 }

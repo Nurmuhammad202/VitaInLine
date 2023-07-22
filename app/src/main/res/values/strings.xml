@@ -71,8 +71,26 @@
     <string name="attention_text">Diqqat, Diqqat, Diqqat!</string>
     <string name="notification_btn_text">Tushunarli</string>
     <string name="notification_skip_btn_text">15 daqiqadan so\'ngra eslating</string>
-    <string name="tavsiyanoma_text">Tavsiyanoma</string>
+    <string name="tavsiyanoma_text">Tavsiya</string>
     <string name="date">Sana</string>
     <string name="save">Saqlash</string>
     <string name="bo_limlar">Bo\'limlar</string>
+    <string name="malumotlar">Ma\'lumotlarni to\'ldiring</string>
+    <string name="login_full_error">Login ma\'lumotlari to\'liq kiritilmagan</string>
+    <string name="birthday_error">Tu\'gilgan kun kiritilmagan</string>
+    <string name="passport_error">Passport ma\'lumotlari to\'liq kiritilmagan</string>
+    <string name="passport_error_two">Passport ma\'lumotlari notog\'ri formatda</string>
+    <string name="phone_number_error">Telifon raqam to\'liq kiritilmagan</string>
+    <string name="phone_number_error_two">Telifon raqam noto\'g\'ri  kiritilgan</string>
+    <string name="name_error">Ism juda qisqa</string>
+    <string name="success_sign_up">Muvaffaqiyatli ro\'yxatdan o\'tildi</string>
+    <string name="notification_title">Dori ichish vaqti</string>
+    <string name="notification_extra_title">Dorilarni ko\'rish uchun bosing</string>
+    <string name="davolash_not_found_text">Xozircha hech qanday ma\'lumot topilmadi!</string>
+    <string name="pills">Dorilar:</string>
+    <string name="pill_drink_att_text">da, siz dorilar ichishingiz kerak!</string>
+    <string name="tabletka_tx">ta tabletka</string>
+    <string name="after_meal">Ovqatdan keyin</string>
+    <string name="before_meal">Ovqatdan oldin</string>
+    <string name="mahal_tx">mahal</string>
 </resources>

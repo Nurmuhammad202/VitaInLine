@@ -5,6 +5,7 @@ import android.content.Context
 private const val SHARED_PREF_NAME = "SHARED_PREF_NAME"
 private const val SHARED_USER_TOKEN = "SHARED_USER_TOKEN"
 private const val SHARED_LANGUAGE = "SHARED_LANGUAGE"
+private const val SHARED_ALARM = "SHARED_ALARM"
 
 class SharedPrefRepository(context: Context) : SharedInterface {
 
@@ -26,4 +27,15 @@ class SharedPrefRepository(context: Context) : SharedInterface {
     override fun getLang(): String {
         return sharedPreferences.getString(SHARED_LANGUAGE, "ru") ?: "ru"
     }
+
+    override fun setAlarm(date: Int) {
+
+        sharedPreferences.edit().putInt(SHARED_ALARM, date).apply()
+    }
+
+    override fun getAlarm(): Int {
+        return sharedPreferences.getInt(SHARED_ALARM, 0)
+    }
+
+
 }

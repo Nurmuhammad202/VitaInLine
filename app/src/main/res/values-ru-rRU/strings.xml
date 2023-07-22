@@ -35,18 +35,18 @@
         <item>ru</item>
     </string-array>
     <string-array name="spinner_region_items">
-        <item>Toshkent</item>
-        <item>Sirdaryo</item>
-        <item>Andijon</item>
-        <item>Farg\'ona</item>
-        <item>Namangan</item>
-        <item>Samarqand</item>
-        <item>Qashqadaryo</item>
-        <item>Surxandaryo</item>
-        <item>Buxoro</item>
-        <item>Navoiy</item>
-        <item>Xorazm</item>
-        <item>Qoraqalpog\'iston</item>
+        <item>Ташкент</item>
+        <item>Сырдарья</item>
+        <item>Андижан</item>
+        <item>Фергана</item>
+        <item>Наманган</item>
+        <item>Самарканд</item>
+        <item>Кашкадарья</item>
+        <item>Сурхандарья</item>
+        <item>Бухара</item>
+        <item>Навои</item>
+        <item>Хорезм</item>
+        <item> Каракалпакстан</item>
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -68,4 +68,22 @@
     <string name="date">Дата</string>
     <string name="save">Сохранить</string>
     <string name="bo_limlar">Раздел</string>
+    <string name="malumotlar">Заполните информацию</string>
+    <string name="login_full_error">Данные для входа неполные</string>
+    <string name="birthday_error">Дата рождения не введена</string>
+    <string name="passport_error">Паспортные данные введены не полностью</string>
+    <string name="passport_error_two">Паспортные данные указаны в неверном формате</string>
+    <string name="phone_number_error">Номер телефона введен не полностью</string>
+    <string name="phone_number_error_two">Номер телефона был введен неправильно</string>
+    <string name="name_error">Имя слишком короткое</string>
+    <string name="success_sign_up">Успешно зарегистрирован</string>
+    <string name="notification_title">Время принимать лекарства</string>
+    <string name="notification_extra_title">Нажмите, чтобы посмотреть лекарства</string>
+    <string name="davolash_not_found_text">Информация пока не найдена!</string>
+    <string name="pills">Лекарство:</string>
+    <string name="pill_drink_att_text">Принимайте лекарства</string>
+    <string name="tabletka_tx">таблетка</string>
+    <string name="after_meal">После еды</string>
+    <string name="before_meal">До еды</string>
+    <string name="mahal_tx">раз</string>
 </resources>

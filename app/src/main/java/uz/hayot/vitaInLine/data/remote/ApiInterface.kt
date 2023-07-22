@@ -34,6 +34,9 @@ interface ApiInterface {
     ): Response<HealingResponse>
 
     @GET("advertisings")
-    suspend fun advertising():Response<AdvertisingModel>
+    suspend fun advertising(): Response<AdvertisingModel>
+
+    @GET("pills/{pillId}")
+    suspend fun getPillById(@Path("pillId") variable: String): Response<DataPillModel>
 
 }

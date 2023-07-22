@@ -1,25 +1,19 @@
 package uz.hayot.vitaInLine.ui.main
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
-import uz.hayot.vitaInLine.adapters.TavsiyanomaParentAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaBinding
-import uz.hayot.vitaInLine.fake_data.FakeData
-import uz.hayot.vitaInLine.models.ParentRcModel
 
 
 @Suppress("UNCHECKED_CAST")
@@ -41,14 +35,28 @@ class TavsiyanomaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         binding.animationTavsiyaView.visibility=View.VISIBLE
+        binding.animationTavsiyaView.visibility = View.VISIBLE
         davolanishViewModel.recommendations()
 
 
-        davolanishViewModel.recommendationsData.observe(requireActivity()) {
-            binding.animationTavsiyaView.visibility=View.GONE
-            dataList = it.data as List<DataItem>
-            initDataAdapter(dataList)
+        davolanishViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
+                binding.animationTavsiyaView.visibility = View.GONE
+                dataList = davolanishViewModel.getRecommendationData().data as List<DataItem>
+                if (dataList.isEmpty()) binding.tavsiyaNotFoundContainer.visibility = View.VISIBLE
+                else binding.tavsiyaNotFoundContainer.visibility = View.GONE
+                initDataAdapter(dataList)
+            } else {
+                if (binding.animationTavsiyaView.isVisible) {
+                    binding.animationTavsiyaView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        davolanishViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         }
 
         binding.tavsiyanomaHistory.setOnClickListener {
@@ -61,27 +69,9 @@ class TavsiyanomaFragment : Fragment() {
         }
     }
 
-    private fun showNotificationDialog() {
-        val dialog = Dialog(binding.root.context)
-        dialog.setContentView(R.layout.notification_dialog)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-        dialog.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation;
-        dialog.window?.setGravity(Gravity.BOTTOM);
-
-
-        val exitButton = dialog.findViewById<ImageView>(R.id.notificationDismissIcon)
-        exitButton.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
 
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list,"recommendations")
+        val adapter = DavolanishParentAdapter(list, "recommendations")
         binding.tavsiyanomaDate.text = dataList[0].startedDate
         binding.tavRecyclerView.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {

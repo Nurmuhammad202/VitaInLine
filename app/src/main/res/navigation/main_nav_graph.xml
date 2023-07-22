@@ -25,6 +25,7 @@
         android:name="uz.hayot.vitaInLine.ui.main.DavolanishFragment"
         android:label="fragment_davolanish"
         tools:layout="@layout/fragment_davolanish">
+
         <action
             android:id="@+id/action_davolanishFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

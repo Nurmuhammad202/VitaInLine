@@ -12,9 +12,8 @@ import java.util.*
 class DataPicterDialog(context: Context, var success: (String) -> Unit) :
     BaseAlertDialog(context) {
     private val binding = ItemPrrofileDataDialogLayoutBinding.inflate(LayoutInflater.from(context))
-
     init {
-        setCancelable(false)
+
         //min date...
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
@@ -27,12 +26,12 @@ class DataPicterDialog(context: Context, var success: (String) -> Unit) :
             }
 
             btnSave.setOnClickListener {
-                val day: String = if (binding.datePicker.dayOfMonth < 10) {
+                val day: String = if (binding.datePicker.dayOfMonth <10) {
                     "0${binding.datePicker.dayOfMonth}"
                 } else {
                     binding.datePicker.dayOfMonth.toString()
                 }
-                val month = if(binding.datePicker.month<10){
+                val month = if(binding.datePicker.month<9){
                     "0${binding.datePicker.month+1}"
                 }else {
                     (binding.datePicker.month+1).toString()

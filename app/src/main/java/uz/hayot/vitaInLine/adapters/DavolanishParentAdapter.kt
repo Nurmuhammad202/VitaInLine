@@ -39,7 +39,7 @@ class DavolanishParentAdapter(private val healingList: List<DataItem>, private v
             }
 
             binding.davChildRv.adapter =
-                DavolanishChildAdapter(childList)
+                DavolanishChildAdapter(childList,binding.root.context)
 
             binding.davParentInfoIcon.setOnClickListener {
                 infoListener?.onInfoClicked(adapterPosition)

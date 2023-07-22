@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
-import uz.hayot.vitaInLine.adapters.TavsiyanomaHistoryAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaHistoryBinding
-import uz.hayot.vitaInLine.fake_data.FakeData
 
 @Suppress("UNCHECKED_CAST")
 @AndroidEntryPoint
@@ -36,14 +35,28 @@ class TavsiyanomaHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.animationTavsiyaHisView.visibility=View.VISIBLE
+        binding.animationTavsiyaHisView.visibility = View.VISIBLE
         davolanishViewModel.recommendationsHistory()
 
 
-        davolanishViewModel.recommendationsDataHistory.observe(requireActivity()) {
-            binding.animationTavsiyaHisView.visibility=View.GONE
-            dataList = it.data as List<DataItem>
-            initDataAdapter(dataList)
+        davolanishViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
+                binding.animationTavsiyaHisView.visibility = View.GONE
+                dataList = davolanishViewModel.getRecommendationHisData().data as List<DataItem>
+                if (dataList.isEmpty()) binding.tavHisNotFoundContainer.visibility = View.VISIBLE
+                else binding.tavHisNotFoundContainer.visibility = View.GONE
+                initDataAdapter(dataList)
+            } else {
+                if (binding.animationTavsiyaHisView.isVisible) {
+                    binding.animationTavsiyaHisView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        davolanishViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
         }
 
         binding.tavHisBackBtn.setOnClickListener {
@@ -53,7 +66,7 @@ class TavsiyanomaHistoryFragment : Fragment() {
 
 
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list,"recommendations")
+        val adapter = DavolanishParentAdapter(list, "recommendations")
         binding.davRecyclerView.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {})
 

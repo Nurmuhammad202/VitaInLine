@@ -21,6 +21,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     private val binding get() = _binding!!
     private val viewModel: AuthViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +42,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             }
 
             override fun onFinish() {
-                if (loginState) findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+
+                if (loginState) {
+                    findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+                    requireActivity().finish()
+                }
                 else findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
             }
         }.start()

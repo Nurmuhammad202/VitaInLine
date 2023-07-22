@@ -13,16 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
-import uz.hayot.vitaInLine.adapters.DavolanishHistoryAdapter
 import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishHistoryBinding
-import uz.hayot.vitaInLine.fake_data.FakeData
+import uz.hayot.vitaInLine.util.Constants
 
 
 @Suppress("UNCHECKED_CAST")
@@ -43,13 +44,29 @@ class DavolanishHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.animationDavolanishHisHomeView.visibility=View.VISIBLE
+        binding.animationDavolanishHisHomeView.visibility = View.VISIBLE
         davolanishViewModel.getHealingHistory()
 
-        davolanishViewModel.healingDateHistory.observe(requireActivity()) {
-            binding.animationDavolanishHisHomeView.visibility=View.GONE
-            dataList = it.data as List<DataItem>
-            initDataAdapter(dataList)
+        davolanishViewModel.success.observe(requireActivity()) {success->
+            if(success){
+                binding.animationDavolanishHisHomeView.visibility = View.GONE
+                dataList = davolanishViewModel.getHealingHistoryData().data as List<DataItem>
+                if (dataList.isEmpty()) binding.davHisNotFoundContainer.visibility = View.VISIBLE
+                else binding.davHisNotFoundContainer.visibility = View.GONE
+
+                initDataAdapter(dataList)
+            }else{
+                if (binding.animationDavolanishHisHomeView.isVisible) {
+                    binding.animationDavolanishHisHomeView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        davolanishViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+
         }
         binding.davHisBackBtn.setOnClickListener {
             findNavController().popBackStack()
@@ -59,7 +76,7 @@ class DavolanishHistoryFragment : Fragment() {
 
 
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list,"pill")
+        val adapter = DavolanishParentAdapter(list, "pill")
         Log.e(TAG, "initDataAdapter: $list")
         binding.davHistoryRv.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {
@@ -76,8 +93,7 @@ class DavolanishHistoryFragment : Fragment() {
         val dialog = Dialog(binding.root.context)
         dialog.setContentView(R.layout.davolanish_info_dialog)
         dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
         dialog.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation;
@@ -97,14 +113,21 @@ class DavolanishHistoryFragment : Fragment() {
         val times = StringBuilder()
         for (i in 0 until dataObject.times?.size!!) {
             times.append(dataObject.times[i])
-            if (i != dataObject.times.size - 1)
-                times.append(",")
+            if (i != dataObject.times.size - 1) times.append(",")
         }
         pillTimes.text = times.toString()
 
-        pillChildCount.text = "${dataObject.quantity} ta tabletka"
-        pillChildStatus.text = dataObject.type
-        pillChildCountDay.text = dataObject.times.size.toString()
+
+        pillChildCount.text = "${dataObject.quantity} ${resources.getString(R.string.tabletka_tx)}"
+
+        if (dataObject.type == Constants.BEFORE_MEAL)
+            pillChildStatus.text = resources.getString(R.string.before_meal)
+        else if (dataObject.type == Constants.AFTER_MEAL)
+            pillChildStatus.text =  resources.getString(R.string.after_meal)
+
+
+        pillChildCountDay.text =
+            "${dataObject.times.size} ${resources.getString(R.string.mahal_tx)}"
 
         val exitButton = dialog.findViewById<ImageView>(R.id.infoDialogDismiss)
         exitButton.setOnClickListener {

@@ -1,7 +1,10 @@
 package uz.hayot.vitaInLine.ui.main
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +15,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,8 +25,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.MainActivity
 import uz.hayot.vitaInLine.R
 import uz.hayot.vitaInLine.databinding.FragmentHomeBinding
+import uz.hayot.vitaInLine.ui.splash.SplashActivity
+import uz.hayot.vitaInLine.util.Constants.REQUEST_LOCATION
 import uz.hayot.vitaInLine.util.Localization.changeLan
-import uz.hayot.vitaInLine.util.setAlarm
+import uz.hayot.vitaInLine.util.functions.ExtraFunctions.Companion.convertShortDesc
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -29,40 +37,81 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val binding get() = _binding!!
     private val mainViewModel: HomeViewModel by viewModels()
 
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return _binding?.root
     }
 
+    @SuppressLint("InlinedApi")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //bildirishnomaga ruxsat berilgan yoki yo'qligi tekshirish
+        checkNotificationPermission()
+        // ma'lumotlar kelgunga animatsiya
         binding.animationHomeView.visibility = View.VISIBLE
+        // ma'lumotlar olib kelish uchun so'rov jo'natish
         mainViewModel.getSignUser()
+        // tilni amashtirish uchun til spinnerini init qilish
         initSpinner()
 
-        // setAlarm(5, requireActivity())
+        //viewModeldan success ni observe qilish
 
-        mainViewModel.userResponse.observe(requireActivity()) { userResponse ->
-            binding.animationHomeView.visibility = View.GONE
-            binding.homeUsername.text = userResponse.data?.fullname
-            binding.homeUserBirthDay.text = userResponse.data?.birthday
-            binding.homeUserRegion.text = userResponse.data?.province
-            binding.homeUserJobPlace.text = userResponse.data?.workplace ?: "Promo Technology"
+        mainViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
+                val userData = mainViewModel.getHomeUserData()
+                binding.animationHomeView.visibility = View.GONE
+                binding.homeUserBirthDay.text = userData.data?.birthday
+                binding.homeUserRegion.text = userData.data?.province
+                binding.homeUserJobPlace.text = userData.data?.workplace ?: "Promo Technology"
+                val name = userData.data?.fullname
+                if (name?.length!! > 26) {
+                    binding.homeUsername.text = convertShortDesc(name, 0, 23)
+                } else {
+                    binding.homeUsername.text = name
+                }
+
+            } else {
+                if (binding.animationHomeView.isVisible) {
+                    binding.animationHomeView.visibility = View.GONE
+                    Toast.makeText(
+                        binding.root.context,
+                        mainViewModel.getErrorText(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+
         }
 
+
+        // log out tugmasi bosilishi
+        binding.homeLogOut.setOnClickListener {
+            mainViewModel.logOutPatient()
+            mainViewModel.saveAlarm(0)
+            val intent = Intent(requireActivity(), SplashActivity::class.java)
+            requireActivity().finishAffinity()
+            startActivity(intent)
+        }
+
+
+        // davolanish oynasiga o'tish
         binding.davolanishBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_davolanishFragment)
         }
+        //tavsiyanoma oynasiga o'tish
 
         binding.tavsiyanomaBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_tavsiyanomaFragment)
 
         }
+
+        // dorilar oynasiga o'tish
         binding.homePillBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_pillsFragment)
         }
@@ -75,12 +124,14 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val lang = mainViewModel.getLang()
         languageSpinnerAdapter = if (lang == "ru") {
             ArrayAdapter(
-                binding.root.context, R.layout.simple_spinner_item,
+                binding.root.context,
+                R.layout.simple_spinner_item,
                 resources.getStringArray(R.array.spinner_items_ru)
             )
         } else {
             ArrayAdapter(
-                binding.root.context, R.layout.simple_spinner_item,
+                binding.root.context,
+                R.layout.simple_spinner_item,
                 resources.getStringArray(R.array.spinner_items)
             )
         }
@@ -118,6 +169,24 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+
+    private fun checkNotificationPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestPermissions(
+                    requireActivity(), arrayOf(
+                        Manifest.permission.POST_NOTIFICATIONS,
+                    ), REQUEST_LOCATION
+                )
+            }
+        }
     }
 
 
