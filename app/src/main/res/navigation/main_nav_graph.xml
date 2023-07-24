@@ -19,7 +19,16 @@
         <action
             android:id="@+id/action_homeFragment_to_pillsFragment"
             app:destination="@id/pillsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_fragment_doctor"
+            app:destination="@id/fragment_doctor" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_doctor"
+        android:name="uz.hayot.vitaInLine.ui.main.doctorsDustup.DoctorsFragment"
+        tools:layout="@layout/fragment_doctors" />
+
     <fragment
         android:id="@+id/davolanishFragment"
         android:name="uz.hayot.vitaInLine.ui.main.DavolanishFragment"

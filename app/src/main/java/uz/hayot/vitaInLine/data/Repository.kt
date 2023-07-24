@@ -5,6 +5,7 @@ import uz.hayot.vitaInLine.data.local.room.entity.PillModel
 import uz.hayot.vitaInLine.data.local.sharedPref.SharedInterface
 import uz.hayot.vitaInLine.data.model.CreateDataPatient
 import uz.hayot.vitaInLine.data.model.SendSigInModel
+import uz.hayot.vitaInLine.data.model.doctorById.ApproveConfirmationModel
 import uz.hayot.vitaInLine.data.remote.ApiInterface
 import javax.inject.Inject
 
@@ -46,6 +47,13 @@ class Repository @Inject constructor(
     suspend fun advertising() = apiInterface.advertising()
     suspend fun getPillById(pillId: String) = apiInterface.getPillById(pillId)
 
+    suspend fun getConfirmations() = apiInterface.getConfirmations(sharedInterface.getToken())
+
+    suspend fun getDoctorById(doctorId: String) =
+        apiInterface.getDoctorById(id = doctorId, sharedInterface.getToken())
+
+    suspend fun confirmations(approveConfirmationModel: ApproveConfirmationModel) =
+        apiInterface.confirmations(sharedInterface.getToken(), approveConfirmationModel)
 
     //save pill
     fun saveRoomPill(pillList: List<PillModel>) = vitaDao.insertPill(pillList)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="врачи">doctors</string>
+    <string name="ruxsat_berasizmi">Ruxsat berasizmi?</string>
+    <string name="ha">Ha</string>
+</resources>

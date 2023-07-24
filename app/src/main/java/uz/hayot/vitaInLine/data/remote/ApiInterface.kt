@@ -4,6 +4,10 @@ import retrofit2.Response
 import retrofit2.http.*
 import uz.hayot.vitaInLine.data.model.*
 import uz.hayot.vitaInLine.data.model.advertising.AdvertisingModel
+import uz.hayot.vitaInLine.data.model.confirmation.GetConfirmationModel
+import uz.hayot.vitaInLine.data.model.confirmation.confirmation.ConfirmationModel
+import uz.hayot.vitaInLine.data.model.doctorById.ApproveConfirmationModel
+import uz.hayot.vitaInLine.data.model.doctorById.DoctorByIdModel
 
 
 interface ApiInterface {
@@ -38,5 +42,20 @@ interface ApiInterface {
 
     @GET("pills/{pillId}")
     suspend fun getPillById(@Path("pillId") variable: String): Response<DataPillModel>
+
+    @GET("confirmations/patient")
+    suspend fun getConfirmations(@Header("Authorization") authToken: String): Response<GetConfirmationModel>
+
+    @GET("doctors/{id}")
+    suspend fun getDoctorById(
+        @Path("id") id: String,
+        @Header("Authorization") authToken: String,
+    ): Response<DoctorByIdModel>
+
+    @PUT("confirmations")
+    suspend fun confirmations(
+        @Header("Authorization") authToken: String,
+        @Body approveConfirmationModel: ApproveConfirmationModel
+    ): Response<ConfirmationModel>
 
 }

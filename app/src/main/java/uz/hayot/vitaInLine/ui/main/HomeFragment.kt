@@ -61,6 +61,10 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         //viewModeldan success ni observe qilish
 
+        binding.btnDoctor.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_fragment_doctor)
+        }
+
         mainViewModel.success.observe(requireActivity()) { success ->
             if (success) {
                 val userData = mainViewModel.getHomeUserData()

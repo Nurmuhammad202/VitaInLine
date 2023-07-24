@@ -93,4 +93,8 @@
     <string name="after_meal">Ovqatdan keyin</string>
     <string name="before_meal">Ovqatdan oldin</string>
     <string name="mahal_tx">mahal</string>
+    <string name="doctor">Doctorlar</string>
+    <string name="ruxsat_berasizmi">Ruxsat berasizmi?</string>
+    <string name="ha">Ha</string>
+    <string name="yo_q">Yo\'q</string>
 </resources>
