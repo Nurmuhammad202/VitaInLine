@@ -263,6 +263,16 @@
 
     </LinearLayout>
 
+    <Button
+        style="@style/ButtonStyle"
+        android:text="@string/doctor"
+        android:id="@+id/btn_doctor"
+        android:layout_marginHorizontal="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="150dp"
+        android:layout_below="@+id/homeTextSection"/>
+
     <LinearLayout
         android:id="@+id/homeSpinnerContainer"
         android:layout_width="120dp"

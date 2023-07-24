@@ -86,4 +86,8 @@
     <string name="after_meal">После еды</string>
     <string name="before_meal">До еды</string>
     <string name="mahal_tx">раз</string>
+
+    <string name="doctor">врачи</string>
+    <string name="ruxsat_berasizmi">Вы позволяете?</string>
+    <string name="ha">Да</string>
 </resources>

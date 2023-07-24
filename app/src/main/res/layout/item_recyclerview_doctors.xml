@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginHorizontal="2dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="15sp"
+    android:gravity="center|left"
+    android:id="@+id/layout"
+    android:background="#EBFAFC"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/txt_name"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Shukurov Laziz" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/txt_specialty"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:text="Kardiolog" />
+</androidx.appcompat.widget.LinearLayoutCompat>
