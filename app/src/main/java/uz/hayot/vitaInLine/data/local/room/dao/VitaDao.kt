@@ -14,7 +14,7 @@ interface VitaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPill(addresses: PillModel): Long
 
-    @Query("SELECT * FROM ${AppDatabase.TABLE_PILL} ORDER BY id")
+    @Query("SELECT * FROM ${AppDatabase.TABLE_PILL}")
     fun getPill(): LiveData<List<PillModel>>
 
     @Query("DELETE FROM ${AppDatabase.TABLE_PILL}")

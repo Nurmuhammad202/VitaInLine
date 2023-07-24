@@ -56,8 +56,8 @@ class Repository @Inject constructor(
         apiInterface.confirmations(sharedInterface.getToken(), approveConfirmationModel)
 
     //save pill
-    fun saveRoomPill(pillModel: PillModel) = vitaDao.insertPill(pillModel)
+    fun saveRoomPill(pillList: List<PillModel>) = vitaDao.insertPill(pillList)
 
-    fun getRoomPill() = vitaDao.getPill()
+     fun getRoomPill() = vitaDao.getPill()
 
 }

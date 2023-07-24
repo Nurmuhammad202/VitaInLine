@@ -22,16 +22,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
-import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
 import uz.hayot.vitaInLine.adapters.NotificationChildAdapter
+import uz.hayot.vitaInLine.adapters.subadapter.DavolanishParent
+import uz.hayot.vitaInLine.data.local.room.entity.PillModel
 import uz.hayot.vitaInLine.data.model.AlarmData
-import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.data.model.NotificationChild
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishBinding
 import uz.hayot.vitaInLine.util.Constants
 import uz.hayot.vitaInLine.util.createNotificationChannel
 import uz.hayot.vitaInLine.util.setAlarm
-
 import java.time.LocalDate
 
 @Suppress("UNCHECKED_CAST")
@@ -40,11 +39,9 @@ class DavolanishFragment : Fragment() {
     private var _binding: FragmentDavolanishBinding? = null
     private val binding get() = _binding!!
     private val davolanishViewModel: DavolanishViewModel by viewModels()
-    private lateinit var dataList: List<DataItem>
+    private lateinit var dataList: List<PillModel>
     private var isNotification = false
     private var timeNotification = ""
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -65,14 +62,18 @@ class DavolanishFragment : Fragment() {
         binding.animationDavolanishView.visibility = View.VISIBLE
         davolanishViewModel.getHealing()
 
+        davolanishViewModel.insertData()
+        val list = davolanishViewModel.getRoomData()
 
 
+
+        Toast.makeText(binding.root.context, list.toString(), Toast.LENGTH_SHORT).show()
 
 
         davolanishViewModel.success.observe(requireActivity()) { success ->
             if (success) {
                 binding.animationDavolanishView.visibility = View.GONE
-                dataList = davolanishViewModel.getHealingData().data as List<DataItem>
+                dataList = davolanishViewModel.getHealingData()
                 if (dataList.isEmpty())
                     binding.davolanishNotFoundContainer.visibility = View.VISIBLE
                 else binding.davolanishNotFoundContainer.visibility = View.GONE
@@ -118,7 +119,7 @@ class DavolanishFragment : Fragment() {
 
     }
 
-    private fun showNotificationDialog(list: List<DataItem>, time: String) {
+    private fun showNotificationDialog(list: List<PillModel>, time: String) {
         val dialog = Dialog(binding.root.context)
         dialog.setContentView(R.layout.notification_dialog)
         dialog.window?.setLayout(
@@ -163,11 +164,11 @@ class DavolanishFragment : Fragment() {
 
 
     // adapter init qilish
-    private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list, "pill")
+    private fun initDataAdapter(list: List<PillModel>) {
+        val adapter = DavolanishParent(list)
         binding.davolanishDate.text = dataList[0].startedDate
         binding.davRecyclerView.adapter = adapter
-        adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {
+        adapter.setOnInfoClicked(object : DavolanishParent.OnParentInfoClickedListener {
             override fun onInfoClicked(position: Int) {
                 super.onInfoClicked(position)
                 showBottomDialog(list[position])
@@ -178,7 +179,7 @@ class DavolanishFragment : Fragment() {
 
     // dorilar haqida dialog
     @SuppressLint("SetTextI18n")
-    private fun showBottomDialog(dataObject: DataItem) {
+    private fun showBottomDialog(dataObject: PillModel) {
         val dialog = Dialog(binding.root.context)
         dialog.setContentView(R.layout.davolanish_info_dialog)
         dialog.window?.setLayout(
@@ -239,8 +240,8 @@ class DavolanishFragment : Fragment() {
         }
     }
 
- //data listdan vaqtlarni array ko'rinishida alohida ajratib olish
-    private fun separateTime(list: List<DataItem>): MutableList<String> {
+    //data listdan vaqtlarni array ko'rinishida alohida ajratib olish
+    private fun separateTime(list: List<PillModel>): MutableList<String> {
         val listTime: MutableList<String> = ArrayList()
 
         for (i in list.indices) {
@@ -253,7 +254,7 @@ class DavolanishFragment : Fragment() {
     }
 
     // alarm chalingan vaqt bo'yicha datadan shu vaqtga mos bo'lgan dorilarni ajratib olish
-    private fun getTimeData(list: List<DataItem>, time: String): MutableList<NotificationChild> {
+    private fun getTimeData(list: List<PillModel>, time: String): MutableList<NotificationChild> {
         val childList: MutableList<NotificationChild> = ArrayList()
         for (i in list.indices) {
             for (j in 0 until (list[i].times?.size ?: 0)) {
