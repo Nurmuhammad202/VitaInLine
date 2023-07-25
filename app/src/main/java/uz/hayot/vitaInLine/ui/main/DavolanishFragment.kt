@@ -22,16 +22,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
-import uz.hayot.vitaInLine.adapters.NotificationChildAdapter
+import uz.hayot.vitaInLine.adapters.notification.NotificationChildAdapter
 import uz.hayot.vitaInLine.adapters.subadapter.DavolanishParent
 import uz.hayot.vitaInLine.data.local.room.entity.PillModel
 import uz.hayot.vitaInLine.data.model.AlarmData
-import uz.hayot.vitaInLine.data.model.NotificationChild
+import uz.hayot.vitaInLine.data.model.notification.NotificationModel
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishBinding
-import uz.hayot.vitaInLine.util.Constants
-import uz.hayot.vitaInLine.util.createNotificationChannel
-import uz.hayot.vitaInLine.util.setAlarm
-import java.time.LocalDate
+import uz.hayot.vitaInLine.util.*
+import uz.hayot.vitaInLine.util.Constants.HEALING
+import uz.hayot.vitaInLine.util.functions.ExtraFunctions.Companion.convertTimeUseDate
+import uz.hayot.vitaInLine.util.functions.ExtraFunctions.Companion.getDifferentPillId
 
 @Suppress("UNCHECKED_CAST")
 @AndroidEntryPoint
@@ -62,29 +62,22 @@ class DavolanishFragment : Fragment() {
         binding.animationDavolanishView.visibility = View.VISIBLE
         davolanishViewModel.getHealing()
 
-        davolanishViewModel.insertData()
-        val list = davolanishViewModel.getRoomData()
-
-
-
-        Toast.makeText(binding.root.context, list.toString(), Toast.LENGTH_SHORT).show()
-
-
         davolanishViewModel.success.observe(requireActivity()) { success ->
             if (success) {
                 binding.animationDavolanishView.visibility = View.GONE
                 dataList = davolanishViewModel.getHealingData()
-                if (dataList.isEmpty())
+                if (dataList.isNotEmpty()) {
+                    initDataAdapter(dataList)
+                    setAlarmDavolanish(dataList)
+                    binding.davolanishNotFoundContainer.visibility = View.GONE
+                } else
                     binding.davolanishNotFoundContainer.visibility = View.VISIBLE
-                else binding.davolanishNotFoundContainer.visibility = View.GONE
 
-                initDataAdapter(dataList)
-                setAlarmFromDateTimes()
+
 
                 if (isNotification) {
                     if (dataList.isNotEmpty()) {
                         showNotificationDialog(dataList, timeNotification)
-
                     } else {
                         Toast.makeText(
                             binding.root.context,
@@ -93,6 +86,8 @@ class DavolanishFragment : Fragment() {
                         ).show()
                     }
                 }
+
+                davolanishViewModel.savePillDataRoom(dataList)
             } else {
                 if (binding.animationDavolanishView.isVisible) {
                     binding.animationDavolanishView.visibility = View.GONE
@@ -136,13 +131,21 @@ class DavolanishFragment : Fragment() {
         val skipBtn = dialog.findViewById<Button>(R.id.notificationSkipBtn)
         val timeNotification = dialog.findViewById<TextView>(R.id.notificationPillTime)
         val rvNotification = dialog.findViewById<RecyclerView>(R.id.notificationRv)
+        val notifDesc = dialog.findViewById<TextView>(R.id.notificationDesc)
+        val notifTitle = dialog.findViewById<TextView>(R.id.notificationContent)
 
-        timeNotification.text = time
+        var _time: String = ""
+
+        notifDesc.text = binding.root.context.getString(R.string.pill_drink_att_text)
+        notifTitle.text= binding.root.context.getString(R.string.pills)
+
+        _time = time.ifEmpty { list[0].times?.get(0).toString() }
+
+        timeNotification.text = _time
+
+
         rvNotification.adapter =
-            NotificationChildAdapter(getTimeData(list, time), binding.root.context)
-
-
-
+            NotificationChildAdapter(getTimeData(list, _time), binding.root.context,HEALING)
 
         cancelBtn.setOnClickListener {
             dialog.dismiss()
@@ -152,7 +155,9 @@ class DavolanishFragment : Fragment() {
         }
 
         skipBtn.setOnClickListener {
+            setFifteenAfterAlarm(requireContext(), AlarmData(_time, mutableListOf()),HEALING)
             dialog.dismiss()
+
         }
 
         exitButton.setOnClickListener {
@@ -166,7 +171,6 @@ class DavolanishFragment : Fragment() {
     // adapter init qilish
     private fun initDataAdapter(list: List<PillModel>) {
         val adapter = DavolanishParent(list)
-        binding.davolanishDate.text = dataList[0].startedDate
         binding.davRecyclerView.adapter = adapter
         adapter.setOnInfoClicked(object : DavolanishParent.OnParentInfoClickedListener {
             override fun onInfoClicked(position: Int) {
@@ -196,10 +200,12 @@ class DavolanishFragment : Fragment() {
         val pillChildCount = dialog.findViewById<TextView>(R.id.infoDialogChildPillCount)
         val pillChildStatus = dialog.findViewById<TextView>(R.id.infoDialogPillStatus)
         val pillChildCountDay = dialog.findViewById<TextView>(R.id.infoDialogPillCountDate)
+        val infoDialogPillExtraDesc = dialog.findViewById<TextView>(R.id.infoDialogPillExtraDesc)
 
         pillName.text = dataObject.pill
         pillInformation.text = dataObject.information
         pillPeriodDate.text = dataObject.period.toString()
+        infoDialogPillExtraDesc.text=dataObject.extraInformation
         val times = StringBuilder()
         for (i in 0 until dataObject.times?.size!!) {
             times.append(dataObject.times[i])
@@ -226,41 +232,63 @@ class DavolanishFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("NewApi")
+    fun setAlarmDavolanish(list: List<PillModel>) {
+        // yangi qo'shilgan pillarni aniqlash
+        val newPillList = determineNewPill(list)
+
+        if (newPillList.isNotEmpty()) {
+
+            val alarmPillData = prepareAlarmData(newPillList)
+
+            setAlarm(alarmPillData)
+
+        }
+
+    }
+    //data listdan  alarm uchun modelni array ko'rinishida alohida ajratib olish
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun prepareAlarmData(newList: List<PillModel>): MutableList<AlarmData> {
+        val alarmList: MutableList<AlarmData> = ArrayList()
+        for (i in newList.indices) {
+            for (j in 0 until newList[i].times!!.size) {
+                alarmList.add(
+                    AlarmData(
+                        newList[i].times!![j],
+                        convertTimeUseDate(newList[i].times!![j], newList[i].endedDate.toString())
+                    )
+                )
+            }
+
+
+        }
+        return alarmList
+
+    }
+
 
     // berilgan list ko'rinishagi vaqtlarda alarm set qilish
-    private fun setAlarmDavolanish(timeList: MutableList<String>) {
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun setAlarm(newPillItems: List<AlarmData>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             createNotificationChannel(requireContext())
         }
-
-        for (i in 0 until timeList.size) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setAlarm(requireActivity(), AlarmData(timeList[i], i))
-            }
+        for (item in newPillItems) {
+            setRepeatAlarm(binding.root.context, item,HEALING)
         }
     }
 
-    //data listdan vaqtlarni array ko'rinishida alohida ajratib olish
-    private fun separateTime(list: List<PillModel>): MutableList<String> {
-        val listTime: MutableList<String> = ArrayList()
 
-        for (i in list.indices) {
-            for (j in 0 until (list[i].times?.size ?: 0)) {
-                listTime.add(list[i].times?.get(j) ?: "")
-            }
-        }
 
-        return listTime
-    }
 
     // alarm chalingan vaqt bo'yicha datadan shu vaqtga mos bo'lgan dorilarni ajratib olish
-    private fun getTimeData(list: List<PillModel>, time: String): MutableList<NotificationChild> {
-        val childList: MutableList<NotificationChild> = ArrayList()
+    private fun getTimeData(list: List<PillModel>, time: String): MutableList<NotificationModel> {
+        val childList: MutableList<NotificationModel> = ArrayList()
         for (i in list.indices) {
             for (j in 0 until (list[i].times?.size ?: 0)) {
                 if (time == (list[i].times?.get(j) ?: "")) {
                     childList.add(
-                        NotificationChild(
+                        NotificationModel(
                             list[i].pill.toString(),
                             list[i].quantity.toString(),
                             list[i].type.toString()
@@ -271,46 +299,21 @@ class DavolanishFragment : Fragment() {
             }
         }
 
+
+
         return childList
     }
 
 
-    //  alarmni set qilish uchun tekshrish , agardan kun davomida set qilinmagan bo'lsa
-    // alarm set qilinadi, agarda set qilingan bo'lsa set qilinmaydi
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun setAlarmFromDateTimes() {
-        val status = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setAlarmStatus()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-
-        if (status) {
-            setAlarmDavolanish(separateTime(dataList))
-
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                saveAlarm()
-            }
-        }
-    }
-
-    // kun davomida alarm  set qilingan uyoki qilinmaganlik halotini aniqlash
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setAlarmStatus(): Boolean {
-        val lastDate = davolanishViewModel.getAlarm()
-        val day: Int = LocalDate.now().dayOfMonth
-
-        return if (lastDate == 0) {
-            true
-        } else lastDate.toString() != day.toString()
-
-    }
-
-    // notification qo'yilgan kunni shared preferencga saqlab qo'yish
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun saveAlarm() {
-        davolanishViewModel.saveAlarm(LocalDate.now().dayOfMonth)
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun determineNewPill(newPillItems: List<PillModel>): List<PillModel> {
+        val oldPillItems = davolanishViewModel.getPillDataRoom()
+//        Toast.makeText(
+//            binding.root.context,
+//            getDifferentPillId(oldPillItems, newPillItems).toString(),
+//            Toast.LENGTH_LONG
+//        ).show()
+        return getDifferentPillId(oldPillItems, newPillItems)
     }
 
 
@@ -321,3 +324,5 @@ class DavolanishFragment : Fragment() {
 
 
 }
+
+

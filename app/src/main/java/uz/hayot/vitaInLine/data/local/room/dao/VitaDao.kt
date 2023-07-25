@@ -1,9 +1,9 @@
 package uz.hayot.vitaInLine.data.local.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.geo.go.database.room.database.AppDatabase
 import uz.hayot.vitaInLine.data.local.room.entity.PillModel
+import uz.hayot.vitaInLine.data.local.room.entity.RecommendationModel
 
 @Dao
 interface VitaDao {
@@ -15,7 +15,7 @@ interface VitaDao {
     fun insertPill(addresses: PillModel): Long
 
     @Query("SELECT * FROM ${AppDatabase.TABLE_PILL}")
-    fun getPill(): LiveData<List<PillModel>>
+    fun getPill(): List<PillModel>
 
     @Query("DELETE FROM ${AppDatabase.TABLE_PILL}")
     fun deleteAllPill(): Int
@@ -26,4 +26,12 @@ interface VitaDao {
     @Update
     fun updatePill(addresses: List<PillModel>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRecommendation(addresses: List<RecommendationModel>)
+
+    @Query("SELECT * FROM ${AppDatabase.TABLE_RECOMMENDATION}")
+    fun getRecommendation(): List<RecommendationModel>
+
+    @Query("DELETE FROM ${AppDatabase.TABLE_RECOMMENDATION}")
+    fun deleteAllRecommendation(): Int
 }

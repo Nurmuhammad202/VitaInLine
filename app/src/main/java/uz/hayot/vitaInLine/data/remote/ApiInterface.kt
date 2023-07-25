@@ -31,7 +31,7 @@ interface ApiInterface {
         @Query("type") type: String
     ): Response<HealingResponse>
 
-    @GET("recommendations")
+    @GET("recommendations/patient")
     suspend fun recommendations(
         @Header("Authorization") authToken: String,
         @Query("type") type: String

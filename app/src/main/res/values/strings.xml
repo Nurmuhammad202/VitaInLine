@@ -86,9 +86,15 @@
     <string name="success_sign_up">Muvaffaqiyatli ro\'yxatdan o\'tildi</string>
     <string name="notification_title">Dori ichish vaqti</string>
     <string name="notification_extra_title">Dorilarni ko\'rish uchun bosing</string>
+
+    <string name="notification_tavsiya_title">Tavsiya vaqti</string>
+    <string name="notification_tavsiya_extra_title">Tavsiyalarni ko\'rish uchun bosing</string>
+
     <string name="davolash_not_found_text">Xozircha hech qanday ma\'lumot topilmadi!</string>
     <string name="pills">Dorilar:</string>
+    <string name="tavsiya_notif_title">Tavsiyalar:</string>
     <string name="pill_drink_att_text">da, siz dorilar ichishingiz kerak!</string>
+    <string name="tavsiya_att_text">da, sizdagi tavsiyalar!</string>
     <string name="tabletka_tx">ta tabletka</string>
     <string name="after_meal">Ovqatdan keyin</string>
     <string name="before_meal">Ovqatdan oldin</string>
@@ -97,4 +103,6 @@
     <string name="ruxsat_berasizmi">Ruxsat berasizmi?</string>
     <string name="ha">Ha</string>
     <string name="yo_q">Yo\'q</string>
+    <string name="bugun">Bugun</string>
+    <string name="call">Operator bilan aloqa</string>
 </resources>

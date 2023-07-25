@@ -79,8 +79,16 @@
     <string name="success_sign_up">Успешно зарегистрирован</string>
     <string name="notification_title">Время принимать лекарства</string>
     <string name="notification_extra_title">Нажмите, чтобы посмотреть лекарства</string>
+
+    <string name="notification_tavsiya_title">Время рекомендации</string>
+    <string name="notification_tavsiya_extra_title">Нажмите, чтобы просмотреть рекомендации</string>
+
     <string name="davolash_not_found_text">Информация пока не найдена!</string>
+
+
+
     <string name="pills">Лекарство:</string>
+    <string name="tavsiya_notif_title">Рекомендации:</string>
     <string name="pill_drink_att_text">Принимайте лекарства</string>
     <string name="tabletka_tx">таблетка</string>
     <string name="after_meal">После еды</string>
@@ -90,4 +98,11 @@
     <string name="doctor">врачи</string>
     <string name="ruxsat_berasizmi">Вы позволяете?</string>
     <string name="ha">Да</string>
+
+    <string name="yo_q">Нет</string>
+    <string name="bugun">Сегодня</string>
+
+    <string name="tavsiya_att_text">в, ваши рекомендации!</string>
+    <string name="call">Связь с оператором</string>
+
 </resources>

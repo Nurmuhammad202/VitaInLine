@@ -58,11 +58,13 @@ class PillsFragment : Fragment() {
                                     binding.animationPillsView.visibility = View.GONE
                                 } else {
                                     binding.pillNotFoundContainer.visibility = View.VISIBLE
+                                    binding.animationPillsView.visibility = View.GONE
                                 }
                             }
                         }
                     } else {
                         binding.pillNotFoundContainer.visibility = View.VISIBLE
+                        binding.animationPillsView.visibility = View.GONE
                     }
 
                 } else {

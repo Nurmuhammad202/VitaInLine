@@ -1,83 +1,81 @@
 package uz.hayot.vitaInLine.adapters
 
+
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import uz.hayot.vitaInLine.data.model.DataItem
+import uz.hayot.vitaInLine.data.model.HealingChildRVModel
 import uz.hayot.vitaInLine.databinding.DavolanishParentRowBinding
-import uz.hayot.vitaInLine.databinding.HistoryDateRowBinding
-import uz.hayot.vitaInLine.models.DateModel
-import uz.hayot.vitaInLine.models.ParentRcModel
 
-class DavolanishHistoryAdapter(private val list: MutableList<Any>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DavolanishHistoryAdapter(private val healingList: List<DataItem>, private val type: String) :
+    RecyclerView.Adapter<DavolanishHistoryAdapter.ViewHolder>() {
+    private var infoListener: OnParentInfoClickedListener? = null
+    private var childList: MutableList<HealingChildRVModel> = ArrayList()
 
-    companion object {
-        const val PARENT_VIEW_TYPE = 0
-        const val DATE_VIEW_TYPE = 1
-    }
-
-    inner class ParentViewHolder(private val binding: DavolanishParentRowBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun onBind(parentRcModel: ParentRcModel) {
-            binding.davParentPillName.text = parentRcModel.title
-//            binding.davChildRv.adapter = DavolanishChildAdapter(parentRcModel.list)
-        }
-    }
-
-    inner class DateViewHolder(private val binding: HistoryDateRowBinding) :
+    inner class ViewHolder(private val binding: DavolanishParentRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(dateModel: DateModel) {
-            binding.historyDate.text = dateModel.date
+        fun onBind(dataItem: DataItem) {
+            if (type != "recommendations") {
+                binding.davParentPillName.text = dataItem.pill
+                binding.davParentInfoIcon.visibility = View.VISIBLE
+            } else {
+                binding.davParentPillName.text = dataItem.title
+                binding.davParentInfoIcon.visibility = View.INVISIBLE
+            }
 
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            PARENT_VIEW_TYPE -> {
-                val view = DavolanishParentRowBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+            childList.clear()
+            for (i in 0 until (dataItem.times?.size ?: 0)) {
+                childList.add(
+                    HealingChildRVModel(
+                        dataItem.times?.get(i) ?: "",
+                        dataItem.quantity.toString(),
+                        dataItem.type.toString(),
+                        type
+                    )
                 )
-                ParentViewHolder(view)
             }
-            DATE_VIEW_TYPE -> {
-                val view = HistoryDateRowBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                DateViewHolder(view)
-            }
-            else -> throw IllegalArgumentException("Invalid view type")
-        }
-    }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = list[position]
-        when (holder.itemViewType) {
-            PARENT_VIEW_TYPE -> {
-                val personViewHolder = holder as ParentViewHolder
-                val person = item as ParentRcModel
-                personViewHolder.onBind(person)
-            }
-            DATE_VIEW_TYPE -> {
-                val dateViewHolder = holder as DateViewHolder
-                val date = item as DateModel
-                dateViewHolder.onBind(date)
+            binding.davChildRv.adapter =
+                DavolanishChildAdapter(childList,binding.root.context)
+
+            binding.davParentInfoIcon.setOnClickListener {
+                infoListener?.onInfoClicked(adapterPosition)
             }
         }
+
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view =
+            DavolanishParentRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.onBind(healingList[position])
+
+
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(list[position] is DateModel)
-            DATE_VIEW_TYPE
-        else PARENT_VIEW_TYPE
+        return super.getItemViewType(position)
+    }
+
+
+    override fun getItemCount(): Int {
+        return healingList.size
+    }
+
+    fun setOnInfoClicked(listener: OnParentInfoClickedListener) {
+        this.infoListener = listener
+    }
+
+    interface OnParentInfoClickedListener {
+        fun onInfoClicked(position: Int) {
+
+        }
     }
 }

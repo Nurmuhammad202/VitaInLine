@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import uz.hayot.vitaInLine.data.Repository
 import uz.hayot.vitaInLine.data.local.room.entity.PillModel
+import uz.hayot.vitaInLine.data.local.room.entity.RecommendationModel
 import uz.hayot.vitaInLine.data.model.DomainResponseEmploee
 import uz.hayot.vitaInLine.data.model.HealingResponse
 import uz.hayot.vitaInLine.util.network.NetworkHelper
@@ -31,6 +32,7 @@ class DavolanishViewModel @Inject constructor(
         if (networkHelper.isNetworkConnected()) {
             viewModelScope.launch {
                 try {
+                    Log.e("OSON", "recommendations123123: ${repository.getToken()}")
                     repository.getHealing().let {
                         if (it.isSuccessful) {
                             it.body()?.let { data ->
@@ -60,19 +62,16 @@ class DavolanishViewModel @Inject constructor(
                                         timeList,
                                         listItem.doctorId,
                                         listItem.information,
+                                        listItem.extraInformation,
                                         listItem.updatedAt,
                                         listItem.title
                                     )
                                     casheList.add(pillEntity)
                                 }
-
-
-                                // cashe listni  dataRoomga saqlash
-//                                repository.saveRoomPill(casheList)
-
+                                healingDate = casheList
 
                                 // saqlangan listni viewga berish
-                                healingDate = casheList
+
                                 Log.d("casheList", healingDate.toString())
 
                                 success.value = true
@@ -100,37 +99,27 @@ class DavolanishViewModel @Inject constructor(
                 }
             }
         } else {
-
             //   agarda internet bo'lmagan holat
             try {
-
-                healingDate = repository.getRoomPill().value!!
-                Log.d("offlineHealing", repository.getRoomPill().value!!.toString())
-
+                healingDate = getPillDataRoom()
                 success.value = true
             } catch (e: Exception) {
                 e.message
                 Log.e("offlineError", "${e.message}")
             }
 
-
         }
-
-
     }
 
-    fun getRoomData()=repository.getRoomPill().value
 
+    fun getPillDataRoom(): List<PillModel> {
+        return repository.getRoomPill()
+    }
 
-    fun insertData(){
-        val pillModel=PillModel("",2,2,"","","","","","","", mutableListOf("12:00"))
-        val list:MutableList<PillModel> =ArrayList()
-        list.add(pillModel)
-        list.add(pillModel)
-        list.add(pillModel)
-
+    fun savePillDataRoom(list: List<PillModel>) {
         repository.saveRoomPill(list)
     }
+
 
     fun getHealingHistory() = viewModelScope.launch {
         try {
@@ -161,35 +150,94 @@ class DavolanishViewModel @Inject constructor(
         }
     }
 
-    private lateinit var recommendationsData: HealingResponse
-    fun recommendations() = viewModelScope.launch {
-        try {
-            repository.recommendations().let {
-                if (it.isSuccessful) {
-                    it.body()?.let { data ->
-                        recommendationsData = data
-                        success.value = true
-                    }
-                } else {
-                    val gson = Gson()
-                    val type = object : TypeToken<DomainResponseEmploee>() {}.type
-                    val errorResponse: DomainResponseEmploee? =
-                        gson.fromJson(it.errorBody()!!.charStream(), type)
+    private lateinit var recommendationsData: List<RecommendationModel>
+    fun recommendations() {
+        if (networkHelper.isNetworkConnected()) {
+            viewModelScope.launch {
+                try {
+                    Log.e("OSON", "recommendations123123: ${repository.getToken()}")
+                    repository.recommendations().let {
+                        if (it.isSuccessful) {
+                            it.body()?.let { data ->
+                                //internetdan kelgan datadan listni olish
+                                val list = data.data!!
+                                //room uchun cashe list
+                                val casheList = ArrayList<RecommendationModel>()
 
-                    errorResponse?.let { error ->
-                        errorText = error.message
+                                // internetdan kelgan listdan cashe list tayyorlash
+                                for (listItem in list) {
+                                    val timeList = ArrayList<String>()
+                                    if (listItem?.times?.isNotEmpty() == true) {
+                                        for (timeItem in listItem.times) {
+                                            timeList.add(timeItem)
+                                        }
+                                    }
+
+                                    val recommendationEntity = RecommendationModel(
+                                        listItem?.id!!,
+                                        listItem.period,
+                                        listItem.quantity,
+                                        listItem.endedDate,
+                                        listItem.patientId,
+                                        listItem.startedDate,
+                                        listItem.type,
+                                        listItem.pill,
+                                        listItem.pillId,
+                                        listItem.createdAt,
+                                        timeList,
+                                        listItem.doctorId,
+                                        listItem.information,
+                                        listItem.extraInformation,
+                                        listItem.updatedAt,
+                                        listItem.title
+                                    )
+                                    casheList.add(recommendationEntity)
+                                }
+                                recommendationsData = casheList
+
+                                success.value = true
+                            }
+                        } else {
+                            val gson = Gson()
+                            val type = object : TypeToken<DomainResponseEmploee>() {}.type
+                            val errorResponse: DomainResponseEmploee? =
+                                gson.fromJson(it.errorBody()!!.charStream(), type)
+
+                            errorResponse?.let { error ->
+                                errorText = error.message
+                            }
+                            Log.e(
+                                ContentValues.TAG, "getEmployee vs $errorResponse "
+                            )
+                            success.value = false
+                        }
+                        Log.e("recommendationsData", "  $it vs ${it.body()}")
                     }
-                    Log.e(
-                        ContentValues.TAG, "getEmployee vs $errorResponse "
-                    )
-                    success.value = false
+                } catch (ex: Exception) {
+                    ex.message
                 }
-                Log.e("recommendationsData", "  $it vs ${it.body()}")
             }
-        } catch (ex: Exception) {
-            ex.message
+        } else {
+            //   agarda internet bo'lmagan holat
+            try {
+                recommendationsData = getRecommendationDataRoom()
+                success.value = true
+            } catch (e: Exception) {
+                e.message
+                Log.e("offlineError", "${e.message}")
+            }
         }
     }
+
+
+    fun getRecommendationDataRoom(): List<RecommendationModel> {
+        return repository.getRoomRecommendation()
+    }
+
+    fun saveRecommendationDataRoom(list: List<RecommendationModel>) {
+        repository.saveRoomRecommendation(list)
+    }
+
 
     private lateinit var recommendationsDataHistory: HealingResponse
     fun recommendationsHistory() = viewModelScope.launch {
@@ -222,8 +270,6 @@ class DavolanishViewModel @Inject constructor(
     }
 
 
-    fun saveAlarm(date: Int) = repository.saveAlarm(date)
-    fun getAlarm(): Int = repository.getAlarm()
     fun getErrorText() = errorText.ifEmpty { "Information error" }
     fun getHealingData(): List<PillModel> = healingDate
     fun getHealingHistoryData() = healingDateHistory

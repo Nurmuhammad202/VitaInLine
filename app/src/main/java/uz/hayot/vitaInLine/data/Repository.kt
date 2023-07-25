@@ -2,6 +2,7 @@ package uz.hayot.vitaInLine.data
 
 import uz.hayot.vitaInLine.data.local.room.dao.VitaDao
 import uz.hayot.vitaInLine.data.local.room.entity.PillModel
+import uz.hayot.vitaInLine.data.local.room.entity.RecommendationModel
 import uz.hayot.vitaInLine.data.local.sharedPref.SharedInterface
 import uz.hayot.vitaInLine.data.model.CreateDataPatient
 import uz.hayot.vitaInLine.data.model.SendSigInModel
@@ -20,9 +21,6 @@ class Repository @Inject constructor(
     fun getToken(): String = sharedInterface.getToken()
 
     fun saveLang(lang: String) = sharedInterface.saveLang(lang = lang)
-
-    fun saveAlarm(date: Int) = sharedInterface.setAlarm(date)
-    fun getAlarm(): Int = sharedInterface.getAlarm()
 
     suspend fun saveToken(token: String) = sharedInterface.saveToken(token = token)
 
@@ -55,9 +53,21 @@ class Repository @Inject constructor(
     suspend fun confirmations(approveConfirmationModel: ApproveConfirmationModel) =
         apiInterface.confirmations(sharedInterface.getToken(), approveConfirmationModel)
 
-    //save pill
+    //  pill
     fun saveRoomPill(pillList: List<PillModel>) = vitaDao.insertPill(pillList)
 
-     fun getRoomPill() = vitaDao.getPill()
+    fun getRoomPill() = vitaDao.getPill()
+
+    fun deleteRoomData() = vitaDao.deleteAllPill()
+
+
+    //  Recommendation
+    fun saveRoomRecommendation(RecommendationList: List<RecommendationModel>) =
+        vitaDao.insertRecommendation(RecommendationList)
+
+    fun getRoomRecommendation() = vitaDao.getRecommendation()
+
+    fun deleteRoomRecommendation() = vitaDao.deleteAllRecommendation()
+
 
 }

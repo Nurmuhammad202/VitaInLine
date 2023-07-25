@@ -28,14 +28,7 @@ class SharedPrefRepository(context: Context) : SharedInterface {
         return sharedPreferences.getString(SHARED_LANGUAGE, "ru") ?: "ru"
     }
 
-    override fun setAlarm(date: Int) {
 
-        sharedPreferences.edit().putInt(SHARED_ALARM, date).apply()
-    }
-
-    override fun getAlarm(): Int {
-        return sharedPreferences.getInt(SHARED_ALARM, 0)
-    }
 
 
 }

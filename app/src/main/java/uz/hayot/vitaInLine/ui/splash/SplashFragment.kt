@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
@@ -44,10 +45,16 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             override fun onFinish() {
 
                 if (loginState) {
-                    findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
-                    requireActivity().finish()
+                    lifecycleScope.launchWhenResumed {
+                        findNavController().navigate(R.id.action_splashFragment_to_mainActivity)
+                        requireActivity().finish()
+                    }
+
+                } else {
+                    lifecycleScope.launchWhenResumed {
+                        findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
+                    }
                 }
-                else findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
             }
         }.start()
     }

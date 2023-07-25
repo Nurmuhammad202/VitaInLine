@@ -58,6 +58,7 @@
             android:layout_weight="1"
             android:src="@drawable/date_line_icon"/>
         <TextView
+            android:text="@string/bugun"
             android:id="@+id/davolanishDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

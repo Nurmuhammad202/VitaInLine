@@ -8,6 +8,5 @@ interface SharedInterface {
 
     fun getLang(): String
 
-    fun setAlarm(date: Int)
-    fun getAlarm(): Int
+
 }

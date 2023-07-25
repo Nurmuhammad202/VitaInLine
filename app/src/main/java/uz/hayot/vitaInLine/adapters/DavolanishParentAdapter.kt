@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import uz.hayot.vitaInLine.R
+import uz.hayot.vitaInLine.data.local.room.entity.RecommendationModel
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.data.model.HealingChildRVModel
 import uz.hayot.vitaInLine.databinding.DavolanishParentRowBinding
 
-class DavolanishParentAdapter(private val healingList: List<DataItem>, private val type: String) :
+class DavolanishParentAdapter(private val healingList: List<RecommendationModel>, private val type: String) :
     RecyclerView.Adapter<DavolanishParentAdapter.ViewHolder>() {
     private var infoListener: OnParentInfoClickedListener? = null
     private var childList: MutableList<HealingChildRVModel> = ArrayList()
@@ -17,13 +19,14 @@ class DavolanishParentAdapter(private val healingList: List<DataItem>, private v
     inner class ViewHolder(private val binding: DavolanishParentRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(dataItem: DataItem) {
+        fun onBind(dataItem: RecommendationModel) {
             if (type != "recommendations") {
                 binding.davParentPillName.text = dataItem.pill
                 binding.davParentInfoIcon.visibility = View.VISIBLE
             } else {
                 binding.davParentPillName.text = dataItem.title
                 binding.davParentInfoIcon.visibility = View.INVISIBLE
+
             }
 
             childList.clear()

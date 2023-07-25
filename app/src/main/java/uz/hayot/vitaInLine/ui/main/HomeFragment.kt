@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -65,6 +66,16 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
             findNavController().navigate(R.id.action_homeFragment_to_fragment_doctor)
         }
 
+        binding.call.setOnClickListener {
+            try {
+                val telegramIntent = Intent(Intent.ACTION_VIEW)
+                telegramIntent.data = Uri.parse("https://telegram.me/ZEALvitainline")
+                startActivity(telegramIntent)
+            } catch (e: Exception) {
+                // show error message
+            }
+        }
+
         mainViewModel.success.observe(requireActivity()) { success ->
             if (success) {
                 val userData = mainViewModel.getHomeUserData()
@@ -96,8 +107,8 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         // log out tugmasi bosilishi
         binding.homeLogOut.setOnClickListener {
+            mainViewModel.deleteRoomData()
             mainViewModel.logOutPatient()
-            mainViewModel.saveAlarm(0)
             val intent = Intent(requireActivity(), SplashActivity::class.java)
             requireActivity().finishAffinity()
             startActivity(intent)

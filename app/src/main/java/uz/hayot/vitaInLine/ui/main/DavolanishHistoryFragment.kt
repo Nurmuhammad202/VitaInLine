@@ -20,7 +20,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.hayot.vitaInLine.R
-import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
+import uz.hayot.vitaInLine.adapters.DavolanishHistoryAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentDavolanishHistoryBinding
 import uz.hayot.vitaInLine.util.Constants
@@ -47,15 +47,15 @@ class DavolanishHistoryFragment : Fragment() {
         binding.animationDavolanishHisHomeView.visibility = View.VISIBLE
         davolanishViewModel.getHealingHistory()
 
-        davolanishViewModel.success.observe(requireActivity()) {success->
-            if(success){
+        davolanishViewModel.success.observe(requireActivity()) { success ->
+            if (success) {
                 binding.animationDavolanishHisHomeView.visibility = View.GONE
                 dataList = davolanishViewModel.getHealingHistoryData().data as List<DataItem>
                 if (dataList.isEmpty()) binding.davHisNotFoundContainer.visibility = View.VISIBLE
                 else binding.davHisNotFoundContainer.visibility = View.GONE
 
                 initDataAdapter(dataList)
-            }else{
+            } else {
                 if (binding.animationDavolanishHisHomeView.isVisible) {
                     binding.animationDavolanishHisHomeView.visibility = View.GONE
                     Toast.makeText(
@@ -76,10 +76,10 @@ class DavolanishHistoryFragment : Fragment() {
 
 
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list, "pill")
+        val adapter = DavolanishHistoryAdapter(list, "pill")
         Log.e(TAG, "initDataAdapter: $list")
         binding.davHistoryRv.adapter = adapter
-        adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {
+        adapter.setOnInfoClicked(object : DavolanishHistoryAdapter.OnParentInfoClickedListener {
             override fun onInfoClicked(position: Int) {
                 super.onInfoClicked(position)
                 showBottomDialog(list[position])
@@ -123,7 +123,7 @@ class DavolanishHistoryFragment : Fragment() {
         if (dataObject.type == Constants.BEFORE_MEAL)
             pillChildStatus.text = resources.getString(R.string.before_meal)
         else if (dataObject.type == Constants.AFTER_MEAL)
-            pillChildStatus.text =  resources.getString(R.string.after_meal)
+            pillChildStatus.text = resources.getString(R.string.after_meal)
 
 
         pillChildCountDay.text =

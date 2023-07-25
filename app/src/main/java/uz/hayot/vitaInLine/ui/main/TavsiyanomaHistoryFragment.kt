@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import uz.hayot.vitaInLine.adapters.DavolanishParentAdapter
+import uz.hayot.vitaInLine.adapters.DavolanishHistoryAdapter
 import uz.hayot.vitaInLine.data.model.DataItem
 import uz.hayot.vitaInLine.databinding.FragmentTavsiyanomaHistoryBinding
 
@@ -66,9 +66,9 @@ class TavsiyanomaHistoryFragment : Fragment() {
 
 
     private fun initDataAdapter(list: List<DataItem>) {
-        val adapter = DavolanishParentAdapter(list, "recommendations")
+        val adapter = DavolanishHistoryAdapter(list, "recommendations")
         binding.davRecyclerView.adapter = adapter
-        adapter.setOnInfoClicked(object : DavolanishParentAdapter.OnParentInfoClickedListener {})
+        adapter.setOnInfoClicked(object : DavolanishHistoryAdapter.OnParentInfoClickedListener {})
 
     }
 

@@ -63,8 +63,9 @@
             style="@style/ToolbarTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/bugun"
             android:layout_marginHorizontal="10dp"
-            android:text="04.05.2023" />
+              />
 
         <ImageView
             android:layout_width="0dp"

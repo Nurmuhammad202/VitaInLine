@@ -18,6 +18,7 @@ data class DataItem(
     val times: List<String>? = null,
     val doctorId: String? = null,
     val information: String? = null,
+    val extraInformation: String? = null,
     val id: String? = null,
     val updatedAt: String? = null,
     val title: String? = null

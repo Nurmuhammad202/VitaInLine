@@ -7,8 +7,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.geo.go.database.room.database.AppDatabase
 
-@Entity(tableName = AppDatabase.TABLE_PILL)
-data class PillModel(
+@Entity(tableName = AppDatabase.TABLE_RECOMMENDATION)
+data class RecommendationModel(
     @PrimaryKey
     val id: String,
     val period: Int? = null,
@@ -28,16 +28,6 @@ data class PillModel(
     val title: String? = null
 )
 
-class TimeTypeConverter {
-    @TypeConverter
-    fun fromString(value: String?): List<String>? {
-        val listType = object : TypeToken<List<String>>() {}.type
-        return Gson().fromJson(value, listType)
-    }
 
-    @TypeConverter
-    fun fromList(list: List<String>): String {
-        return Gson().toJson(list)
-    }
-}
+
 

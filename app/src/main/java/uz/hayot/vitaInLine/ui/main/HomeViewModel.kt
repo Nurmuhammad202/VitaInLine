@@ -60,7 +60,9 @@ class HomeViewModel @Inject constructor(private val repository: Repository) : Vi
         repository.saveToken("")
     }
 
-    fun saveAlarm(date: Int) = repository.saveAlarm(date)
+    fun deleteRoomData(){
+        repository.deleteRoomData()
+    }
     fun getErrorText() = errorText.ifEmpty { "Home information error" }
     fun getHomeUserData() = userResponse
 

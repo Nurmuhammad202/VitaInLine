@@ -79,6 +79,7 @@
             android:layout_below="@id/notificationPillTimeContainer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="16dp"
             android:text="@string/pill_drink_att_text" />
 
         <ImageView
