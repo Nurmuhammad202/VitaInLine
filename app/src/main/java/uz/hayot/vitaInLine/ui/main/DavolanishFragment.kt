@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -63,11 +64,14 @@ class DavolanishFragment : Fragment() {
         davolanishViewModel.getHealing()
 
         davolanishViewModel.insertData()
-        val list = davolanishViewModel.getRoomData()
+         davolanishViewModel.getRoomData().observe(requireActivity()){
+            Log.e("OSON", "onViewCreated: $it")
+            Toast.makeText(binding.root.context, it.toString(), Toast.LENGTH_SHORT).show()
+
+        }
 
 
 
-        Toast.makeText(binding.root.context, list.toString(), Toast.LENGTH_SHORT).show()
 
 
         davolanishViewModel.success.observe(requireActivity()) { success ->

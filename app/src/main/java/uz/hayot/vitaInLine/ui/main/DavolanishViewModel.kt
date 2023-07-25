@@ -31,6 +31,7 @@ class DavolanishViewModel @Inject constructor(
         if (networkHelper.isNetworkConnected()) {
             viewModelScope.launch {
                 try {
+                    Log.e("OSON", "recommendations123123: ${repository.getToken()}")
                     repository.getHealing().let {
                         if (it.isSuccessful) {
                             it.body()?.let { data ->
@@ -119,7 +120,7 @@ class DavolanishViewModel @Inject constructor(
 
     }
 
-    fun getRoomData()=repository.getRoomPill().value
+    fun getRoomData()=repository.getRoomPill()
 
 
     fun insertData(){
@@ -164,6 +165,8 @@ class DavolanishViewModel @Inject constructor(
     private lateinit var recommendationsData: HealingResponse
     fun recommendations() = viewModelScope.launch {
         try {
+
+            Log.e("OSON", "recommendations123123: ${repository.getToken()}")
             repository.recommendations().let {
                 if (it.isSuccessful) {
                     it.body()?.let { data ->
